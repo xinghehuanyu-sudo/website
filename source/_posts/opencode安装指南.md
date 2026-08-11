@@ -1,4 +1,15 @@
+---
+title: OpenCode 新手安装部署与上手指南
+date: 2026-08-11 10:00:00
+tags:
+  - OpenCode
+  - AI
+  - 安装教程
+categories:
+  - 教程
+---
 
+# OpenCode 新手安装部署与上手指南
 ---
 
 # 1. OpenCode 是什么？

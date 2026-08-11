@@ -24,6 +24,10 @@
     overlay.innerHTML = `
       <canvas id="intro-canvas"></canvas>
 
+      <!-- split-curtain panels -->
+      <div class="intro-curtain-l"></div>
+      <div class="intro-curtain-r"></div>
+
       <!-- rotating rings -->
       <div class="intro-hex-ring"></div>
       <div class="intro-hex-ring"></div>
@@ -62,15 +66,19 @@
     // --- progress counter ---
     animatePercent(document.getElementById('intro-pct'), 2200);
 
-    // --- dismiss after animation ---
+    // --- curtain-reveal dismiss ---
     const dismiss = () => {
-      overlay.classList.add('hide');
+      // 1) fade out content, open curtains
+      overlay.classList.add('reveal');
       document.body.style.overflow = '';
-      overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
-      // fallback
-      setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 1200);
+      // 2) after curtains finish sliding (0.9s), fade then remove
+      setTimeout(() => {
+        overlay.classList.add('gone');
+        setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 400);
+      }, 950);
     };
-    // wait for progress bar (1.5s delay + 2.2s anim) then dismiss
+
+    // progress bar: 1.5s delay + 2.2s fill = 3.7s, then 0.5s hold = 4.2s
     setTimeout(dismiss, 4200);
   }
 

@@ -13,13 +13,42 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 
-#wyx-intro.hide {
-  opacity: 0;
-  visibility: hidden;
+/* Split-curtain dismiss: two halves slide apart */
+#wyx-intro .intro-curtain-l,
+#wyx-intro .intro-curtain-r {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 50%;
+  background: #0a0a14;
+  z-index: 10;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   pointer-events: none;
+}
+#wyx-intro .intro-curtain-l { left: 0; }
+#wyx-intro .intro-curtain-r { right: 0; }
+
+#wyx-intro.reveal .intro-curtain-l { transform: translateX(-100%); }
+#wyx-intro.reveal .intro-curtain-r { transform: translateX(100%); }
+
+#wyx-intro.gone {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease 0.85s;
+}
+
+/* keep content above curtain during reveal */
+#wyx-intro .intro-content,
+#wyx-intro .intro-hex-ring,
+#wyx-intro .intro-corner,
+#wyx-intro #intro-canvas {
+  z-index: 5;
+}
+/* fade out content just before curtain opens */
+#wyx-intro.reveal .intro-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 /* ---------- Grid background ---------- */
@@ -271,4 +300,125 @@ footer,
 #aside-content {
   position: relative;
   z-index: 1;
+}
+
+/* =====================================================
+   Avatar Tech Glow Effects
+   ===================================================== */
+
+/* Wrapper around the butterfly theme avatar img */
+#aside-content .card-info-avatar,
+.card-info-avatar {
+  position: relative;
+}
+
+/* Pulsing cyan/purple border ring on avatar */
+#aside-content .card-info-avatar img,
+.card-info-avatar img {
+  border-radius: 50% !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 212, 255, 0.6),
+    0 0 12px rgba(0, 212, 255, 0.4),
+    0 0 24px rgba(123, 47, 247, 0.25);
+  animation: avatar-pulse 3s ease-in-out infinite;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+#aside-content .card-info-avatar img:hover,
+.card-info-avatar img:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 2px #00d4ff,
+    0 0 20px rgba(0, 212, 255, 0.7),
+    0 0 40px rgba(123, 47, 247, 0.5);
+}
+
+@keyframes avatar-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 2px rgba(0, 212, 255, 0.6),
+      0 0 12px rgba(0, 212, 255, 0.35),
+      0 0 24px rgba(123, 47, 247, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(123, 47, 247, 0.8),
+      0 0 20px rgba(0, 212, 255, 0.5),
+      0 0 36px rgba(123, 47, 247, 0.4);
+  }
+}
+
+/* Rotating arc around avatar */
+#aside-content .card-info-avatar::before,
+.card-info-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #00d4ff;
+  border-right-color: rgba(123, 47, 247, 0.5);
+  animation: avatar-spin 3s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Second opposite arc */
+#aside-content .card-info-avatar::after,
+.card-info-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -11px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-bottom-color: #7b2ff7;
+  border-left-color: rgba(0, 212, 255, 0.3);
+  animation: avatar-spin 5s linear infinite reverse;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes avatar-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =====================================================
+   Banner / Cover image tech overlay
+   ===================================================== */
+
+/* Add a subtle scanline & vignette overlay on top of the banner */
+#page-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px
+    ),
+    radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Glowing bottom edge on banner */
+#page-header::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00d4ff, #7b2ff7, transparent);
+  z-index: 3;
+  animation: banner-scan 5s ease-in-out infinite;
+  opacity: 0;
+}
+
+@keyframes banner-scan {
+  0%   { opacity: 0; transform: scaleX(0.3); }
+  20%  { opacity: 0.8; transform: scaleX(1); }
+  80%  { opacity: 0.8; }
+  100% { opacity: 0; transform: scaleX(0.3); }
 }

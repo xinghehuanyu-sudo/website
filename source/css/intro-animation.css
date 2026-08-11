@@ -51,14 +51,14 @@
   transition: opacity 0.3s ease;
 }
 
-/* ---------- Grid background ---------- */
+/* ---------- Grid background (dimmed) ---------- */
 #wyx-intro::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(70, 170, 200, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 170, 200, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
   animation: grid-scroll 6s linear infinite;
 }
@@ -68,21 +68,21 @@
   100% { background-position: 50px 50px; }
 }
 
-/* ---------- Scan line ---------- */
+/* ---------- Scan line (dimmed) ---------- */
 #wyx-intro::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #00d4ff, #7b2ff7, transparent);
+  background: linear-gradient(90deg, transparent, #4ab8d4, #6b3fbf, transparent);
   animation: scan 3s ease-in-out infinite;
-  opacity: 0.7;
+  opacity: 0.35;
 }
 
 @keyframes scan {
   0%   { top: -2px; opacity: 0; }
-  10%  { opacity: 0.7; }
-  90%  { opacity: 0.7; }
+  10%  { opacity: 0.35; }
+  90%  { opacity: 0.35; }
   100% { top: 100%; opacity: 0; }
 }
 
@@ -132,14 +132,14 @@
 .intro-logo-glow {
   position: absolute;
   inset: -20px;
-  background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.18) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(70, 180, 200, 0.08) 0%, transparent 70%);
   animation: pulse-glow 2.5s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50%       { opacity: 1;   transform: scale(1.08); }
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%       { opacity: 0.5;   transform: scale(1.05); }
 }
 
 /* ---------- Subtitle / typewriter ---------- */
@@ -216,7 +216,7 @@
 /* ---------- Hex decorations ---------- */
 .intro-hex-ring {
   position: absolute;
-  border: 1px solid rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(70, 180, 200, 0.08);
   border-radius: 50%;
   animation: spin-ring linear infinite;
 }
@@ -233,25 +233,25 @@
   margin: -240px 0 0 -240px;
   animation-duration: 20s;
   animation-direction: reverse;
-  border-color: rgba(123, 47, 247, 0.1);
+  border-color: rgba(100, 60, 180, 0.06);
 }
 .intro-hex-ring:nth-child(3) {
   width: 620px; height: 620px;
   top: 50%; left: 50%;
   margin: -310px 0 0 -310px;
   animation-duration: 30s;
-  border-color: rgba(0, 212, 255, 0.06);
+  border-color: rgba(70, 180, 200, 0.04);
 }
 
 .intro-hex-ring::after {
   content: '';
   position: absolute;
-  width: 8px; height: 8px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: #00d4ff;
-  top: -4px; left: 50%;
-  margin-left: -4px;
-  box-shadow: 0 0 10px #00d4ff;
+  background: #4ab8d4;
+  top: -3px; left: 50%;
+  margin-left: -3px;
+  box-shadow: 0 0 6px rgba(74, 184, 212, 0.5);
 }
 
 @keyframes spin-ring {
@@ -303,83 +303,53 @@ footer,
 }
 
 /* =====================================================
-   Avatar Tech Glow Effects
+   Avatar Tech Glow Effects (Static - No Animation)
    ===================================================== */
 
-/* Wrapper around the butterfly theme avatar img */
 #aside-content .card-info-avatar,
 .card-info-avatar {
   position: relative;
 }
 
-/* Pulsing cyan/purple border ring on avatar */
+/* Static subtle border, no animation */
 #aside-content .card-info-avatar img,
 .card-info-avatar img {
   border-radius: 50% !important;
   box-shadow:
-    0 0 0 2px rgba(0, 212, 255, 0.6),
-    0 0 12px rgba(0, 212, 255, 0.4),
-    0 0 24px rgba(123, 47, 247, 0.25);
-  animation: avatar-pulse 3s ease-in-out infinite;
+    0 0 0 2px rgba(70, 180, 220, 0.4),
+    0 0 8px rgba(70, 180, 220, 0.25);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 #aside-content .card-info-avatar img:hover,
 .card-info-avatar img:hover {
-  transform: scale(1.06);
+  transform: scale(1.04);
   box-shadow:
-    0 0 0 2px #00d4ff,
-    0 0 20px rgba(0, 212, 255, 0.7),
-    0 0 40px rgba(123, 47, 247, 0.5);
+    0 0 0 2px rgba(70, 180, 220, 0.6),
+    0 0 12px rgba(70, 180, 220, 0.4);
 }
 
-@keyframes avatar-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 0 2px rgba(0, 212, 255, 0.6),
-      0 0 12px rgba(0, 212, 255, 0.35),
-      0 0 24px rgba(123, 47, 247, 0.2);
-  }
-  50% {
-    box-shadow:
-      0 0 0 2px rgba(123, 47, 247, 0.8),
-      0 0 20px rgba(0, 212, 255, 0.5),
-      0 0 36px rgba(123, 47, 247, 0.4);
-  }
-}
-
-/* Rotating arc around avatar */
+/* Remove rotating arcs - no pseudo-element animation */
 #aside-content .card-info-avatar::before,
 .card-info-avatar::before {
   content: '';
   position: absolute;
-  inset: -6px;
+  inset: -5px;
   border-radius: 50%;
-  border: 2px solid transparent;
-  border-top-color: #00d4ff;
-  border-right-color: rgba(123, 47, 247, 0.5);
-  animation: avatar-spin 3s linear infinite;
+  border: 1px solid rgba(70, 180, 220, 0.2);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Second opposite arc */
 #aside-content .card-info-avatar::after,
 .card-info-avatar::after {
   content: '';
   position: absolute;
-  inset: -11px;
+  inset: -9px;
   border-radius: 50%;
-  border: 1.5px solid transparent;
-  border-bottom-color: #7b2ff7;
-  border-left-color: rgba(0, 212, 255, 0.3);
-  animation: avatar-spin 5s linear infinite reverse;
+  border: 0.5px solid rgba(100, 60, 180, 0.12);
   pointer-events: none;
   z-index: 2;
-}
-
-@keyframes avatar-spin {
-  to { transform: rotate(360deg); }
 }
 
 /* =====================================================
@@ -396,29 +366,29 @@ footer,
       0deg,
       transparent,
       transparent 2px,
-      rgba(0, 0, 0, 0.03) 2px,
-      rgba(0, 0, 0, 0.03) 4px
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px
     ),
-    radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
+    radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.2) 100%);
   pointer-events: none;
   z-index: 2;
 }
 
-/* Glowing bottom edge on banner */
+/* Subtle bottom edge glow */
 #page-header::before {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #00d4ff, #7b2ff7, transparent);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(70,180,220,0.4), rgba(100,60,180,0.3), transparent);
   z-index: 3;
-  animation: banner-scan 5s ease-in-out infinite;
+  animation: banner-scan 6s ease-in-out infinite;
   opacity: 0;
 }
 
 @keyframes banner-scan {
-  0%   { opacity: 0; transform: scaleX(0.3); }
-  20%  { opacity: 0.8; transform: scaleX(1); }
-  80%  { opacity: 0.8; }
-  100% { opacity: 0; transform: scaleX(0.3); }
+  0%   { opacity: 0; transform: scaleX(0.2); }
+  20%  { opacity: 0.4; transform: scaleX(1); }
+  80%  { opacity: 0.4; }
+  100% { opacity: 0; transform: scaleX(0.2); }
 }

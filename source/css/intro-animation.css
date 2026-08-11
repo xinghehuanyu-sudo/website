@@ -1,13 +1,17 @@
 /* =====================================================
    WYX LAB - Intro Animation & Particle Effects
+   Bright & Clean Edition (AnZhiYu-inspired)
    ===================================================== */
 
 /* ---------- Intro Overlay ---------- */
 #wyx-intro {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 99999;
-  background: #0a0a14;
+  background: linear-gradient(160deg, #dcefff 0%, #f2f9ff 45%, #ffffff 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +25,7 @@
   position: absolute;
   top: 0; bottom: 0;
   width: 50%;
-  background: #0a0a14;
+  background: linear-gradient(160deg, #dcefff 0%, #ffffff 100%);
   z-index: 10;
   transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   pointer-events: none;
@@ -57,8 +61,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(70, 170, 200, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(70, 170, 200, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(73, 177, 245, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(73, 177, 245, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   animation: grid-scroll 6s linear infinite;
 }
@@ -74,15 +78,15 @@
   position: absolute;
   left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #4ab8d4, #6b3fbf, transparent);
+  background: linear-gradient(90deg, transparent, #49b1f5, #8ec9ff, transparent);
   animation: scan 3s ease-in-out infinite;
-  opacity: 0.35;
+  opacity: 0.25;
 }
 
 @keyframes scan {
   0%   { top: -2px; opacity: 0; }
-  10%  { opacity: 0.35; }
-  90%  { opacity: 0.35; }
+  10%  { opacity: 0.25; }
+  90%  { opacity: 0.25; }
   100% { top: 100%; opacity: 0; }
 }
 
@@ -107,10 +111,10 @@
 /* ---------- Logo / title ---------- */
 .intro-logo {
   font-size: clamp(2.4rem, 8vw, 5rem);
-  font-weight: 900;
+  font-weight: 800;
   font-family: 'Segoe UI', 'PingFang SC', sans-serif;
   letter-spacing: 0.18em;
-  color: #fff;
+  color: #1c3d5a;
   position: relative;
 }
 
@@ -122,7 +126,7 @@
 }
 
 .intro-logo .logo-text:nth-child(1) { animation-delay: 0.3s; }
-.intro-logo .logo-text:nth-child(2) { animation-delay: 0.5s; color: #00d4ff; }
+.intro-logo .logo-text:nth-child(2) { animation-delay: 0.5s; color: #49b1f5; }
 .intro-logo .logo-text:nth-child(3) { animation-delay: 0.7s; }
 
 @keyframes logo-rise {
@@ -132,7 +136,7 @@
 .intro-logo-glow {
   position: absolute;
   inset: -20px;
-  background: radial-gradient(ellipse at center, rgba(70, 180, 200, 0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(73, 177, 245, 0.12) 0%, transparent 70%);
   animation: pulse-glow 2.5s ease-in-out infinite;
   pointer-events: none;
 }
@@ -145,10 +149,10 @@
 /* ---------- Subtitle / typewriter ---------- */
 .intro-subtitle {
   font-size: clamp(0.85rem, 2.5vw, 1.1rem);
-  color: rgba(255,255,255,0.55);
+  color: #7fa8cc;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  font-family: 'Courier New', monospace;
+  font-family: 'Segoe UI', 'PingFang SC', sans-serif;
   opacity: 0;
   animation: fade-in 0.6s ease forwards 1.2s;
 }
@@ -157,7 +161,7 @@
   display: inline-block;
   width: 2px;
   height: 1em;
-  background: #00d4ff;
+  background: #49b1f5;
   margin-left: 3px;
   vertical-align: middle;
   animation: blink 0.8s step-end infinite;
@@ -183,8 +187,8 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.35);
-  font-family: 'Courier New', monospace;
+  color: #9fbcd6;
+  font-family: 'Consolas', 'Courier New', monospace;
   letter-spacing: 0.1em;
   margin-bottom: 8px;
 }
@@ -192,7 +196,7 @@
 .intro-progress-track {
   width: 100%;
   height: 3px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(73, 177, 245, 0.15);
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -202,7 +206,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #7b2ff7, #00d4ff);
+  background: linear-gradient(90deg, #2f8fe0, #49b1f5, #8ec9ff);
   border-radius: 4px;
   transform: scaleX(0);
   transform-origin: left;
@@ -216,31 +220,31 @@
 /* ---------- Hex decorations ---------- */
 .intro-hex-ring {
   position: absolute;
-  border: 1px solid rgba(70, 180, 200, 0.08);
+  border: 1px solid rgba(73, 177, 245, 0.15);
   border-radius: 50%;
   animation: spin-ring linear infinite;
 }
 
-.intro-hex-ring:nth-child(1) {
+.intro-ring-1 {
   width: 340px; height: 340px;
   top: 50%; left: 50%;
   margin: -170px 0 0 -170px;
   animation-duration: 12s;
 }
-.intro-hex-ring:nth-child(2) {
+.intro-ring-2 {
   width: 480px; height: 480px;
   top: 50%; left: 50%;
   margin: -240px 0 0 -240px;
   animation-duration: 20s;
   animation-direction: reverse;
-  border-color: rgba(100, 60, 180, 0.06);
+  border-color: rgba(143, 201, 255, 0.18);
 }
-.intro-hex-ring:nth-child(3) {
+.intro-ring-3 {
   width: 620px; height: 620px;
   top: 50%; left: 50%;
   margin: -310px 0 0 -310px;
   animation-duration: 30s;
-  border-color: rgba(70, 180, 200, 0.04);
+  border-color: rgba(73, 177, 245, 0.1);
 }
 
 .intro-hex-ring::after {
@@ -248,10 +252,10 @@
   position: absolute;
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: #4ab8d4;
+  background: #49b1f5;
   top: -3px; left: 50%;
   margin-left: -3px;
-  box-shadow: 0 0 6px rgba(74, 184, 212, 0.5);
+  box-shadow: 0 0 6px rgba(73, 177, 245, 0.5);
 }
 
 @keyframes spin-ring {
@@ -262,13 +266,13 @@
 .intro-corner {
   position: absolute;
   width: 60px; height: 60px;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 .intro-corner::before,
 .intro-corner::after {
   content: '';
   position: absolute;
-  background: #00d4ff;
+  background: #49b1f5;
 }
 .intro-corner::before { width: 2px; height: 100%; }
 .intro-corner::after  { width: 100%; height: 2px; }
@@ -287,7 +291,7 @@
   width: 100%; height: 100%;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.45;
+  opacity: 0.5;
 }
 
 /* ensure main content sits above particles */
@@ -296,14 +300,13 @@
 .content-inner,
 header,
 footer,
-#rightside,
 #aside-content {
   position: relative;
   z-index: 1;
 }
 
 /* =====================================================
-   Avatar Tech Glow Effects (Static - No Animation)
+   Avatar Glow Effects (Static - No Animation)
    ===================================================== */
 
 #aside-content .card-info-avatar,
@@ -316,8 +319,8 @@ footer,
 .card-info-avatar img {
   border-radius: 50% !important;
   box-shadow:
-    0 0 0 2px rgba(70, 180, 220, 0.4),
-    0 0 8px rgba(70, 180, 220, 0.25);
+    0 0 0 2px rgba(73, 177, 245, 0.35),
+    0 0 8px rgba(73, 177, 245, 0.2);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
@@ -325,8 +328,8 @@ footer,
 .card-info-avatar img:hover {
   transform: scale(1.04);
   box-shadow:
-    0 0 0 2px rgba(70, 180, 220, 0.6),
-    0 0 12px rgba(70, 180, 220, 0.4);
+    0 0 0 2px rgba(73, 177, 245, 0.55),
+    0 0 12px rgba(73, 177, 245, 0.35);
 }
 
 /* Remove rotating arcs - no pseudo-element animation */
@@ -336,7 +339,7 @@ footer,
   position: absolute;
   inset: -5px;
   border-radius: 50%;
-  border: 1px solid rgba(70, 180, 220, 0.2);
+  border: 1px solid rgba(73, 177, 245, 0.25);
   pointer-events: none;
   z-index: 2;
 }
@@ -347,16 +350,49 @@ footer,
   position: absolute;
   inset: -9px;
   border-radius: 50%;
-  border: 0.5px solid rgba(100, 60, 180, 0.12);
+  border: 0.5px solid rgba(143, 201, 255, 0.2);
   pointer-events: none;
   z-index: 2;
 }
 
 /* =====================================================
-   Banner / Cover image tech overlay
+   Banner / Cover image light overlay
    ===================================================== */
 
-/* Add a subtle scanline & vignette overlay on top of the banner */
+/* Bright banner: dark text for readability */
+#page-header #nav .site-name,
+#page-header #nav a,
+#page-header #nav span.site-page,
+#page-header .nav-page-title {
+  color: #1c3d5a;
+  text-shadow: none;
+}
+
+#page-header #site-title,
+#page-header.post-bg .post-title {
+  color: #1c3d5a;
+  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.7);
+}
+
+#page-header #site-subtitle {
+  color: #4a7a9e;
+  text-shadow: none;
+}
+
+#page-header #scroll-down .scroll-down-effects {
+  color: #49b1f5;
+  text-shadow: none;
+}
+
+#page-header.post-bg #post-meta,
+#page-header.post-bg #post-meta a,
+#page-header.post-bg #post-meta i,
+#page-header.post-bg #post-meta time,
+#page-header.post-bg #post-meta span {
+  color: #3d6b93;
+}
+
+/* Add a subtle scanline & light vignette on top of the banner */
 #page-header::after {
   content: '';
   position: absolute;
@@ -366,10 +402,10 @@ footer,
       0deg,
       transparent,
       transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
+      rgba(255, 255, 255, 0.03) 2px,
+      rgba(255, 255, 255, 0.03) 4px
     ),
-    radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.2) 100%);
+    radial-gradient(ellipse at center, transparent 55%, rgba(28, 61, 90, 0.12) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -380,7 +416,7 @@ footer,
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(70,180,220,0.4), rgba(100,60,180,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(73,177,245,0.6), rgba(143,201,255,0.5), transparent);
   z-index: 3;
   animation: banner-scan 6s ease-in-out infinite;
   opacity: 0;
@@ -391,4 +427,64 @@ footer,
   20%  { opacity: 0.4; transform: scaleX(1); }
   80%  { opacity: 0.4; }
   100% { opacity: 0; transform: scaleX(0.2); }
+}
+
+/* =====================================================
+   Mobile Optimizations (max-width 768px)
+   ===================================================== */
+@media screen and (max-width: 768px) {
+  /* Avoid background-attachment: fixed jank on Android / iOS */
+  #page-header {
+    background-attachment: scroll !important;
+  }
+
+  /* URL-bar aware banner height (falls back to 100vh) */
+  #page-header.full_page {
+    height: 100vh;
+    height: 100svh;
+  }
+
+  /* Slightly smaller site title on small screens */
+  #site-info #site-title,
+  #page-site-info #site-title {
+    font-size: 1.55em;
+  }
+
+  /* Solid nav bar: backdrop-filter can glitch over the fixed canvas on iOS */
+  #page-header #nav,
+  #page-header.nav-fixed #nav {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  /* Intro: shrink decorations so nothing clips on narrow screens */
+  .intro-ring-1 {
+    width: 240px; height: 240px;
+    margin: -120px 0 0 -120px;
+  }
+  .intro-ring-2 {
+    width: 340px; height: 340px;
+    margin: -170px 0 0 -170px;
+  }
+  .intro-ring-3 {
+    width: 440px; height: 440px;
+    margin: -220px 0 0 -220px;
+  }
+
+  .intro-logo {
+    letter-spacing: 0.1em;
+  }
+
+  .intro-content {
+    gap: 16px;
+  }
+
+  .intro-corner {
+    width: 40px; height: 40px;
+  }
+  .intro-corner-tl { top: 20px; left: 20px; }
+  .intro-corner-tr { top: 20px; right: 20px; }
+  .intro-corner-bl { bottom: 20px; left: 20px; }
+  .intro-corner-br { bottom: 20px; right: 20px; }
 }

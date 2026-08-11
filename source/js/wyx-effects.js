@@ -10,12 +10,21 @@
   'use strict';
 
   const rnd = (min, max) => Math.random() * (max - min) + min;
+  const isMobile = () =>
+    (navigator.maxTouchPoints > 0 || 'ontouchstart' in window) &&
+    window.innerWidth <= 768;
+  const prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ============================================================
      1. INTRO OVERLAY
   ============================================================ */
   function buildIntro() {
     if (document.getElementById('wyx-intro')) return;
+    /* Respect "reduce motion" system setting: skip the intro */
+    if (prefersReducedMotion) return;
+
+    const mobile = isMobile();
 
     const overlay = document.createElement('div');
     overlay.id = 'wyx-intro';
@@ -25,9 +34,9 @@
       <div class="intro-curtain-l"></div>
       <div class="intro-curtain-r"></div>
 
-      <div class="intro-hex-ring"></div>
-      <div class="intro-hex-ring"></div>
-      <div class="intro-hex-ring"></div>
+      <div class="intro-hex-ring intro-ring-1"></div>
+      <div class="intro-hex-ring intro-ring-2"></div>
+      <div class="intro-hex-ring intro-ring-3"></div>
 
       <div class="intro-corner intro-corner-tl"></div>
       <div class="intro-corner intro-corner-tr"></div>
@@ -49,52 +58,74 @@
       </div>
     `;
     document.body.appendChild(overlay);
+
+    /* Lock page scroll during the intro (html + body for iOS) */
+    const html = document.documentElement;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = document.body.style.overflow;
+    html.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+    /* iOS: prevent touch scroll on the overlay itself */
+    overlay.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
     initIntroBurst(document.getElementById('intro-canvas'));
 
     const phrases = ['记录学习和生活的点滴', 'Personal Lab & Blog', 'wyxlab.top'];
     typeWriter(document.getElementById('intro-typed'), phrases[Math.floor(rnd(0, phrases.length))]);
-    animatePercent(document.getElementById('intro-pct'), 2200);
+    animatePercent(document.getElementById('intro-pct'), mobile ? 1400 : 2200);
 
+    let dismissed = false;
     const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
       overlay.classList.add('reveal');
-      document.body.style.overflow = '';
+      html.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
       setTimeout(() => {
         overlay.classList.add('gone');
         setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 400);
       }, 950);
     };
-    setTimeout(dismiss, 4200);
+    /* Tap anywhere to skip */
+    overlay.addEventListener('click', dismiss);
+    /* Mobile: shorter auto-dismiss */
+    setTimeout(dismiss, mobile ? 2600 : 4200);
   }
 
   /* Dimmed particle burst — center-out, low opacity */
   function initIntroBurst(canvas) {
     const ctx = canvas.getContext('2d');
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const mobile = isMobile();
 
-    const cx = canvas.width / 2, cy = canvas.height / 2;
-    const particles = Array.from({ length: 80 }, () => ({
+    let W, H, cx, cy, particles, frame;
+    const COUNT = mobile ? 30 : 80;
+
+    const resize = () => {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      cx = W / 2; cy = H / 2;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', () => setTimeout(resize, 200));
+
+    const spawn = () => ({
       x: cx, y: cy,
       vx: rnd(-2, 2), vy: rnd(-2, 2),
       r: rnd(0.8, 1.8),
       alpha: rnd(0.15, 0.45),   // much dimmer
-      color: Math.random() > 0.5 ? '#4ab8d4' : '#6b3fbf',  // desaturated
+      color: Math.random() > 0.5 ? '#49b1f5' : '#8ec9ff',  // soft blues
       life: rnd(50, 140)
-    }));
+    });
 
-    let frame;
+    particles = Array.from({ length: COUNT }, spawn);
+
     const tick = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, W, H);
       for (const p of particles) {
         p.x += p.vx; p.y += p.vy;
         p.vx *= 0.985; p.vy *= 0.985;
-        if (--p.life < 0) {
-          p.x = cx; p.y = cy;
-          p.vx = rnd(-2, 2); p.vy = rnd(-2, 2);
-          p.life = rnd(50, 140);
-        }
+        if (--p.life < 0) Object.assign(p, spawn());
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
@@ -145,33 +176,38 @@
   ============================================================ */
   function initParticles() {
     if (document.getElementById('particle-canvas')) return;
+    /* Respect "reduce motion" system setting: skip particles */
+    if (prefersReducedMotion) return;
 
     const canvas = document.createElement('canvas');
     canvas.id = 'particle-canvas';
     document.body.insertBefore(canvas, document.body.firstChild);
 
     const ctx = canvas.getContext('2d');
+    const mobile = isMobile();
     let W, H;
     const mouse = { x: -9999, y: -9999, active: false };
 
     /* Tune these to taste */
     const CFG = {
-      count:       Math.min(Math.floor(window.innerWidth / 10), 110),
+      count:       mobile
+        ? Math.min(Math.floor(window.innerWidth / 22), 40)
+        : Math.min(Math.floor(window.innerWidth / 10), 110),
       baseSpeed:   0.38,
       maxSpeed:    2.2,
-      connectDist: 120,        // max line distance
-      mouseRadius: 180,        // influence zone
+      connectDist: mobile ? 80 : 120,        // max line distance
+      mouseRadius: mobile ? 0 : 180,         // no cursor interaction on touch
       gravity:     0.018,      // pull strength toward cursor
       scatter:     40,         // inner radius where scatter takes over
       scatterForce:0.06,
       /* colors as [r,g,b] */
-      dotColor:    [80, 180, 220],   // soft cyan
-      lineColor:   [110, 70, 200],   // soft purple
+      dotColor:    [73, 177, 245],   // butterfly blue
+      lineColor:   [143, 201, 255],  // light sky blue
       /* opacity range: dim far from mouse, brighter near */
-      dotOpacityMin:  0.20,
-      dotOpacityMax:  0.65,
-      lineOpacityMin: 0.04,
-      lineOpacityMax: 0.30,
+      dotOpacityMin:  0.22,
+      dotOpacityMax:  0.60,
+      lineOpacityMin: 0.05,
+      lineOpacityMax: 0.28,
     };
 
     function isDark() {
@@ -184,6 +220,7 @@
     }
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', () => setTimeout(resize, 200));
 
     const dots = Array.from({ length: CFG.count }, () => ({
       x:  rnd(0, W),
@@ -215,7 +252,7 @@
 
       ctx.clearRect(0, 0, W, H);
 
-      const themeMult = isDark() ? 1.0 : 0.55;
+      const themeMult = isDark() ? 1.0 : 0.8;
 
       for (let i = 0; i < dots.length; i++) {
         const d = dots[i];

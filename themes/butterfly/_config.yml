@@ -18,10 +18,9 @@ nav:
   fixed: true
 
 menu:
-  # Home: / || fas fa-home
-  # List||fas fa-list:
-  #   Music: /music/ || fas fa-music
-  #   Movie: /movies/ || fas fa-video
+  主页: / || fas fa-home
+  文章: /archives/ || fas fa-book
+  搜索: /search/ || fas fa-search
 
 # --------------------------------------
 # Code Blocks Settings
@@ -476,9 +475,8 @@ math:
 
 search:
   # Choose: algolia_search / local_search / docsearch
-  # leave it empty if you don't need search
-  use:
-  placeholder:
+  use: local_search
+  placeholder: 搜索文章...
 
   # Algolia Search
   algolia_search:
@@ -488,7 +486,7 @@ search:
   # Local Search
   local_search:
     # Preload the search data when the page loads.
-    preload: false
+    preload: true
     # Show top n results per article, show all results by setting to -1
     top_n_per_article: 1
     # Unescape html strings to the readable one.
@@ -532,19 +530,11 @@ share:
 # --------------------------------------
 
 comments:
-  # Up to two comments system, the first will be shown as default
-  # Leave it empty if you don't need comments
-  # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
-  # Format of two comments system : Disqus,Waline
+  # 暂时禁用评论系统
   use:
-  # Display the comment name next to the button
   text: true
-  # Lazyload: The comment system will be load when comment element enters the browser's viewport.
-  # If you set it to true, the comment count will be invalid
   lazyload: false
-  # Display comment count in post's top_img
   count: false
-  # Display comment count in Home Page
   card_post_count: false
 
 # Disqus
@@ -633,9 +623,9 @@ twikoo:
 # Giscus
 # https://giscus.app/
 giscus:
-  repo:
-  repo_id:
-  category_id:
+  repo: xinghehuanyu-sudo/wyxlab-blog-comments
+  repo_id: 请填写repo_id
+  category_id: 请填写category_id
   light_theme: light
   dark_theme: dark
   js:
@@ -808,8 +798,8 @@ preloader:
   # pace theme (see https://codebyzach.github.io/pace/)
   pace_css_url:
 
-# Page Transition
-enter_transitions: true
+# Page Transition (disabled - using custom intro animation)
+enter_transitions: false
 
 # Default display mode - light (default) / dark
 display_mode: light

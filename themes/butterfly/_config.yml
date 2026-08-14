@@ -20,7 +20,6 @@ nav:
 menu:
   主页: / || fas fa-home
   文章: /archives/ || fas fa-book
-  搜索: /search/ || fas fa-search
 
 # --------------------------------------
 # Code Blocks Settings

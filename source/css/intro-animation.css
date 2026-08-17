@@ -498,12 +498,9 @@ body {
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* Keep navigation in the header flow: it never floats over sidebar cards. */
-#page-header.nav-fixed #nav,
-#page-header.nav-visible:not(.fixed) #nav {
-  position: absolute;
-  top: 0;
-  transform: none;
+/* The header is a higher stacking context than content cards and side widgets. */
+#page-header {
+  z-index: 300;
 }
 
 #page-header #nav .site-name {
@@ -586,21 +583,26 @@ body {
 }
 
 /* Maintain contrast when the built-in dark theme is enabled. */
-[data-theme='dark'] body {
+html[data-theme='dark'],
+html[data-theme='dark'] body {
   background:
     radial-gradient(circle at 15% 5%, rgba(49, 128, 183, 0.2), transparent 34%),
     radial-gradient(circle at 85% 80%, rgba(43, 113, 165, 0.14), transparent 30%),
-    #0b1420;
+    #0b1420 !important;
 }
 
-[data-theme='dark'] #web_bg {
+html[data-theme='dark'] #web_bg {
   background:
     linear-gradient(135deg, rgba(8, 19, 32, 0.94), rgba(13, 31, 47, 0.9)),
-    radial-gradient(circle at 80% 20%, rgba(73, 177, 245, 0.12), transparent 28%);
+    radial-gradient(circle at 80% 20%, rgba(73, 177, 245, 0.12), transparent 28%) !important;
 }
 
-[data-theme='dark'] #page-header::after {
-  background: linear-gradient(120deg, rgba(5, 16, 29, 0.5), rgba(8, 28, 45, 0.66));
+html[data-theme='dark'] #web_bg::before {
+  background: linear-gradient(135deg, rgba(5, 14, 25, 0.38), rgba(9, 31, 49, 0.52)) !important;
+}
+
+html[data-theme='dark'] #page-header::after {
+  background: linear-gradient(120deg, rgba(5, 16, 29, 0.62), rgba(8, 28, 45, 0.74));
 }
 
 [data-theme='dark'] #page-header #site-title,

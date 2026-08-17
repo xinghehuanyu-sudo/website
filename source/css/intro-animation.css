@@ -498,6 +498,14 @@ body {
   -webkit-backdrop-filter: blur(14px);
 }
 
+/* Keep navigation in the header flow: it never floats over sidebar cards. */
+#page-header.nav-fixed #nav,
+#page-header.nav-visible:not(.fixed) #nav {
+  position: absolute;
+  top: 0;
+  transform: none;
+}
+
 #page-header #nav .site-name {
   letter-spacing: 0.04em;
   font-weight: 700;
@@ -579,13 +587,48 @@ body {
 
 /* Maintain contrast when the built-in dark theme is enabled. */
 [data-theme='dark'] body {
-  background: var(--global-bg);
+  background:
+    radial-gradient(circle at 15% 5%, rgba(49, 128, 183, 0.2), transparent 34%),
+    radial-gradient(circle at 85% 80%, rgba(43, 113, 165, 0.14), transparent 30%),
+    #0b1420;
+}
+
+[data-theme='dark'] #web_bg {
+  background:
+    linear-gradient(135deg, rgba(8, 19, 32, 0.94), rgba(13, 31, 47, 0.9)),
+    radial-gradient(circle at 80% 20%, rgba(73, 177, 245, 0.12), transparent 28%);
+}
+
+[data-theme='dark'] #page-header::after {
+  background: linear-gradient(120deg, rgba(5, 16, 29, 0.5), rgba(8, 28, 45, 0.66));
+}
+
+[data-theme='dark'] #page-header #site-title,
+[data-theme='dark'] #page-header.post-bg .post-title {
+  color: #f3f8fc;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme='dark'] #page-header #site-subtitle,
+[data-theme='dark'] #page-header.post-bg #post-meta,
+[data-theme='dark'] #page-header.post-bg #post-meta a,
+[data-theme='dark'] #page-header.post-bg #post-meta i,
+[data-theme='dark'] #page-header.post-bg #post-meta time,
+[data-theme='dark'] #page-header.post-bg #post-meta span {
+  color: rgba(222, 239, 252, 0.82);
 }
 
 [data-theme='dark'] #page-header #nav,
 [data-theme='dark'] #page-header.nav-fixed #nav {
   background: rgba(18, 18, 18, 0.82);
   border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme='dark'] #page-header #nav .site-name,
+[data-theme='dark'] #page-header #nav a,
+[data-theme='dark'] #page-header #nav span.site-page,
+[data-theme='dark'] #page-header .nav-page-title {
+  color: rgba(239, 247, 255, 0.9);
 }
 
 [data-theme='dark'] #recent-posts .recent-post-item,

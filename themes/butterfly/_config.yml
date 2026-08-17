@@ -61,10 +61,10 @@ avatar:
 disable_top_img: false
 
 # If the banner of page not setting, it will show the default_top_img
-default_top_img: /img/cover-tech.svg
+default_top_img: /img/cover-post.png
 
 # The banner image of index page
-index_img: /img/cover-tech.svg
+index_img: /img/cover-home.png
 
 # The banner image of archive page
 archive_img:

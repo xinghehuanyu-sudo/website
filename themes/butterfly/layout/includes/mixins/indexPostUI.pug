@@ -4,7 +4,7 @@ mixin indexPostUI()
   #recent-posts.recent-posts.nc(class=masonryLayoutClass)
     .recent-post-items
       each article, index in page.posts.data
-        .recent-post-item
+        .recent-post-item(data-url=url_for(article.link || article.path) role='link' tabindex='0' aria-label=article.title || _p('no_title'))
           - const link = article.link || article.path
           - const title = article.title || _p('no_title')
           - const leftOrRight = indexLayout === 3 ? (index % 2 === 0 ? 'left' : 'right') : (indexLayout === 2 ? 'right' : '')

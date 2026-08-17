@@ -355,11 +355,64 @@
   }
 
   /* ============================================================
+     3. FALLING PARTICLES
+     Quiet, slow-moving accents that sit behind content.
+  ============================================================ */
+  function initFallingParticles() {
+    if (document.getElementById('falling-particles') || prefersReducedMotion) return;
+
+    const layer = document.createElement('div');
+    layer.id = 'falling-particles';
+    layer.setAttribute('aria-hidden', 'true');
+
+    const count = isMobile() ? 10 : 18;
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('i');
+      const size = rnd(2, 5);
+      const duration = rnd(14, 25);
+      particle.style.cssText = `
+        left: ${rnd(0, 100)}%;
+        width: ${size}px;
+        height: ${size}px;
+        opacity: ${rnd(0.18, 0.42)};
+        animation-duration: ${duration}s;
+        animation-delay: -${rnd(0, duration)}s;
+      `;
+      layer.appendChild(particle);
+    }
+
+    document.body.insertBefore(layer, document.body.firstChild);
+  }
+
+  function initPostCardLinks() {
+    document.querySelectorAll('#recent-posts .recent-post-item[data-url]').forEach(card => {
+      if (card.dataset.cardLinkReady) return;
+      card.dataset.cardLinkReady = 'true';
+
+      const openPost = event => {
+        if (event.target.closest('a, button, input, textarea, select, [role="button"]')) return;
+        if (window.getSelection().toString()) return;
+        window.location.href = card.dataset.url;
+      };
+
+      card.addEventListener('click', openPost);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          window.location.href = card.dataset.url;
+        }
+      });
+    });
+  }
+
+  /* ============================================================
      BOOT
   ============================================================ */
   function boot() {
     buildIntro();
     initParticles();
+    initFallingParticles();
+    initPostCardLinks();
   }
 
   if (document.readyState === 'loading') {
@@ -370,6 +423,7 @@
 
   document.addEventListener('pjax:complete', () => {
     if (!document.getElementById('particle-canvas')) initParticles();
+    initPostCardLinks();
   });
 
 })();

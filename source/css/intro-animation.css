@@ -294,6 +294,36 @@
   opacity: 0.5;
 }
 
+/* Low-contrast falling particles: decorative only, never block interaction. */
+#falling-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#falling-particles i {
+  position: absolute;
+  top: -24px;
+  display: block;
+  border-radius: 50%;
+  background: #76bff0;
+  box-shadow: 0 0 8px rgba(118, 191, 240, 0.16);
+  animation-name: particle-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes particle-fall {
+  from {
+    transform: translate3d(0, -24px, 0);
+  }
+  to {
+    transform: translate3d(10vw, 105vh, 0);
+  }
+}
+
 /* ensure main content sits above particles */
 #web-main,
 #page,
@@ -431,6 +461,12 @@ footer,
   border: 1px solid rgba(73, 177, 245, 0.22);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(28, 61, 90, 0.08);
+  cursor: pointer;
+}
+
+#recent-posts .recent-post-item:focus-visible {
+  outline: 3px solid rgba(73, 177, 245, 0.45);
+  outline-offset: 3px;
 }
 
 #recent-posts .recent-post-item:hover {
@@ -454,6 +490,7 @@ body {
 /* A restrained navigation surface makes the page feel lighter. */
 #page-header #nav,
 #page-header.nav-fixed #nav {
+  z-index: 200;
   background: rgba(255, 255, 255, 0.82);
   border-bottom: 1px solid rgba(28, 61, 90, 0.08);
   box-shadow: 0 4px 18px rgba(28, 61, 90, 0.06);
@@ -531,6 +568,15 @@ body {
   box-shadow: none;
 }
 
+/* Leave a clear buffer for the fixed navigation above sticky widgets. */
+@media screen and (min-width: 900px) {
+  #aside-content .sticky_layout,
+  #page-header.nav-visible:not(.fixed) + .layout > #aside-content .sticky_layout,
+  #page-header.fixed + .layout > #aside-content .sticky_layout {
+    top: 82px;
+  }
+}
+
 /* Maintain contrast when the built-in dark theme is enabled. */
 [data-theme='dark'] body {
   background: var(--global-bg);
@@ -591,6 +637,10 @@ body {
 
   #particle-canvas {
     opacity: 0.1;
+  }
+
+  #falling-particles i {
+    opacity: 0.22 !important;
   }
 
   #recent-posts .recent-post-item,

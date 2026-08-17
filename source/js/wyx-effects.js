@@ -15,14 +15,32 @@
     window.innerWidth <= 768;
   const prefersReducedMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const introSeenKey = 'wyx-intro-seen';
+
+  function hasSeenIntro() {
+    try {
+      return window.localStorage.getItem(introSeenKey) === 'true';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function markIntroSeen() {
+    try {
+      window.localStorage.setItem(introSeenKey, 'true');
+    } catch (_) {
+      // Storage can be disabled; in that case, keep the animation functional.
+    }
+  }
 
   /* ============================================================
      1. INTRO OVERLAY
   ============================================================ */
   function buildIntro() {
     if (document.getElementById('wyx-intro')) return;
-    /* Respect "reduce motion" system setting: skip the intro */
-    if (prefersReducedMotion) return;
+    /* Only play once per browser; always respect reduced-motion preferences. */
+    if (prefersReducedMotion || hasSeenIntro()) return;
+    markIntroSeen();
 
     const mobile = isMobile();
 

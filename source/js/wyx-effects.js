@@ -16,6 +16,41 @@
   const prefersReducedMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const introSeenKey = 'wyx-intro-seen';
+  let themeCoverObserver;
+
+  /**
+   * Keep the hero artwork in sync with Butterfly's data-theme attribute.
+   * Butterfly writes the light cover as an inline style, so this also writes
+   * the selected image inline with important priority for consistent results.
+   */
+  function syncThemeCover() {
+    const header = document.getElementById('page-header');
+    if (!header) return;
+
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    let image = '';
+
+    if (header.classList.contains('full_page')) {
+      image = dark ? '/img/cover-home-dark.png?v=20260819-theme-sync' : '/img/cover-home.png?v=20260819-theme-sync';
+    } else if (header.classList.contains('post-bg')) {
+      image = dark ? '/img/cover-post-dark.png?v=20260819-theme-sync' : '/img/cover-post.png?v=20260819-theme-sync';
+    }
+
+    if (image) {
+      header.style.setProperty('background-image', `url("${image}")`, 'important');
+    }
+  }
+
+  function initThemeCoverSync() {
+    syncThemeCover();
+
+    if (themeCoverObserver) return;
+    themeCoverObserver = new MutationObserver(syncThemeCover);
+    themeCoverObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
 
   function hasSeenIntro() {
     try {
@@ -409,6 +444,7 @@
      BOOT
   ============================================================ */
   function boot() {
+    initThemeCoverSync();
     buildIntro();
     initParticles();
     initFallingParticles();
@@ -422,6 +458,7 @@
   }
 
   document.addEventListener('pjax:complete', () => {
+    syncThemeCover();
     if (!document.getElementById('particle-canvas')) initParticles();
     initPostCardLinks();
   });

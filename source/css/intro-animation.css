@@ -602,13 +602,21 @@ html[data-theme='dark'] #web_bg::before {
 }
 
 html[data-theme='dark'] #page-header::after {
-  background: linear-gradient(120deg, rgba(4, 14, 25, 0.7), rgba(7, 29, 47, 0.82));
+  background: linear-gradient(120deg, rgba(3, 12, 22, 0.16), rgba(4, 23, 38, 0.3));
 }
 
-/* Darken the light-mode hero artwork itself, while keeping its geometry visible. */
+/* Use dedicated artwork in dark mode; avoid muddying light covers with filters. */
 html[data-theme='dark'] #page-header {
-  background-color: #0a2135;
-  background-blend-mode: multiply;
+  background-color: #07131f;
+  background-blend-mode: normal;
+}
+
+html[data-theme='dark'] #page-header.full_page {
+  background-image: url('/img/cover-home-dark.png') !important;
+}
+
+html[data-theme='dark'] #page-header.post-bg {
+  background-image: url('/img/cover-post-dark.png') !important;
 }
 
 html[data-theme='dark'] #page-header #site-info,

@@ -1,6 +1,7 @@
 ---
-title: OpenCode 新手安装部署与上手指南
+title: OpenCode 新手安装与上手指南
 date: 2026-08-11 10:00:00
+description: 从环境准备、安装与模型配置，到第一次运行和安全使用，用一篇文章快速完成 OpenCode 入门。
 tags:
   - OpenCode
   - AI
@@ -9,32 +10,32 @@ categories:
   - 教程
 ---
 
-# OpenCode 新手安装与上手指南
-
 ## OpenCode 是什么？
 
-一句话：**运行在终端里的 AI 编程助手**。
+一句话概括：**OpenCode 是运行在终端里的 AI 编程助手。**
 
-它能读你的代码、修 bug、生成代码、执行命令、写测试、配合 Git 做小步修改。类似 Claude Code，但开源、可自由切换模型。
+它可以阅读项目、解释代码、修复问题、生成代码、执行命令、编写测试，也能配合 Git 完成小步修改。它的使用方式与 Claude Code 等终端编程助手相似，但更加开放，也便于按需切换模型。
+
+如果你第一次接触这类工具，可以先把它理解成一位“住在终端里的结对程序员”：你负责提出目标和把关，它负责阅读、分析与执行。
 
 ---
 
-## 一、安装前你需要准备什么
+## 一、安装前需要准备什么
 
 | 准备项 | 说明 |
 |---|---|
 | 终端 | macOS 用 Terminal/iTerm2；Linux 自带终端；Windows 推荐 WSL2 + Windows Terminal |
-| AI 模型 Key | 至少一个，推荐 Anthropic 或 OpenRouter（一个 Key 可访问多模型） |
+| AI 模型 Key | 至少准备一个；可使用 Anthropic、OpenAI 或 OpenRouter 等服务 |
 | Git | `git --version` 确认已安装，没装就 `brew install git` 或 `sudo apt install git` |
-| 一个测试项目 | **别第一次就在重要项目里用**，先建个空目录练手 |
+| 一个测试项目 | 不建议第一次就在重要项目里尝试，先建一个空目录熟悉流程 |
 
-> Windows 用户强烈建议先装 WSL2 Ubuntu，体验和兼容性都更好。
+> Windows 用户建议优先使用 WSL2 Ubuntu，通常能获得更一致的终端体验和更好的兼容性。
 
 ---
 
 ## 二、安装 OpenCode
 
-### macOS / Linux（最推荐）
+### macOS / Linux（推荐）
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
@@ -42,7 +43,7 @@ exec $SHELL -l
 opencode --version   # 看到版本号即成功
 ```
 
-> 如果提示 `command not found`，把安装路径加入 PATH：
+> 如果出现 `command not found`，可以把安装路径加入 PATH：
 > ```bash
 > echo 'export PATH="$HOME/.opencode/bin:$PATH"' >> ~/.zshrc
 > source ~/.zshrc
@@ -56,19 +57,19 @@ brew install sst/tap/opencode
 
 ### Windows（WSL2 路径）
 
-管理员 PowerShell 执行 `wsl --install`，重启后进入 Ubuntu，然后按上面 macOS/Linux 的步骤装即可。
+在管理员 PowerShell 中执行 `wsl --install`，重启后进入 Ubuntu，再按照上面的 macOS/Linux 步骤安装即可。
 
 ### 其他方式
 
 - **npm**：`npm install -g opencode-ai`（需 Node.js 20+）
 - **Scoop**（Windows 原生）：`scoop install opencode`
-- **Docker**：适合服务器或隔离环境，文末有简要说明
+- **Docker**：适合服务器或需要隔离运行环境的场景
 
 ---
 
 ## 三、配置模型 Key
 
-装好 OpenCode 后，还得告诉它用哪个大模型。
+安装完成后，还需要为 OpenCode 配置可用的模型服务。
 
 ### 方式一：环境变量（最常用）
 
@@ -83,7 +84,7 @@ export OPENAI_API_KEY="你的Key"
 export OPENROUTER_API_KEY="你的Key"
 ```
 
-写入 `~/.zshrc`（或 `~/.bashrc`）让它永久生效。
+如果希望配置长期生效，可以将对应命令写入 `~/.zshrc` 或 `~/.bashrc`，然后重新加载终端配置。
 
 ### 方式二：配置文件
 
@@ -96,11 +97,11 @@ export OPENROUTER_API_KEY="你的Key"
 }
 ```
 
-模型名不确定时，启动后输入 `/models` 查看可用列表。
+如果不确定模型名称，可以启动 OpenCode 后输入 `/models` 查看可用列表。
 
-### 想用本地模型（免费、离线）？
+### 使用本地模型
 
-装好 [Ollama](https://ollama.com/)，拉个模型：
+如果希望在本地运行模型，可以先安装 [Ollama](https://ollama.com/)，再拉取一个代码模型：
 
 ```bash
 ollama pull qwen2.5-coder:14b
@@ -136,13 +137,13 @@ echo "console.log('hello')" > index.js
 opencode
 ```
 
-进入 TUI 界面后，依次试试：
+进入 TUI 界面后，可以依次尝试：
 
-1. **`/init`** — 生成 `AGENTS.md`，告诉 AI 项目的基本信息和规则
-2. **`请解释这个项目的结构`** — 让 AI 先理解你的代码
-3. **`帮我修改 index.js，让它输出 Hello OpenCode`** — 体验 AI 改代码
+1. **`/init`** —— 生成 `AGENTS.md`，记录项目的基本信息与协作规则
+2. **`请解释这个项目的结构`** —— 先让 AI 阅读并理解代码
+3. **`帮我修改 index.js，让它输出 Hello OpenCode`** —— 体验一次小范围代码修改
 
-> 新手阶段建议保留每次修改的确认提示，别一上来就放开自动执行。
+> 刚开始使用时，建议保留修改和命令执行前的确认步骤。先看懂它准备做什么，再决定是否继续。
 
 ---
 
@@ -163,20 +164,20 @@ opencode
 
 ## 六、新手使用技巧
 
-- **先理解，再动手**：先让 AI 读代码、解释结构，别一上来就大改
-- **小步修改**：说"只修改 `src/auth/login.ts` 的跳转逻辑"，别说"重写整个项目"
-- **先要计划**：输入"请先给出修改计划，不要直接改代码"，确认后再执行
-- **改完跑测试**：让 AI 改完后顺手跑一遍测试
-- **用 Git 分支**：`git checkout -b feat/test`，改完 `git diff` 看一眼，满意再提交
+- **先理解，再动手**：先让 AI 阅读代码、解释结构，不要一开始就做大范围修改
+- **保持任务具体**：例如“只修改 `src/auth/login.ts` 的跳转逻辑”，比“重写整个项目”更容易得到可控结果
+- **先确认计划**：可以输入“请先给出修改计划，不要直接改代码”，确认方向后再执行
+- **修改后及时验证**：运行测试、构建或静态检查，不要只看代码表面是否合理
+- **借助 Git 留下退路**：新建分支后再修改，并通过 `git diff` 检查变化，确认无误后提交
 
 ---
 
 ## 七、安全提醒
 
-- **别把 API Key 写进代码或提交到 Git**，用环境变量管理
-- 不可信项目里不要盲目允许 AI 执行命令
-- 重要项目先 `git commit` 备份再让 AI 动手
-- 不要在生产服务器上直接让 AI 改配置、操作数据库
+- **不要把 API Key 写进代码或提交到 Git**，优先使用环境变量或安全的密钥管理方式
+- 在来源不明的项目中，不要直接允许 AI 执行未经检查的命令
+- 修改重要项目之前，先提交当前状态或创建独立分支
+- 不要让 AI 在缺少审核的情况下直接修改生产配置或操作生产数据库
 
 ---
 
@@ -189,7 +190,7 @@ opencode
 | 提示没有模型 / 未认证 | `env \| grep API_KEY` 检查 Key 是否生效 |
 | 401 / 403 错误 | Key 复制错了、过期了、或 provider 选错了 |
 | 网络超时 | 设置代理 `export https_proxy=http://127.0.0.1:7890`，或改用本地 Ollama |
-| AI 改坏了代码 | `git checkout .` 一键撤销，或 `git diff` 挑着恢复 |
+| AI 改坏了代码 | 先用 `git diff` 检查变化，再用 `git restore <文件>` 按需恢复 |
 
 ---
 
@@ -208,10 +209,10 @@ rm -rf ~/.opencode
 
 ## 总结
 
-OpenCode 上手就四步：**安装 → 配 Key → 进项目 → 启动**。
+OpenCode 的入门流程可以归纳为四步：**安装 → 配置模型 → 进入项目 → 启动**。
 
 新手最推荐路径：
 
-> **官方脚本安装 + Anthropic / OpenRouter Key + 小测试项目**
+> **官方脚本安装 + 可用的模型服务 + 一个小型测试项目**
 
-别想太多，先跑起来，改一行代码试试手感，自然就熟了。
+不必一开始就研究所有配置。先让它在测试项目中完成一次小修改，熟悉交互方式，再逐步引入真实工作流，会更轻松也更安全。

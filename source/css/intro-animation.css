@@ -362,6 +362,12 @@ footer,
     0 0 12px rgba(73, 177, 245, 0.35);
 }
 
+/* Butterfly rotates avatar images on hover by default. Keep them stationary. */
+#aside-content .avatar-img img:hover,
+#sidebar .avatar-img img:hover {
+  transform: none !important;
+}
+
 /* Remove rotating arcs - no pseudo-element animation */
 #aside-content .card-info-avatar::before,
 .card-info-avatar::before {
@@ -612,11 +618,11 @@ html[data-theme='dark'] #page-header {
 }
 
 html[data-theme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.png') !important;
+  background-image: url('/img/cover-home-dark.png?v=20260819') !important;
 }
 
 html[data-theme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.png') !important;
+  background-image: url('/img/cover-post-dark.png?v=20260819') !important;
 }
 
 html[data-theme='dark'] #page-header #site-info,

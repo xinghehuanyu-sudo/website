@@ -15,28 +15,64 @@
     window.innerWidth <= 768;
   const prefersReducedMotion = window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const systemDarkQuery = window.matchMedia
+    ? window.matchMedia('(prefers-color-scheme: dark)')
+    : null;
   const introSeenKey = 'wyx-intro-seen';
   let themeCoverObserver;
 
   /**
-   * Keep the hero artwork in sync with Butterfly's data-theme attribute.
-   * Butterfly writes the light cover as an inline style, so this also writes
-   * the selected image inline with important priority for consistent results.
+   * Resolve the visual color mode from every source that can make the page
+   * dark: Butterfly, Dark Reader, or the operating-system preference.
+   */
+  function hasDarkRenderedBackground() {
+    const elements = [document.body, document.documentElement].filter(Boolean);
+
+    return elements.some(element => {
+      const color = window.getComputedStyle(element).backgroundColor;
+      const channels = color.match(/[\d.]+/g);
+      if (!channels || channels.length < 3) return false;
+
+      const [red, green, blue, alpha = 1] = channels.map(Number);
+      if (alpha === 0) return false;
+
+      const luminance = (0.2126 * red) + (0.7152 * green) + (0.0722 * blue);
+      return luminance < 110;
+    });
+  }
+
+  function isDarkCoverMode() {
+    const html = document.documentElement;
+
+    if (html.getAttribute('data-darkreader-scheme') === 'dark') return true;
+
+    const butterflyTheme = html.getAttribute('data-theme');
+    if (butterflyTheme === 'dark') return true;
+    if (butterflyTheme === 'light') return hasDarkRenderedBackground();
+
+    return Boolean(systemDarkQuery && systemDarkQuery.matches) || hasDarkRenderedBackground();
+  }
+
+  /**
+   * Butterfly generates a light cover as an inline style. Keep one authoritative
+   * inline value in sync with the resolved mode so CSS specificity cannot make
+   * the selected artwork ambiguous.
    */
   function syncThemeCover() {
     const header = document.getElementById('page-header');
     if (!header) return;
 
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const dark = isDarkCoverMode();
     let image = '';
 
     if (header.classList.contains('full_page')) {
-      image = dark ? '/img/cover-home-dark.png?v=20260819-theme-sync' : '/img/cover-home.png?v=20260819-theme-sync';
+      image = dark ? '/img/cover-home-dark.png?v=20260819-root-theme' : '/img/cover-home.png?v=20260819-root-theme';
     } else if (header.classList.contains('post-bg')) {
-      image = dark ? '/img/cover-post-dark.png?v=20260819-theme-sync' : '/img/cover-post.png?v=20260819-theme-sync';
+      image = dark ? '/img/cover-post-dark.png?v=20260819-root-theme' : '/img/cover-post.png?v=20260819-root-theme';
     }
 
     if (image) {
+      header.setAttribute('data-cover-theme', dark ? 'dark' : 'light');
       header.style.setProperty('background-image', `url("${image}")`, 'important');
     }
   }
@@ -48,8 +84,19 @@
     themeCoverObserver = new MutationObserver(syncThemeCover);
     themeCoverObserver.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-theme']
+      attributeFilter: ['data-theme', 'data-darkreader-scheme']
     });
+
+    if (systemDarkQuery) {
+      if (typeof systemDarkQuery.addEventListener === 'function') {
+        systemDarkQuery.addEventListener('change', syncThemeCover);
+      } else if (typeof systemDarkQuery.addListener === 'function') {
+        systemDarkQuery.addListener(syncThemeCover);
+      }
+    }
+
+    window.addEventListener('load', syncThemeCover, { once: true });
+    window.addEventListener('pageshow', syncThemeCover);
   }
 
   function hasSeenIntro() {

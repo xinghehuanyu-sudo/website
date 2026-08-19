@@ -618,11 +618,32 @@ html[data-theme='dark'] #page-header {
 }
 
 html[data-theme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.png?v=20260819') !important;
+  background-image: url('/img/cover-home-dark.png?v=20260819-root-theme') !important;
 }
 
 html[data-theme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.png?v=20260819') !important;
+  background-image: url('/img/cover-post-dark.png?v=20260819-root-theme') !important;
+}
+
+/* Dark Reader does not use Butterfly's data-theme attribute. */
+html[data-darkreader-scheme='dark'] #page-header.full_page {
+  background-image: url('/img/cover-home-dark.png?v=20260819-root-theme') !important;
+}
+
+html[data-darkreader-scheme='dark'] #page-header.post-bg {
+  background-image: url('/img/cover-post-dark.png?v=20260819-root-theme') !important;
+}
+
+/* Script-resolved visual mode also covers browser-enforced dark rendering. */
+#page-header[data-cover-theme='dark'] {
+  background-color: #07131f;
+  background-blend-mode: normal;
+}
+
+#page-header[data-cover-theme='dark'] #site-title,
+#page-header[data-cover-theme='dark'].post-bg .post-title {
+  color: #f3f8fc;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.34);
 }
 
 html[data-theme='dark'] #page-header #site-info,

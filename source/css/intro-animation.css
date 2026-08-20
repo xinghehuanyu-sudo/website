@@ -428,22 +428,54 @@ footer,
   color: #3d6b93;
 }
 
-/* Add a subtle scanline & light vignette on top of the banner */
-#page-header::after {
+/*
+ * Let cover artwork dissolve into the page surface instead of ending on a
+ * hard horizontal seam. The final part of the fade extends past the header,
+ * so slight differences between the cover edge and the page background are
+ * blended rather than exposed.
+ */
+#page-header:not(.not-top-img) {
+  --cover-fade-depth: 56px;
+  --cover-fade-start: 62%;
+  --cover-fade-solid: #f6f8fb;
+  --cover-fade-clear: rgba(246, 248, 251, 0);
+  --cover-art-overlay: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.03));
+}
+
+#page-header.full_page {
+  --cover-fade-start: 76%;
+}
+
+#page-header.post-bg {
+  --cover-fade-start: 56%;
+}
+
+#page-header:not(.not-top-img)::after {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: calc(-1 * var(--cover-fade-depth));
+  left: 0;
   background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.03) 2px,
-      rgba(255, 255, 255, 0.03) 4px
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent var(--cover-fade-start),
+      var(--cover-fade-solid) calc(100% - var(--cover-fade-depth)),
+      var(--cover-fade-clear) 100%
     ),
-    radial-gradient(ellipse at center, transparent 55%, rgba(28, 61, 90, 0.12) 100%);
+    var(--cover-art-overlay) top / 100% calc(100% - var(--cover-fade-depth)) no-repeat;
   pointer-events: none;
   z-index: 2;
+}
+
+/* Keep cover copy above the blend layer, including metadata near the bottom. */
+#page-header #site-info,
+#page-header #post-info,
+#page-header #page-site-info,
+#page-header #scroll-down {
+  z-index: 3;
 }
 
 /* Subtle bottom edge glow */
@@ -517,11 +549,6 @@ body {
 #page-header #nav a,
 #page-header #nav span.site-page {
   font-size: 0.94rem;
-}
-
-/* Reduce decoration in the hero so the identity and message take priority. */
-#page-header::after {
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.03));
 }
 
 #page-header #site-title {
@@ -607,8 +634,12 @@ html[data-theme='dark'] #web_bg::before {
   background: linear-gradient(135deg, rgba(5, 14, 25, 0.38), rgba(9, 31, 49, 0.52)) !important;
 }
 
-html[data-theme='dark'] #page-header::after {
-  background: linear-gradient(120deg, rgba(3, 12, 22, 0.16), rgba(4, 23, 38, 0.3));
+html[data-theme='dark'] #page-header:not(.not-top-img),
+html[data-darkreader-scheme='dark'] #page-header:not(.not-top-img),
+#page-header[data-cover-theme='dark']:not(.not-top-img) {
+  --cover-fade-solid: #0b1420;
+  --cover-fade-clear: rgba(11, 20, 32, 0);
+  --cover-art-overlay: linear-gradient(120deg, rgba(3, 12, 22, 0.16), rgba(4, 23, 38, 0.3));
 }
 
 /* Use dedicated artwork in dark mode; avoid muddying light covers with filters. */
@@ -949,6 +980,14 @@ html[data-theme='dark'] #local-search .search-loading {
 }
 
 @media screen and (max-width: 768px) {
+  #page-header:not(.not-top-img) {
+    --cover-fade-depth: 40px;
+  }
+
+  #page-header.post-bg {
+    --cover-fade-start: 50%;
+  }
+
   #recent-posts .recent-post-item {
     border-radius: 12px;
   }

@@ -570,6 +570,10 @@ body {
   border: 1px solid rgba(28, 61, 90, 0.09);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(28, 61, 90, 0.06);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 #recent-posts .recent-post-item {
@@ -580,6 +584,16 @@ body {
 #aside-content .card-widget:hover {
   box-shadow: 0 14px 30px rgba(28, 61, 90, 0.1);
   transform: translateY(-3px);
+}
+
+#recent-posts .recent-post-item:hover,
+#aside-content .card-widget:hover,
+#page .page:hover,
+#post:hover {
+  border-color: rgba(73, 177, 245, 0.72);
+  box-shadow:
+    0 0 0 1px rgba(73, 177, 245, 0.18),
+    0 14px 32px rgba(28, 61, 90, 0.12);
 }
 
 #recent-posts .recent-post-item .article-title {
@@ -718,6 +732,16 @@ html[data-theme='dark'] #page-header #scroll-down {
 [data-theme='dark'] #post {
   border-color: rgba(255, 255, 255, 0.1);
   box-shadow: none;
+}
+
+[data-theme='dark'] #recent-posts .recent-post-item:hover,
+[data-theme='dark'] #aside-content .card-widget:hover,
+[data-theme='dark'] #page .page:hover,
+[data-theme='dark'] #post:hover {
+  border-color: rgba(105, 190, 246, 0.78);
+  box-shadow:
+    0 0 0 1px rgba(105, 190, 246, 0.2),
+    0 12px 30px rgba(23, 116, 177, 0.16);
 }
 
 /* =====================================================

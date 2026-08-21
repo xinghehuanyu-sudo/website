@@ -1049,7 +1049,7 @@ css_prefix: true
 # Insert the code to head (before '</head>' tag) and the bottom (before '</body>' tag)
 inject:
   head:
-    - <link rel="stylesheet" href="/css/intro-animation.css?v=20260819-root-theme">
+    - <link rel="stylesheet" href="/css/intro-animation.css?v=20260821-card-hover">
   bottom:
     - <script src="/js/wyx-effects.js?v=20260819-root-theme"></script>
 

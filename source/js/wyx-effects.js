@@ -20,7 +20,13 @@
     : null;
   const introSeenKey = 'wyx-intro-seen';
   const deepSpacePoster = '/deepspace/deep-space-poster.webp?v=20260823-deepspace';
-  const deepSpaceAssets = [deepSpacePoster];
+  const deepSpaceAssets = [
+    '/deepspace/galaxy_base.webp?v=20260823-flow',
+    '/deepspace/flowmask.webp?v=20260823-flow',
+    '/deepspace/galaxy_layer_2.webp?v=20260823-flow',
+    '/deepspace/galaxy_layer_1.webp?v=20260823-flow',
+    '/deepspace/galaxy_layer_0.webp?v=20260823-flow'
+  ];
   let themeCoverObserver;
 
   /**
@@ -112,7 +118,7 @@
   }
 
   /**
-   * Adapts the Wallpaper Engine artwork into a slow, continuous cover drift.
+   * Recreates the Wallpaper Engine scene's flow-mask animation in WebGL.
    * The CSS background remains visible if WebGL is unavailable or motion is reduced.
    */
   async function initDeepSpaceCover() {
@@ -155,22 +161,42 @@
       precision mediump float;
 
       uniform sampler2D uBase;
+      uniform sampler2D uFlowMask;
+      uniform sampler2D uLayer2;
+      uniform sampler2D uLayer1;
+      uniform sampler2D uLayer0;
       uniform vec2 uUvScale;
       uniform vec2 uUvCenter;
       uniform float uTime;
       varying vec2 vTexCoord;
 
+      vec4 flowLayer(sampler2D layer, vec2 uv, vec2 flow, float speed, float phase) {
+        float cycleA = fract(uTime * speed + phase);
+        float cycleB = fract(uTime * speed + phase + 0.5);
+        float blend = 2.0 * abs(cycleA - 0.5);
+        vec2 flowAmount = flow * 0.10;
+        return mix(
+          texture2D(layer, uv + flowAmount * cycleA),
+          texture2D(layer, uv + flowAmount * cycleB),
+          blend
+        );
+      }
+
+      vec4 alphaOver(vec4 below, vec4 above) {
+        return vec4(mix(below.rgb, above.rgb, above.a), max(below.a, above.a));
+      }
+
       void main() {
         vec2 uv = (vTexCoord - vec2(0.5)) * uUvScale + uUvCenter;
-        float phase = uTime * 0.08;
-        vec2 drift = vec2(
-          sin(uv.y * 7.0 + phase) + cos(uv.x * 4.0 - phase * 0.7),
-          cos(uv.x * 6.0 + phase * 0.8) + sin(uv.y * 5.0 - phase)
-        ) * 0.0018;
-        float breathe = 0.996 - 0.004 * sin(uTime * 0.055);
-        vec2 animatedUv = (uv - vec2(0.5)) * breathe + vec2(0.5) + drift;
-        vec3 color = texture2D(uBase, animatedUv).rgb;
-        gl_FragColor = vec4(color, 1.0);
+        vec2 flow = (texture2D(uFlowMask, uv).rg - vec2(0.5)) * 2.0;
+        vec4 color = texture2D(uBase, uv);
+
+        color = alphaOver(color, flowLayer(uLayer2, uv, flow, 0.010, 0.00));
+        color = alphaOver(color, flowLayer(uLayer1, uv, flow, 0.020, 0.17));
+        color = alphaOver(color, flowLayer(uLayer0, uv, flow, 0.040, 0.33));
+
+        float pulse = 0.985 + 0.025 * sin(uTime * 0.48 + uv.x * 3.0);
+        gl_FragColor = vec4(color.rgb * pulse, 1.0);
       }
     `;
 
@@ -229,7 +255,7 @@
     gl.vertexAttribPointer(texCoord, 2, gl.FLOAT, false, stride, 2 * Float32Array.BYTES_PER_ELEMENT);
 
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    ['uBase'].forEach((name, index) => {
+    ['uBase', 'uFlowMask', 'uLayer2', 'uLayer1', 'uLayer0'].forEach((name, index) => {
       const texture = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0 + index);
       gl.bindTexture(gl.TEXTURE_2D, texture);

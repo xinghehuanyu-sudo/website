@@ -392,40 +392,28 @@ footer,
 }
 
 /* =====================================================
-   Banner / Cover image light overlay
+   Deep-space animated cover
    ===================================================== */
 
-/* Bright banner: dark text for readability */
-#page-header #nav .site-name,
-#page-header #nav a,
-#page-header #nav span.site-page,
-#page-header .nav-page-title {
-  color: #1c3d5a;
-  text-shadow: none;
+#page-header:not(.not-top-img) #nav .site-name,
+#page-header:not(.not-top-img) #nav a,
+#page-header:not(.not-top-img) #nav span.site-page,
+#page-header:not(.not-top-img) .nav-page-title,
+#page-header:not(.not-top-img) #site-title,
+#page-header:not(.not-top-img).post-bg .post-title {
+  color: #f7f9ff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
 }
 
-#page-header #site-title,
-#page-header.post-bg .post-title {
-  color: #1c3d5a;
-  text-shadow: 0 2px 14px rgba(255, 255, 255, 0.7);
-}
-
-#page-header #site-subtitle {
-  color: #4a7a9e;
-  text-shadow: none;
-}
-
-#page-header #scroll-down .scroll-down-effects {
-  color: #49b1f5;
-  text-shadow: none;
-}
-
-#page-header.post-bg #post-meta,
-#page-header.post-bg #post-meta a,
-#page-header.post-bg #post-meta i,
-#page-header.post-bg #post-meta time,
-#page-header.post-bg #post-meta span {
-  color: #3d6b93;
+#page-header:not(.not-top-img) #site-subtitle,
+#page-header:not(.not-top-img) #scroll-down .scroll-down-effects,
+#page-header:not(.not-top-img).post-bg #post-meta,
+#page-header:not(.not-top-img).post-bg #post-meta a,
+#page-header:not(.not-top-img).post-bg #post-meta i,
+#page-header:not(.not-top-img).post-bg #post-meta time,
+#page-header:not(.not-top-img).post-bg #post-meta span {
+  color: rgba(239, 244, 255, 0.88);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
 }
 
 /*
@@ -436,18 +424,35 @@ footer,
  */
 #page-header:not(.not-top-img) {
   --cover-fade-depth: 56px;
-  --cover-fade-start: 62%;
+  --cover-fade-start: 80%;
   --cover-fade-solid: #f6f8fb;
   --cover-fade-clear: rgba(246, 248, 251, 0);
-  --cover-art-overlay: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.03));
+  --cover-art-overlay: radial-gradient(circle at 52% 48%, rgba(4, 8, 17, 0.46), rgba(4, 8, 17, 0.16) 48%, rgba(2, 6, 13, 0.34));
+  background-color: #080d16;
+  background-position: center;
+}
+
+#page-header .deep-space-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.8s ease;
+}
+
+#page-header .deep-space-cover.is-ready {
+  opacity: 1;
 }
 
 #page-header.full_page {
-  --cover-fade-start: 76%;
+  --cover-fade-start: 88%;
 }
 
 #page-header.post-bg {
-  --cover-fade-start: 56%;
+  --cover-fade-start: 78%;
 }
 
 #page-header:not(.not-top-img)::after {
@@ -479,12 +484,16 @@ footer,
 }
 
 /* Subtle bottom edge glow */
-#page-header::before {
+#page-header:not(.not-top-img)::before {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(73,177,245,0.6), rgba(143,201,255,0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(178, 145, 184, 0.58), rgba(231, 166, 153, 0.48), transparent);
+  background-color: transparent;
   z-index: 3;
   animation: banner-scan 6s ease-in-out infinite;
   opacity: 0;
@@ -517,7 +526,10 @@ footer,
    ===================================================== */
 
 body {
-  background: #f6f8fb;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(132, 116, 158, 0.1), transparent 32%),
+    radial-gradient(circle at 88% 20%, rgba(190, 125, 119, 0.08), transparent 34%),
+    #f6f8fb;
 }
 
 /* Keep the background texture present without competing with reading. */
@@ -534,6 +546,13 @@ body {
   box-shadow: 0 4px 18px rgba(28, 61, 90, 0.06);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+}
+
+#page-header:not(.not-top-img) #nav,
+#page-header:not(.not-top-img).nav-fixed #nav {
+  background: rgba(7, 12, 22, 0.66);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.16);
 }
 
 /* The header is a higher stacking context than content cards and side widgets. */
@@ -633,8 +652,8 @@ body {
 html[data-theme='dark'],
 html[data-theme='dark'] body {
   background:
-    radial-gradient(circle at 15% 5%, rgba(49, 128, 183, 0.2), transparent 34%),
-    radial-gradient(circle at 85% 80%, rgba(43, 113, 165, 0.14), transparent 30%),
+    radial-gradient(circle at 15% 5%, rgba(113, 91, 143, 0.22), transparent 34%),
+    radial-gradient(circle at 85% 80%, rgba(142, 76, 86, 0.16), transparent 30%),
     #0b1420 !important;
 }
 
@@ -653,30 +672,22 @@ html[data-darkreader-scheme='dark'] #page-header:not(.not-top-img),
 #page-header[data-cover-theme='dark']:not(.not-top-img) {
   --cover-fade-solid: #0b1420;
   --cover-fade-clear: rgba(11, 20, 32, 0);
-  --cover-art-overlay: linear-gradient(120deg, rgba(3, 12, 22, 0.16), rgba(4, 23, 38, 0.3));
+  --cover-art-overlay: radial-gradient(circle at 52% 48%, rgba(2, 6, 13, 0.5), rgba(2, 6, 13, 0.2) 48%, rgba(1, 4, 9, 0.38));
 }
 
-/* Use dedicated artwork in dark mode; avoid muddying light covers with filters. */
+/* Dark surfaces can carry a longer dissolve without washing out the artwork. */
+#page-header[data-cover-theme='dark'].full_page {
+  --cover-fade-start: 76%;
+}
+
+#page-header[data-cover-theme='dark'].post-bg {
+  --cover-fade-start: 56%;
+}
+
+/* Keep the same artwork in both modes; only the page-edge blend changes. */
 html[data-theme='dark'] #page-header {
   background-color: #07131f;
   background-blend-mode: normal;
-}
-
-html[data-theme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.webp?v=20260823-performance') !important;
-}
-
-html[data-theme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.webp?v=20260823-performance') !important;
-}
-
-/* Dark Reader does not use Butterfly's data-theme attribute. */
-html[data-darkreader-scheme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.webp?v=20260823-performance') !important;
-}
-
-html[data-darkreader-scheme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.webp?v=20260823-performance') !important;
 }
 
 /* Script-resolved visual mode also covers browser-enforced dark rendering. */
@@ -1006,9 +1017,14 @@ html[data-theme='dark'] #local-search .search-loading {
 @media screen and (max-width: 768px) {
   #page-header:not(.not-top-img) {
     --cover-fade-depth: 40px;
+    background-position: 54% center;
   }
 
   #page-header.post-bg {
+    --cover-fade-start: 72%;
+  }
+
+  #page-header[data-cover-theme='dark'].post-bg {
     --cover-fade-start: 50%;
   }
 

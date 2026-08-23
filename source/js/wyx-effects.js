@@ -19,6 +19,8 @@
     ? window.matchMedia('(prefers-color-scheme: dark)')
     : null;
   const introSeenKey = 'wyx-intro-seen';
+  const deepSpacePoster = '/deepspace/deep-space-poster.webp?v=20260823-deepspace';
+  const deepSpaceAssets = [deepSpacePoster];
   let themeCoverObserver;
 
   /**
@@ -53,28 +55,14 @@
     return Boolean(systemDarkQuery && systemDarkQuery.matches) || hasDarkRenderedBackground();
   }
 
-  /**
-   * Butterfly generates a light cover as an inline style. Keep one authoritative
-   * inline value in sync with the resolved mode so CSS specificity cannot make
-   * the selected artwork ambiguous.
-   */
+  /** Keep the static poster in place while WebGL loads, or as its fallback. */
   function syncThemeCover() {
     const header = document.getElementById('page-header');
-    if (!header) return;
+    if (!header || header.classList.contains('not-top-img')) return;
 
     const dark = isDarkCoverMode();
-    let image = '';
-
-    if (header.classList.contains('full_page')) {
-      image = dark ? '/img/cover-home-dark.webp?v=20260823-performance' : '/img/cover-home.webp?v=20260823-performance';
-    } else if (header.classList.contains('post-bg')) {
-      image = dark ? '/img/cover-post-dark.webp?v=20260823-performance' : '/img/cover-post.webp?v=20260823-performance';
-    }
-
-    if (image) {
-      header.setAttribute('data-cover-theme', dark ? 'dark' : 'light');
-      header.style.setProperty('background-image', `url("${image}")`, 'important');
-    }
+    header.setAttribute('data-cover-theme', dark ? 'dark' : 'light');
+    header.style.setProperty('background-image', `url("${deepSpacePoster}")`, 'important');
   }
 
   function initThemeCoverSync() {
@@ -97,6 +85,210 @@
 
     window.addEventListener('load', syncThemeCover, { once: true });
     window.addEventListener('pageshow', syncThemeCover);
+  }
+
+  function loadCoverImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.onload = () => resolve(image);
+      image.onerror = reject;
+      image.src = src;
+    });
+  }
+
+  function compileCoverShader(gl, type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      const message = gl.getShaderInfoLog(shader);
+      gl.deleteShader(shader);
+      throw new Error(message || 'Unable to compile the deep-space cover shader.');
+    }
+
+    return shader;
+  }
+
+  /**
+   * Adapts the Wallpaper Engine artwork into a slow, continuous cover drift.
+   * The CSS background remains visible if WebGL is unavailable or motion is reduced.
+   */
+  async function initDeepSpaceCover() {
+    const header = document.getElementById('page-header');
+    if (!header || header.classList.contains('not-top-img') || header.querySelector('.deep-space-cover')) return;
+    if (prefersReducedMotion) {
+      header.classList.add('deep-space-static');
+      return;
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.className = 'deep-space-cover';
+    canvas.setAttribute('aria-hidden', 'true');
+    header.insertBefore(canvas, header.firstChild);
+
+    const gl = canvas.getContext('webgl', {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      powerPreference: 'low-power'
+    });
+
+    if (!gl) {
+      canvas.remove();
+      header.classList.add('deep-space-static');
+      return;
+    }
+
+    const vertexSource = `
+      attribute vec2 aPosition;
+      attribute vec2 aTexCoord;
+      varying vec2 vTexCoord;
+
+      void main() {
+        vTexCoord = aTexCoord;
+        gl_Position = vec4(aPosition, 0.0, 1.0);
+      }
+    `;
+    const fragmentSource = `
+      precision mediump float;
+
+      uniform sampler2D uBase;
+      uniform vec2 uUvScale;
+      uniform vec2 uUvCenter;
+      uniform float uTime;
+      varying vec2 vTexCoord;
+
+      void main() {
+        vec2 uv = (vTexCoord - vec2(0.5)) * uUvScale + uUvCenter;
+        float phase = uTime * 0.08;
+        vec2 drift = vec2(
+          sin(uv.y * 7.0 + phase) + cos(uv.x * 4.0 - phase * 0.7),
+          cos(uv.x * 6.0 + phase * 0.8) + sin(uv.y * 5.0 - phase)
+        ) * 0.0018;
+        float breathe = 0.996 - 0.004 * sin(uTime * 0.055);
+        vec2 animatedUv = (uv - vec2(0.5)) * breathe + vec2(0.5) + drift;
+        vec3 color = texture2D(uBase, animatedUv).rgb;
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
+    let program;
+    try {
+      const vertexShader = compileCoverShader(gl, gl.VERTEX_SHADER, vertexSource);
+      const fragmentShader = compileCoverShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+      program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+      gl.deleteShader(vertexShader);
+      gl.deleteShader(fragmentShader);
+
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        throw new Error(gl.getProgramInfoLog(program) || 'Unable to link the deep-space cover shader.');
+      }
+    } catch (error) {
+      console.warn('[WYX LAB] Dynamic cover fallback:', error);
+      canvas.remove();
+      header.classList.add('deep-space-static');
+      return;
+    }
+
+    let images;
+    try {
+      images = await Promise.all(deepSpaceAssets.map(loadCoverImage));
+    } catch (error) {
+      console.warn('[WYX LAB] Dynamic cover assets could not be loaded:', error);
+      canvas.remove();
+      header.classList.add('deep-space-static');
+      return;
+    }
+
+    if (!canvas.isConnected) return;
+
+    gl.useProgram(program);
+    const vertices = new Float32Array([
+      -1, -1, 0, 0,
+       1, -1, 1, 0,
+      -1,  1, 0, 1,
+      -1,  1, 0, 1,
+       1, -1, 1, 0,
+       1,  1, 1, 1
+    ]);
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    const stride = 4 * Float32Array.BYTES_PER_ELEMENT;
+    const position = gl.getAttribLocation(program, 'aPosition');
+    const texCoord = gl.getAttribLocation(program, 'aTexCoord');
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, stride, 0);
+    gl.enableVertexAttribArray(texCoord);
+    gl.vertexAttribPointer(texCoord, 2, gl.FLOAT, false, stride, 2 * Float32Array.BYTES_PER_ELEMENT);
+
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    ['uBase'].forEach((name, index) => {
+      const texture = gl.createTexture();
+      gl.activeTexture(gl.TEXTURE0 + index);
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images[index]);
+      gl.uniform1i(gl.getUniformLocation(program, name), index);
+    });
+
+    const uvScaleLocation = gl.getUniformLocation(program, 'uUvScale');
+    const uvCenterLocation = gl.getUniformLocation(program, 'uUvCenter');
+    const timeLocation = gl.getUniformLocation(program, 'uTime');
+    const sourceAspect = 16 / 9;
+    const sceneOverscan = 1 / 1.1;
+
+    function resizeCover() {
+      const rect = header.getBoundingClientRect();
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, rect.width <= 768 ? 1 : 1.5);
+      const width = Math.max(1, Math.round(rect.width * pixelRatio));
+      const height = Math.max(1, Math.round(rect.height * pixelRatio));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        gl.viewport(0, 0, width, height);
+      }
+
+      const coverAspect = rect.width / Math.max(rect.height, 1);
+      const scaleX = coverAspect < sourceAspect ? coverAspect / sourceAspect : 1;
+      const scaleY = coverAspect > sourceAspect ? sourceAspect / coverAspect : 1;
+      gl.uniform2f(uvScaleLocation, scaleX * sceneOverscan, scaleY * sceneOverscan);
+      gl.uniform2f(uvCenterLocation, rect.width <= 768 ? 0.54 : 0.5, 0.5);
+    }
+
+    resizeCover();
+    const resizeObserver = typeof ResizeObserver === 'function'
+      ? new ResizeObserver(resizeCover)
+      : null;
+    if (resizeObserver) resizeObserver.observe(header);
+    else window.addEventListener('resize', resizeCover);
+
+    const startedAt = performance.now();
+    let previousFrame = 0;
+    function drawCover(now) {
+      if (!canvas.isConnected) {
+        if (resizeObserver) resizeObserver.disconnect();
+        else window.removeEventListener('resize', resizeCover);
+        return;
+      }
+
+      requestAnimationFrame(drawCover);
+      if (document.hidden || now - previousFrame < 33) return;
+      previousFrame = now;
+      gl.uniform1f(timeLocation, (now - startedAt) / 1000);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      if (!canvas.classList.contains('is-ready')) canvas.classList.add('is-ready');
+    }
+    requestAnimationFrame(drawCover);
   }
 
   function hasSeenIntro() {
@@ -504,6 +696,7 @@
   ============================================================ */
   function boot() {
     initThemeCoverSync();
+    initDeepSpaceCover();
     buildIntro();
     initParticles();
     initFallingParticles();
@@ -518,6 +711,7 @@
 
   document.addEventListener('pjax:complete', () => {
     syncThemeCover();
+    initDeepSpaceCover();
     if (!document.getElementById('particle-canvas')) initParticles();
     initPostCardLinks();
   });

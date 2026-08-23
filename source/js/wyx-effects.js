@@ -717,6 +717,22 @@
     });
   }
 
+  function initNavActions() {
+    const proxyAction = (buttonId, targetId) => {
+      const button = document.getElementById(buttonId);
+      if (!button || button.dataset.navActionReady) return;
+
+      button.dataset.navActionReady = 'true';
+      button.addEventListener('click', () => {
+        const target = document.getElementById(targetId);
+        if (target) target.click();
+      });
+    };
+
+    proxyAction('nav-darkmode-button', 'darkmode');
+    proxyAction('nav-readmode-button', 'readmode');
+  }
+
   /* ============================================================
      BOOT
   ============================================================ */
@@ -727,6 +743,7 @@
     initParticles();
     initFallingParticles();
     initPostCardLinks();
+    initNavActions();
   }
 
   if (document.readyState === 'loading') {
@@ -740,6 +757,7 @@
     initDeepSpaceCover();
     if (!document.getElementById('particle-canvas')) initParticles();
     initPostCardLinks();
+    initNavActions();
   });
 
 })();

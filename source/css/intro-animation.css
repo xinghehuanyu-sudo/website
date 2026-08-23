@@ -570,6 +570,35 @@ body {
   font-size: 0.94rem;
 }
 
+#page-header #nav .nav-quick-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--font-color);
+  font: inherit;
+  cursor: pointer;
+}
+
+#page-header:not(.not-top-img) #nav .nav-quick-action {
+  color: #f7f9ff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.72);
+}
+
+#page-header #nav .nav-quick-action:hover,
+#page-header #nav .nav-quick-action:focus-visible {
+  color: var(--theme-color);
+}
+
+#page-header #nav .nav-quick-action:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
 #page-header #site-title {
   letter-spacing: 0.09em;
   font-weight: 750;
@@ -651,27 +680,33 @@ body {
 /* Maintain contrast when the built-in dark theme is enabled. */
 html[data-theme='dark'],
 html[data-theme='dark'] body {
-  background:
-    radial-gradient(circle at 15% 5%, rgba(113, 91, 143, 0.22), transparent 34%),
-    radial-gradient(circle at 85% 80%, rgba(142, 76, 86, 0.16), transparent 30%),
-    #0b1420 !important;
+  background: #000 !important;
+}
+
+html[data-theme='dark'] {
+  --global-bg: #000;
+  --card-bg: #111318;
+  --sidebar-bg: #111318;
+  --sidebar-menu-bg: #171a20;
+  --search-bg: #111318;
+  --blockquote-bg: #181b21;
+  --tab-button-bg: #191c22;
+  --tab-button-active-bg: #111318;
 }
 
 html[data-theme='dark'] #web_bg {
-  background:
-    linear-gradient(135deg, rgba(8, 19, 32, 0.94), rgba(13, 31, 47, 0.9)),
-    radial-gradient(circle at 80% 20%, rgba(73, 177, 245, 0.12), transparent 28%) !important;
+  background: #000 !important;
 }
 
 html[data-theme='dark'] #web_bg::before {
-  background: linear-gradient(135deg, rgba(5, 14, 25, 0.38), rgba(9, 31, 49, 0.52)) !important;
+  background: transparent !important;
 }
 
 html[data-theme='dark'] #page-header:not(.not-top-img),
 html[data-darkreader-scheme='dark'] #page-header:not(.not-top-img),
 #page-header[data-cover-theme='dark']:not(.not-top-img) {
-  --cover-fade-solid: #0b1420;
-  --cover-fade-clear: rgba(11, 20, 32, 0);
+  --cover-fade-solid: #000;
+  --cover-fade-clear: rgba(0, 0, 0, 0);
   --cover-art-overlay: radial-gradient(circle at 52% 48%, rgba(2, 6, 13, 0.5), rgba(2, 6, 13, 0.2) 48%, rgba(1, 4, 9, 0.38));
 }
 
@@ -741,8 +776,9 @@ html[data-theme='dark'] #page-header #scroll-down {
 [data-theme='dark'] #aside-content .card-widget,
 [data-theme='dark'] #page .page,
 [data-theme='dark'] #post {
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.11);
+  background: #111318;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
 }
 
 [data-theme='dark'] #recent-posts .recent-post-item:hover,

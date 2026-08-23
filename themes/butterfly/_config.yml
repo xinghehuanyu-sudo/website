@@ -19,7 +19,10 @@ nav:
 
 menu:
   主页: / || fas fa-home
-  文章: /archives/ || fas fa-book
+  文章||fas fa-book:
+    归档: /archives/ || fas fa-box-archive
+    分类: /categories/ || fas fa-folder-open
+    标签: /tags/ || fas fa-tags
 
 # --------------------------------------
 # Code Blocks Settings
@@ -394,7 +397,7 @@ darkmode:
   end:
 
 # Show scroll percent in scroll-to-top button
-rightside_scroll_percent: false
+rightside_scroll_percent: true
 
 # Don't modify the following settings unless you know how they work
 # Choose: readmode,translate,darkmode,hideAside,toc,chat,comment
@@ -415,9 +418,9 @@ rightside_config_animation: true
 
 anchor:
   # When you scroll, the URL will update according to header id.
-  auto_update: false
+  auto_update: true
   # Click the headline to scroll and update the anchor
-  click_to_scroll: false
+  click_to_scroll: true
 
 photofigcaption: false
 

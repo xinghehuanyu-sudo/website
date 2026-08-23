@@ -663,20 +663,20 @@ html[data-theme='dark'] #page-header {
 }
 
 html[data-theme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.png?v=20260819-root-theme') !important;
+  background-image: url('/img/cover-home-dark.webp?v=20260823-performance') !important;
 }
 
 html[data-theme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.png?v=20260819-root-theme') !important;
+  background-image: url('/img/cover-post-dark.webp?v=20260823-performance') !important;
 }
 
 /* Dark Reader does not use Butterfly's data-theme attribute. */
 html[data-darkreader-scheme='dark'] #page-header.full_page {
-  background-image: url('/img/cover-home-dark.png?v=20260819-root-theme') !important;
+  background-image: url('/img/cover-home-dark.webp?v=20260823-performance') !important;
 }
 
 html[data-darkreader-scheme='dark'] #page-header.post-bg {
-  background-image: url('/img/cover-post-dark.png?v=20260819-root-theme') !important;
+  background-image: url('/img/cover-post-dark.webp?v=20260823-performance') !important;
 }
 
 /* Script-resolved visual mode also covers browser-enforced dark rendering. */

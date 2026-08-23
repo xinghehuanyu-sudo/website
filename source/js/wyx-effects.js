@@ -66,9 +66,9 @@
     let image = '';
 
     if (header.classList.contains('full_page')) {
-      image = dark ? '/img/cover-home-dark.png?v=20260819-root-theme' : '/img/cover-home.png?v=20260819-root-theme';
+      image = dark ? '/img/cover-home-dark.webp?v=20260823-performance' : '/img/cover-home.webp?v=20260823-performance';
     } else if (header.classList.contains('post-bg')) {
-      image = dark ? '/img/cover-post-dark.png?v=20260819-root-theme' : '/img/cover-post.png?v=20260819-root-theme';
+      image = dark ? '/img/cover-post-dark.webp?v=20260823-performance' : '/img/cover-post.webp?v=20260823-performance';
     }
 
     if (image) {
@@ -286,13 +286,14 @@
     const ctx = canvas.getContext('2d');
     const mobile = isMobile();
     let W, H;
+    let animationFrame = null;
     const mouse = { x: -9999, y: -9999, active: false };
 
     /* Tune these to taste */
     const CFG = {
       count:       mobile
-        ? Math.min(Math.floor(window.innerWidth / 22), 40)
-        : Math.min(Math.floor(window.innerWidth / 10), 110),
+        ? Math.min(Math.floor(window.innerWidth / 24), 28)
+        : Math.min(Math.floor(window.innerWidth / 14), 84),
       baseSpeed:   0.38,
       maxSpeed:    2.2,
       connectDist: mobile ? 80 : 120,        // max line distance
@@ -309,6 +310,7 @@
       lineOpacityMin: 0.05,
       lineOpacityMax: 0.28,
     };
+    const connectDistSq = CFG.connectDist * CFG.connectDist;
 
     function isDark() {
       return document.documentElement.getAttribute('data-theme') === 'dark';
@@ -344,6 +346,11 @@
     const LERP = 0.055;
 
     function draw() {
+      if (document.hidden) {
+        animationFrame = null;
+        return;
+      }
+
       /* lerp target toward mouse when active */
       if (mouse.active) {
         target.x += (mouse.x - target.x) * LERP;
@@ -406,8 +413,9 @@
         for (let j = i + 1; j < dots.length; j++) {
           const e2 = dots[j];
           const ex = d.x - e2.x, ey = d.y - e2.y;
-          const lineDist = Math.sqrt(ex * ex + ey * ey);
-          if (lineDist >= CFG.connectDist) continue;
+          const lineDistSq = ex * ex + ey * ey;
+          if (lineDistSq >= connectDistSq) continue;
+          const lineDist = Math.sqrt(lineDistSq);
 
           /* line brightness also influenced by cursor proximity */
           const distRatio = 1 - lineDist / CFG.connectDist;
@@ -431,9 +439,13 @@
         }
       }
 
-      requestAnimationFrame(draw);
+      animationFrame = requestAnimationFrame(draw);
     }
     draw();
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && animationFrame === null) draw();
+    });
   }
 
   /* ============================================================
@@ -474,14 +486,14 @@
       const openPost = event => {
         if (event.target.closest('a, button, input, textarea, select, [role="button"]')) return;
         if (window.getSelection().toString()) return;
-        window.location.href = card.dataset.url;
+        window.pjax ? window.pjax.loadUrl(card.dataset.url) : (window.location.href = card.dataset.url);
       };
 
       card.addEventListener('click', openPost);
       card.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
-          window.location.href = card.dataset.url;
+          window.pjax ? window.pjax.loadUrl(card.dataset.url) : (window.location.href = card.dataset.url);
         }
       });
     });

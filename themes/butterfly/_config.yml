@@ -54,17 +54,17 @@ social:
 favicon: /img/favicon.svg
 
 avatar:
-  img: /img/avatar-cartoon.png
+  img: /img/avatar-cartoon.webp
   effect: false
 
 # Disable all banner images
 disable_top_img: false
 
 # If the banner of page not setting, it will show the default_top_img
-default_top_img: /img/cover-post.png
+default_top_img: /img/cover-post.webp
 
 # The banner image of index page
-index_img: /img/cover-home.png
+index_img: /img/cover-home.webp
 
 # The banner image of archive page
 archive_img:
@@ -485,7 +485,7 @@ search:
   # Local Search
   local_search:
     # Preload the search data when the page loads.
-    preload: true
+    preload: false
     # Show top n results per article, show all results by setting to -1
     top_n_per_article: 1
     # Unescape html strings to the readable one.
@@ -980,7 +980,7 @@ note:
 
 # https://github.com/MoOx/pjax
 pjax:
-  enable: false
+  enable: true
   # Exclude the specified pages from pjax, such as '/music/'
   exclude:
     # - /xxxxxx/
@@ -1002,9 +1002,9 @@ instantpage: false
 # Lazyload
 # https://github.com/verlok/vanilla-lazyload
 lazyload:
-  enable: false
+  enable: true
   # Use browser's native lazyload instead of vanilla-lazyload
-  native: false
+  native: true
   # Specify the field to use lazyload (site or post)
   field: site
   placeholder:
@@ -1049,9 +1049,9 @@ css_prefix: true
 # Insert the code to head (before '</head>' tag) and the bottom (before '</body>' tag)
 inject:
   head:
-    - <link rel="stylesheet" href="/css/intro-animation.css?v=20260821-card-hover">
+    - <link rel="stylesheet" href="/css/intro-animation.css?v=20260823-performance">
   bottom:
-    - <script src="/js/wyx-effects.js?v=20260819-root-theme"></script>
+    - <script src="/js/wyx-effects.js?v=20260823-performance"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work
@@ -1110,7 +1110,7 @@ CDN:
     # prismjs_autoloader:
     # prismjs_js:
     # prismjs_lineNumber_js:
-    # pjax:
+    pjax: /js/vendor/pjax.min.js
     # sharejs:
     # sharejs_css:
     # snackbar:

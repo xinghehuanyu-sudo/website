@@ -680,22 +680,22 @@ body {
 /* Maintain contrast when the built-in dark theme is enabled. */
 html[data-theme='dark'],
 html[data-theme='dark'] body {
-  background: #000 !important;
+  background: #090a0d !important;
 }
 
 html[data-theme='dark'] {
-  --global-bg: #000;
-  --card-bg: #111318;
-  --sidebar-bg: #111318;
-  --sidebar-menu-bg: #171a20;
-  --search-bg: #111318;
-  --blockquote-bg: #181b21;
-  --tab-button-bg: #191c22;
-  --tab-button-active-bg: #111318;
+  --global-bg: #090a0d;
+  --card-bg: #15171c;
+  --sidebar-bg: #15171c;
+  --sidebar-menu-bg: #1b1e24;
+  --search-bg: #15171c;
+  --blockquote-bg: #1c1f25;
+  --tab-button-bg: #1d2026;
+  --tab-button-active-bg: #15171c;
 }
 
 html[data-theme='dark'] #web_bg {
-  background: #000 !important;
+  background: #090a0d !important;
 }
 
 html[data-theme='dark'] #web_bg::before {
@@ -705,8 +705,8 @@ html[data-theme='dark'] #web_bg::before {
 html[data-theme='dark'] #page-header:not(.not-top-img),
 html[data-darkreader-scheme='dark'] #page-header:not(.not-top-img),
 #page-header[data-cover-theme='dark']:not(.not-top-img) {
-  --cover-fade-solid: #000;
-  --cover-fade-clear: rgba(0, 0, 0, 0);
+  --cover-fade-solid: #090a0d;
+  --cover-fade-clear: rgba(9, 10, 13, 0);
   --cover-art-overlay: radial-gradient(circle at 52% 48%, rgba(2, 6, 13, 0.5), rgba(2, 6, 13, 0.2) 48%, rgba(1, 4, 9, 0.38));
 }
 
@@ -777,7 +777,7 @@ html[data-theme='dark'] #page-header #scroll-down {
 [data-theme='dark'] #page .page,
 [data-theme='dark'] #post {
   border-color: rgba(255, 255, 255, 0.11);
-  background: #111318;
+  background: #15171c;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
 }
 

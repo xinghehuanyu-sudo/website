@@ -574,12 +574,18 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0 0.35rem;
+  box-sizing: border-box;
+  margin: 0 0 0 14px;
+  padding: 0 0 6px;
+  height: 26px;
   border: 0;
   background: transparent;
   color: var(--font-color);
-  font: inherit;
+  font-family: inherit;
+  font-size: 0.94rem;
+  line-height: 20px;
+  top: -1px;
+  vertical-align: baseline;
   cursor: pointer;
 }
 

@@ -18,12 +18,6 @@ nav#nav
         span.site-page.social-icon.search
           i.fas.fa-search.fa-fw
           span= ' ' + _p('search.title')
-    if theme.darkmode.enable && theme.darkmode.button
-      button#nav-darkmode-button.site-page.nav-quick-action(type='button' title=_p('rightside.night_mode_title') aria-label=_p('rightside.night_mode_title'))
-        i.fas.fa-adjust.fa-fw
-    if globalPageType === 'post' && theme.readmode
-      button#nav-readmode-button.site-page.nav-quick-action(type='button' title=_p('rightside.readmode_title') aria-label=_p('rightside.readmode_title'))
-        i.fas.fa-book-open.fa-fw
     if theme.menu
       != partial('includes/header/menu_item', {}, {cache: true})
 

@@ -683,6 +683,26 @@ body {
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.34);
 }
 
+/* Keep article names readable at all times; the original theme swaps them for excerpts on hover. */
+#pagination.pagination-post .pagination-related .info-1,
+#pagination.pagination-post .pagination-related:not(.no-desc):hover .info-1,
+#pagination.pagination-post .pagination-related:not(.no-desc):focus-visible .info-1 {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+#pagination.pagination-post .pagination-related .info-1 .info-item-2 {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-wrap: balance;
+}
+
+#pagination.pagination-post .pagination-related .info-2 {
+  display: none;
+}
+
 #pagination.pagination-post .pagination-direction-icon {
   position: absolute;
   top: 50%;

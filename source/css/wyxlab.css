@@ -35,7 +35,8 @@ html[data-theme='dark'] {
 
 /* ---------- Hero extra lines ---------- */
 .wyxlab-hero-extra {
-  margin-top: 0.9rem;
+  margin-top: 0.7rem;
+  text-align: center;
 }
 
 .wyxlab-hero-tagline {

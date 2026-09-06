@@ -83,7 +83,7 @@
 
   function mountCards() {
     var recentPosts = document.getElementById('recent-posts');
-    if (!recentPosts || !recentPosts.parentNode) return;
+    if (!recentPosts) return;
 
     var section = el('section', 'wyxlab-entrances');
     section.id = 'wyxlab-entrances';
@@ -108,10 +108,12 @@
     });
     section.appendChild(grid);
 
-    recentPosts.parentNode.insertBefore(
-      section,
-      document.getElementById('wyxlab-recent-logs') || recentPosts
-    );
+    var anchor = document.getElementById('wyxlab-recent-logs');
+    if (anchor && anchor.parentNode === recentPosts) {
+      recentPosts.insertBefore(section, anchor);
+    } else {
+      recentPosts.insertBefore(section, recentPosts.firstChild);
+    }
   }
 
   function mount() {

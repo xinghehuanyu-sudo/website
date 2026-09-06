@@ -172,6 +172,6 @@ hexo.extend.filter.register('after_render:html', (html, data) => {
 
   return html.replace(
     /(<div class="recent-posts[^"]*" id="recent-posts">)/,
-    match => section + match
+    match => match + section
   );
 });

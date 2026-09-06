@@ -188,7 +188,7 @@ description: 摘要，用于首页文章列表
 - date: "2026-09-10"          # 必须加引号，保持字符串
   title: Optical setup alignment test
   content: 完成第一轮光路对准与偏振片安装测试。   # 1~3 句
-  type: Experiment             # Research|Experiment|Simulation|Reading|Development|Website|Note
+  type: 实验                   # 科研|实验|仿真|阅读|开发|网站|笔记
   tags: [Optics, Polarization]
   project: Chiral Molecule Detection   # 留空则不显示；须与 projects.yml 的 name 一致
   link:                        # 关联文章/页面，留空则无按钮
@@ -205,7 +205,7 @@ description: 摘要，用于首页文章列表
 - date: "2026-10"              # 支持 YYYY-MM-DD / YYYY-MM / YYYY，必须加引号
   title: First optical setup completed
   description: 完成第一版偏振光谱实验装置搭建。
-  category: Research           # Research|Project|Learning|Website|Achievement
+  category: 科研               # 科研|项目|学习|网站|成就
   project: Chiral Molecule Detection
   link: /post/xxx/             # 可指向文章/Lab Log/Projects/外链，留空无按钮
   image:                       # 留空不占位；有图则自动 lazy loading

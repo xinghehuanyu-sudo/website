@@ -2,49 +2,31 @@
 # WYX LAB — Timeline data（人工精选的重要节点，非 Lab Log 同步）
 # date 支持三种精度: "2026-09-06" / "2026-09" / "2026"（务必加引号）
 # 字段: date / title / description / category / project / link / image / milestone
-# category: Research | Project | Learning | Website | Achievement
+# category: 科研 | 项目 | 学习 | 网站 | 成就
 # =====================================================
 
 - date: "2026-08"
-  title: Chiral Molecule Detection project started
+  title: 手性分子快速检测项目启动
   description: 开始手性分子快速检测项目，确定以偏振光学、光谱测量、COMSOL 仿真和数据分析为主要研究路径。
-  category: Research
-  project: Chiral Molecule Detection
-  link:
-  image:
-  milestone: true
-
-- date: "2026-08-30"
-  title: First chirality literature review completed
-  description: 完成 synthetic chiral light 与 ultrafast chirality 相关文献的第一轮系统阅读，开始建立对快速手性检测物理机制的理解。
-  category: Learning
-  project: Chiral Molecule Detection
-  link: /post/光也有左右手——两篇手性光论文阅读分享/
-  image:
-  milestone: false
-
-- date: "2026-09"
-  title: COMSOL optical model V1 completed
-  description: 完成第一版手性光传播模型，并建立基础数值验证流程。
-  category: Research
+  category: 科研
   project: Chiral Molecule Detection
   link:
   image:
   milestone: true
 
 - date: "2026-09-06"
-  title: COMSOL V2 validation passed
-  description: 第二版模型完成零手性、手性符号反转、传播距离与手性参数等核心验证，物理和数值检查全部通过。
-  category: Research
+  title: COMSOL V3 验证模型完成
+  description: 完成三维圆柱对映体混合溶液模型、400–800 nm 光谱计算与 7 组验证；633 nm 的 90/10 示例旋光角为 7.99993°，结果与理论一致。
+  category: 科研
   project: Chiral Molecule Detection
   link: /lablog/
   image:
   milestone: true
 
 - date: "2026-09"
-  title: WYX LAB became a Personal Digital Lab
+  title: WYX LAB 升级为个人数字实验室
   description: 完成首页、Projects 与 Lab Log 体系，将原有个人博客逐步升级为个人数字实验室。
-  category: Website
+  category: 网站
   project: WYX LAB
   link: /projects/
   image:

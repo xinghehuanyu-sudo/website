@@ -2,14 +2,26 @@
 # WYX LAB — Lab Log data
 # 新增日志只需在这里追加一个条目（日期建议加引号，保持字符串）。
 # 字段: date / title / content / type / tags / project / link / status
-# type:  Research | Experiment | Simulation | Reading | Development | Website | Note
+# type: 科研 | 实验 | 仿真 | 阅读 | 开发 | 网站 | 笔记
 # status: completed | progress | note （可为空）
 # =====================================================
 
 - date: "2026-09-06"
-  title: COMSOL V2 validation passed
-  content: 完成零手性、手性符号反转、传播距离和手性参数扫描等核心验证，物理与数值检查全部通过。下一步继续优化旋光管几何结构与最终报告。
-  type: Simulation
+  title: 精简时间线并统一中文分类
+  content: 根据本次整理要求，将时间线从过程记录收束为真正的里程碑，并统一时间线与日志中的中文分类显示。
+  type: 网站
+  tags:
+    - WYX LAB
+    - 时间线
+    - 内容整理
+  project: WYX LAB
+  link: /timeline/
+  status: completed
+
+- date: "2026-09-06"
+  title: COMSOL V3 验证模型交付
+  content: 完成 COMSOL 6.3 三维圆柱对映体混合溶液模型及最终交付。模型通过消旋、反向配比、纯 A、浓度和光程等 7 组验证；当前结果属于数值验证示例，接入真实药物前仍需实测比旋光度与实验标定。
+  type: 仿真
   tags:
     - COMSOL
     - Chirality
@@ -19,9 +31,9 @@
   status: completed
 
 - date: "2026-09-05"
-  title: WYX LAB Projects page launched
+  title: WYX LAB 项目页面上线
   content: 完成 Projects 页面、项目数据结构与构建期静态渲染，开始将 WYX LAB 从普通博客逐步改造成个人数字实验室。
-  type: Website
+  type: 网站
   tags:
     - WYX LAB
     - Hexo
@@ -31,9 +43,9 @@
   status: completed
 
 - date: "2026-08-30"
-  title: Synthetic chiral light reading
+  title: 合成手性光文献阅读
   content: 完成第一轮 synthetic chiral light 与 ultrafast chirality 文献整理，重点理解普通圆偏振光与局域手性光场在分子手性检测中的差异。
-  type: Reading
+  type: 阅读
   tags:
     - Chirality
     - Ultrafast Optics

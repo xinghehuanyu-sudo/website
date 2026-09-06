@@ -8,19 +8,19 @@
 'use strict';
 
 const TYPE_MAP = {
-  'research': { icon: 'fas fa-flask' },
-  'experiment': { icon: 'fas fa-vial' },
-  'simulation': { icon: 'fas fa-wave-square' },
-  'reading': { icon: 'fas fa-book' },
-  'development': { icon: 'fas fa-code' },
-  'website': { icon: 'fas fa-globe' },
-  'note': { icon: 'fas fa-note-sticky' }
+  '科研': { icon: 'fas fa-flask' },
+  '实验': { icon: 'fas fa-vial' },
+  '仿真': { icon: 'fas fa-wave-square' },
+  '阅读': { icon: 'fas fa-book' },
+  '开发': { icon: 'fas fa-code' },
+  '网站': { icon: 'fas fa-globe' },
+  '笔记': { icon: 'fas fa-note-sticky' }
 };
 
 const LOG_STATUS_MAP = {
-  'completed': { label: 'Completed', slug: 'completed' },
-  'progress': { label: 'In Progress', slug: 'progress' },
-  'note': { label: 'Note', slug: 'note' }
+  'completed': { label: '已完成', slug: 'completed' },
+  'progress': { label: '进行中', slug: 'progress' },
+  'note': { label: '记录', slug: 'note' }
 };
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -80,7 +80,7 @@ const safeHref = url => {
 const relatedLine = (entry, names) => {
   const parts = [];
   if (entry.project) {
-    const chipText = `Project: ${escape(entry.project)}`;
+    const chipText = `项目：${escape(entry.project)}`;
     parts.push(names.has(entry.project)
       ? `<a class="wyxlab-log-project" href="/projects/">${chipText}</a>`
       : `<span class="wyxlab-log-project">${chipText}</span>`);
@@ -89,7 +89,7 @@ const relatedLine = (entry, names) => {
   if (link) {
     const external = /^https?:\/\//i.test(link);
     const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-    parts.push(`<a class="wyxlab-log-link"${attrs} href="${escape(link)}">Related<i class="fas fa-arrow-right" aria-hidden="true"></i></a>`);
+    parts.push(`<a class="wyxlab-log-link"${attrs} href="${escape(link)}">相关内容<i class="fas fa-arrow-right" aria-hidden="true"></i></a>`);
   }
   return parts.length ? `<div class="wyxlab-log-related">${parts.join('')}</div>` : '';
 };
@@ -157,9 +157,9 @@ const recentLogsHtml = () => {
 
   return [
     '<section class="wyxlab-recent-logs" id="wyxlab-recent-logs">',
-    '<h2 class="wyxlab-recent-logs-title">Recent Lab Logs <span>最近日志</span></h2>',
+    '<h2 class="wyxlab-recent-logs-title">最近日志</h2>',
     `<ol class="wyxlab-recent-logs-list">${items.join('')}</ol>`,
-    '<a class="wyxlab-recent-logs-more" href="/lablog/">View all logs<i class="fas fa-arrow-right" aria-hidden="true"></i></a>',
+    '<a class="wyxlab-recent-logs-more" href="/lablog/">查看全部日志<i class="fas fa-arrow-right" aria-hidden="true"></i></a>',
     '</section>'
   ].join('');
 };

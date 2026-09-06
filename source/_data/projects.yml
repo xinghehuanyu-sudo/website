@@ -7,8 +7,8 @@
 # =====================================================
 
 - name: Chiral Molecule Detection
-  subtitle: 手性分子快速检测研究
-  description: 基于偏振光学、光谱测量、COMSOL 仿真与数据分析，探索手性分子的快速检测方案。
+  subtitle: COMSOL V3 圆柱对映体溶液模型
+  description: 基于 COMSOL 6.3 Wave Optics 建立三维圆柱对映体混合溶液模型；V3 已完成 400–800 nm 光谱计算及 7 组物理与数值验证，用于后续接入真实比旋光度与实验标定数据。
   status: In Progress
   started: 2026
   tags:
@@ -17,6 +17,7 @@
     - COMSOL
     - Chirality
     - Data Analysis
+    - V3
   image:
   article:
   github:

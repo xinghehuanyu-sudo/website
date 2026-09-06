@@ -8,26 +8,30 @@
 
 const PROFILE = {
   name: 'WYX LAB',
-  tagline: 'Personal Digital Lab',
+  tagline: '个人数字实验室',
   lead: '这里记录我在物理、代码、科研与生活中的实验。',
-  second: '我喜欢把学习过程、科研进展和自己做出来的东西记录下来。这里既是博客，也是项目档案、实验日志与成长记录。',
-  keywords: ['Physics', 'Code', 'Research', 'Life'],
+  second: '以物理与光学研究为主线，把模型、实验、代码和思考整理成可以持续生长的个人档案。',
+  keywords: ['物理', '代码', '科研', '生活'],
   avatar: '/img/avatar-cartoon.webp'
 };
 
+const EDUCATION = {
+  school: '西安交通大学',
+  college: '',
+  major: '光电信息专业'
+};
+
 const INTERESTS = [
-  { group: 'Research', items: ['Chirality', 'Optics', 'Spectroscopy', 'COMSOL', 'Data Analysis'] },
-  { group: 'Building & Life', items: ['AI', 'Web Development', 'Photography'] }
+  { group: '科研', items: ['手性', '光学', '光谱学', 'COMSOL', '数据分析'] },
+  { group: '创造与生活', items: ['AI', '网页开发', '摄影'] }
 ];
 
 const EXPLORE = [
-  { href: '/projects/', icon: 'fas fa-flask', name: 'Projects', desc: 'What I build.' },
-  { href: '/lablog/', icon: 'fas fa-clipboard-list', name: 'Lab Log', desc: 'What I am working on.' },
-  { href: '/timeline/', icon: 'fas fa-route', name: 'Timeline', desc: 'Important milestones.' },
-  { href: '/archives/', icon: 'fas fa-box-archive', name: 'Posts', desc: 'Long-form notes and articles.' }
+  { href: '/projects/', icon: 'fas fa-flask', name: '项目', desc: '持续构建的研究与作品。' },
+  { href: '/lablog/', icon: 'fas fa-clipboard-list', name: '实验日志', desc: '实验、阅读与开发进展。' },
+  { href: '/timeline/', icon: 'fas fa-route', name: '时间线', desc: '值得长期保留的重要节点。' },
+  { href: '/archives/', icon: 'fas fa-box-archive', name: '文章', desc: '完整的笔记、教程与随笔。' }
 ];
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const escape = value => String(value == null ? '' : value)
   .replace(/&/g, '&amp;')
@@ -44,16 +48,22 @@ const sortable = iso => {
 
 const formatDate = iso => {
   const parts = String(iso || '').split('-');
-  if (parts.length === 1) return parts[0] || '';
-  const month = MONTHS[parseInt(parts[1], 10) - 1];
-  if (!month) return String(iso);
-  return parts.length >= 3 ? `${month} ${parts[2]}, ${parts[0]}` : `${month} ${parts[0]}`;
+  if (parts.length === 1) return parts[0] ? `${parts[0]} 年` : '';
+  const month = parseInt(parts[1], 10);
+  if (!month || month > 12) return String(iso);
+  return parts.length >= 3 ? `${parts[0]} 年 ${month} 月 ${parseInt(parts[2], 10)} 日` : `${parts[0]} 年 ${month} 月`;
 };
 
 const statusPill = status => {
   if (!status) return '';
   const slug = String(status).toLowerCase().replace(/\s+/g, '-');
-  return `<span class="wyxlab-about-status status-${escape(slug)}">${escape(status)}</span>`;
+  const labels = {
+    'in progress': '进行中',
+    'completed': '已完成',
+    'maintaining': '持续维护',
+    'paused': '已暂停'
+  };
+  return `<span class="wyxlab-about-status status-${escape(slug)}">${escape(labels[String(status).toLowerCase()] || status)}</span>`;
 };
 
 const firstSentence = (text, max) => {
@@ -69,16 +79,34 @@ const dataList = key => {
   return Array.isArray(list) ? list : [];
 };
 
-const section = (title, zh, inner) => inner
-  ? `<section class="wyxlab-about-block"><h2 class="wyxlab-about-heading">${title} <span>${zh}</span></h2>${inner}</section>`
+const section = (title, inner, extraClass = '') => inner
+  ? `<section class="wyxlab-about-block${extraClass ? ` ${extraClass}` : ''}"><h2 class="wyxlab-about-heading">${title}</h2>${inner}</section>`
   : '';
 
 const moreLink = (href, label) => `<a class="wyxlab-about-more" href="${escape(href)}">${escape(label)}<i class="fas fa-arrow-right" aria-hidden="true"></i></a>`;
 
 /* ---------- blocks ---------- */
 
-const profileHtml = () => [
-  '<section class="wyxlab-about-profile">',
+const educationHtml = () => {
+  const rows = [
+    ['学校', EDUCATION.school],
+    ['学院', EDUCATION.college],
+    ['专业', EDUCATION.major]
+  ].filter(([, value]) => value);
+  if (!rows.length) return '';
+  return [
+    '<aside class="wyxlab-about-education">',
+    '<div class="wyxlab-about-education-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>',
+    '<div><p class="wyxlab-about-education-title">教育经历</p>',
+    `<dl>${rows.map(([label, value]) => `<div><dt>${label}</dt><dd>${escape(value)}</dd></div>`).join('')}</dl></div>`,
+    '</aside>'
+  ].join('');
+};
+
+const profileHtml = () => {
+  const education = educationHtml();
+  return [
+  `<section class="wyxlab-about-profile${education ? ' has-education' : ''}">`,
   `<div class="wyxlab-about-avatar-wrap"><img class="wyxlab-about-avatar" src="${escape(PROFILE.avatar)}" alt="WYX LAB avatar" loading="lazy"></div>`,
   '<div class="wyxlab-about-intro">',
   `<h2 class="wyxlab-about-name">${escape(PROFILE.name)}</h2>`,
@@ -86,10 +114,12 @@ const profileHtml = () => [
   `<p class="wyxlab-about-lead">${escape(PROFILE.lead)}</p>`,
   `<p class="wyxlab-about-second">${escape(PROFILE.second)}</p>`,
   `<ul class="wyxlab-about-keywords">${PROFILE.keywords.map(k => `<li>${escape(k)}</li>`).join('')}</ul>`,
-  '<p class="wyxlab-about-statusline"><span class="wyxlab-about-status-label">LAB STATUS</span>Researching · Building · Learning</p>',
+  '<p class="wyxlab-about-statusline"><span class="wyxlab-about-status-label">当前状态</span>研究 · 构建 · 学习</p>',
   '</div>',
+  education,
   '</section>'
 ].join('');
+};
 
 const interestsHtml = () => {
   const groups = INTERESTS.map(g => [
@@ -104,8 +134,8 @@ const interestsHtml = () => {
 const currentlyHtml = projects => {
   const find = status => projects.find(p => p.featured && String(p.status || '').toLowerCase() === status.toLowerCase());
   const slots = [
-    { heading: 'Researching', project: find('In Progress') },
-    { heading: 'Building', project: find('Maintaining') }
+    { heading: '科研进行中', project: find('In Progress') },
+    { heading: '持续构建', project: find('Maintaining') }
   ].filter(s => s.project).map(s => {
     const p = s.project;
     const subtitle = p.subtitle ? `<p class="wyxlab-about-project-subtitle">${escape(p.subtitle)}</p>` : '';
@@ -127,7 +157,7 @@ const featuredHtml = projects => {
     const subtitle = p.subtitle ? `<p class="wyxlab-about-project-subtitle">${escape(p.subtitle)}</p>` : '';
     const desc = p.description ? `<p class="wyxlab-about-project-desc">${escape(p.description)}</p>` : '';
     const tags = Array.isArray(p.tags) && p.tags.length
-      ? `<ul class="wyxlab-about-project-tags">${p.tags.slice(0, 4).map(t => `<li>${escape(t)}</li>`).join('')}</ul>`
+      ? `<ul class="wyxlab-about-project-tags">${p.tags.slice(0, 5).map(t => `<li>${escape(t)}</li>`).join('')}</ul>`
       : '';
     return [
       '<a class="wyxlab-about-project" href="/projects/">',
@@ -139,7 +169,7 @@ const featuredHtml = projects => {
     ].join('');
   });
   return cards.length
-    ? `<div class="wyxlab-about-featured">${cards.join('')}</div>${moreLink('/projects/', 'View all projects')}`
+    ? `<div class="wyxlab-about-featured">${cards.join('')}</div>${moreLink('/projects/', '查看全部项目')}`
     : '';
 };
 
@@ -155,7 +185,7 @@ const milestoneHtml = (timeline, names) => {
     : '';
   let project = '';
   if (latest.project) {
-    const chipText = `Project: ${escape(latest.project)}`;
+    const chipText = `项目：${escape(latest.project)}`;
     project = names.has(latest.project)
       ? `<a class="wyxlab-about-milestone-project" href="/projects/">${chipText}</a>`
       : `<span class="wyxlab-about-milestone-project">${chipText}</span>`;
@@ -169,7 +199,7 @@ const milestoneHtml = (timeline, names) => {
     desc,
     project ? `<div class="wyxlab-about-milestone-related">${project}</div>` : '',
     '</div>',
-    moreLink('/timeline/', 'View timeline')
+    moreLink('/timeline/', '查看时间线')
   ].join('');
 };
 
@@ -193,7 +223,7 @@ const activityHtml = logs => {
       ].join('');
     });
   return items.length
-    ? `<ul class="wyxlab-about-activity">${items.join('')}</ul>${moreLink('/lablog/', 'View Lab Log')}`
+    ? `<ul class="wyxlab-about-activity">${items.join('')}</ul>${moreLink('/lablog/', '查看实验日志')}`
     : '';
 };
 
@@ -217,12 +247,16 @@ hexo.extend.tag.register('wyxlab_about', () => {
 
   return ['<div class="wyxlab-about nc">',
     profileHtml(),
-    section('Research &amp; Interests', '研究与兴趣', interestsHtml()),
-    section('Currently', '正在进行', currentlyHtml(projects)),
-    section('Featured Projects', '精选项目', featuredHtml(projects)),
-    section('Latest Milestone', '最新里程碑', milestoneHtml(timeline, names)),
-    section('Latest Lab Activity', '最近动态', activityHtml(logs)),
-    section('Explore WYX LAB', '浏览实验室', exploreHtml()),
+    '<div class="wyxlab-about-dashboard">',
+    section('研究与兴趣', interestsHtml(), 'is-panel'),
+    section('正在进行', currentlyHtml(projects), 'is-panel'),
+    '</div>',
+    section('精选项目', featuredHtml(projects)),
+    '<div class="wyxlab-about-updates">',
+    section('最新里程碑', milestoneHtml(timeline, names), 'is-panel'),
+    section('最近动态', activityHtml(logs), 'is-panel'),
+    '</div>',
+    section('浏览实验室', exploreHtml()),
     '</div>'
   ].join('');
 });

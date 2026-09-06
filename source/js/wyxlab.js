@@ -6,37 +6,33 @@
 (function () {
   'use strict';
 
-  var HERO_TAGLINE = 'Experiments across physics, code and life.';
-  var HERO_KEYWORDS = 'Physics · Research · Code · Life';
+  var HERO_TAGLINE = '探索物理、代码与生活。';
+  var HERO_KEYWORDS = '物理 · 科研 · 代码 · 生活';
 
   var CARDS = [
     {
       href: '/tags/手性光/',
       icon: 'fas fa-microscope',
-      title: 'Research',
-      desc: '手性光、光谱、COMSOL、科研与论文阅读',
-      en: 'Optics, spectroscopy and research notes.'
+      title: '科研',
+      desc: '手性光、光谱、COMSOL、科研与论文阅读'
     },
     {
       href: '/projects/',
       icon: 'fas fa-hammer',
-      title: 'Projects',
-      desc: '实验装置、软件、网页与正在构建的项目',
-      en: 'Things I build and experiment with.'
+      title: '项目',
+      desc: '实验装置、软件、网页与正在构建的项目'
     },
     {
       href: '/categories/教程/',
       icon: 'fas fa-book-open',
-      title: 'Notes',
-      desc: 'AI 工具、编程、技术与学习笔记',
-      en: 'Technical notes and things I learn.'
+      title: '笔记',
+      desc: 'AI 工具、编程、技术与学习笔记'
     },
     {
       href: '/categories/随笔/',
       icon: 'fas fa-camera',
-      title: 'Life',
-      desc: '摄影、旅行、观察与生活记录',
-      en: 'Photography, travel and everyday thoughts.'
+      title: '生活',
+      desc: '摄影、旅行、观察与生活记录'
     }
   ];
 
@@ -88,8 +84,7 @@
     var section = el('section', 'wyxlab-entrances');
     section.id = 'wyxlab-entrances';
 
-    var title = el('h2', 'wyxlab-entrance-title', 'Explore the Lab');
-    title.appendChild(el('span', 'wyxlab-entrance-sub', '实验室入口'));
+    var title = el('h2', 'wyxlab-entrance-title', '实验室入口');
     section.appendChild(title);
 
     var grid = el('div', 'wyxlab-lab-grid');
@@ -103,7 +98,6 @@
       link.appendChild(icon);
       link.appendChild(el('span', 'wyxlab-lab-name', card.title));
       link.appendChild(el('span', 'wyxlab-lab-desc', card.desc));
-      link.appendChild(el('span', 'wyxlab-lab-en', card.en));
       grid.appendChild(link);
     });
     section.appendChild(grid);

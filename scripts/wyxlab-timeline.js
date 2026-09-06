@@ -6,14 +6,12 @@
 'use strict';
 
 const CATEGORY_MAP = {
-  'research': { icon: 'fas fa-flask' },
-  'project': { icon: 'fas fa-diagram-project' },
-  'learning': { icon: 'fas fa-book' },
-  'website': { icon: 'fas fa-globe' },
-  'achievement': { icon: 'fas fa-trophy' }
+  '科研': { icon: 'fas fa-flask' },
+  '项目': { icon: 'fas fa-diagram-project' },
+  '学习': { icon: 'fas fa-book' },
+  '网站': { icon: 'fas fa-globe' },
+  '成就': { icon: 'fas fa-trophy' }
 };
-
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const escape = value => String(value == null ? '' : value)
   .replace(/&/g, '&amp;')
@@ -31,10 +29,10 @@ const sortable = iso => {
 
 const formatDate = iso => {
   const parts = iso.split('-');
-  if (parts.length === 1) return iso;
-  const month = MONTHS[parseInt(parts[1], 10) - 1];
-  if (!month) return iso;
-  return parts.length >= 3 ? `${month} ${parts[2]}, ${parts[0]}` : `${month} ${parts[0]}`;
+  if (parts.length === 1) return `${iso} 年`;
+  const month = parseInt(parts[1], 10);
+  if (!month || month > 12) return iso;
+  return parts.length >= 3 ? `${parts[0]} 年 ${month} 月 ${parseInt(parts[2], 10)} 日` : `${parts[0]} 年 ${month} 月`;
 };
 
 const projectNames = () => {
@@ -57,7 +55,7 @@ const safeHref = url => {
 const relatedLine = (entry, names) => {
   const parts = [];
   if (entry.project) {
-    const chipText = `Project: ${escape(entry.project)}`;
+    const chipText = `项目：${escape(entry.project)}`;
     parts.push(names.has(entry.project)
       ? `<a class="wyxlab-timeline-project" href="/projects/">${chipText}</a>`
       : `<span class="wyxlab-timeline-project">${chipText}</span>`);
@@ -66,7 +64,7 @@ const relatedLine = (entry, names) => {
   if (link) {
     const external = /^https?:\/\//i.test(link);
     const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-    parts.push(`<a class="wyxlab-timeline-link"${attrs} href="${escape(link)}">View related<i class="fas fa-arrow-right" aria-hidden="true"></i></a>`);
+    parts.push(`<a class="wyxlab-timeline-link"${attrs} href="${escape(link)}">查看相关内容<i class="fas fa-arrow-right" aria-hidden="true"></i></a>`);
   }
   return parts.length ? `<div class="wyxlab-timeline-related">${parts.join('')}</div>` : '';
 };
@@ -83,7 +81,7 @@ const timelineItem = (entry, names) => {
     `<div class="wyxlab-timeline-date"><time datetime="${escape(iso)}">${escape(formatDate(iso))}</time></div>`,
     '<div class="wyxlab-timeline-body">',
     '<span class="wyxlab-timeline-dot" aria-hidden="true"></span>',
-    `<div class="wyxlab-timeline-meta">${categoryChip(entry.category)}${milestone ? '<span class="wyxlab-timeline-milestone">Milestone</span>' : ''}</div>`,
+    `<div class="wyxlab-timeline-meta">${categoryChip(entry.category)}${milestone ? '<span class="wyxlab-timeline-milestone">里程碑</span>' : ''}</div>`,
     `<h3 class="wyxlab-timeline-title">${escape(entry.title)}</h3>`,
     entry.description ? `<p class="wyxlab-timeline-description">${escape(entry.description)}</p>` : '',
     media,

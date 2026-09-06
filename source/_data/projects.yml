@@ -1,0 +1,67 @@
+# =====================================================
+# WYX LAB — Projects data
+# 新增项目只需在这里追加一个条目，无需修改页面代码。
+# 字段: name / subtitle / description / status / started /
+#       tags / image / article / github / demo / featured
+# status 可选值: In Progress | Completed | Maintaining | Paused
+# =====================================================
+
+- name: Chiral Molecule Detection
+  subtitle: 手性分子快速检测研究
+  description: 基于偏振光学、光谱测量、COMSOL 仿真与数据分析，探索手性分子的快速检测方案。
+  status: In Progress
+  started: 2026
+  tags:
+    - Optics
+    - Spectroscopy
+    - COMSOL
+    - Chirality
+    - Data Analysis
+  image:
+  article:
+  github:
+  demo:
+  featured: true
+
+- name: AA Trip Calculator
+  subtitle:
+  description: 用于 AA 出行费用计算与分摊的纯前端小工具。
+  status: Completed
+  started:
+  tags:
+    - Frontend
+    - Tool
+  image:
+  article:
+  github:
+  demo:
+  featured: false
+
+- name: Time Tracker
+  subtitle:
+  description: 用于记录和整理个人时间投入的轻量工具。
+  status: Completed
+  started:
+  tags:
+    - Frontend
+    - Productivity
+  image:
+  article:
+  github:
+  demo:
+  featured: false
+
+- name: WYX LAB
+  subtitle: Personal Digital Lab
+  description: 我的个人数字实验室，用于记录物理、代码、科研与生活中的实验。
+  status: Maintaining
+  started: 2026
+  tags:
+    - Hexo
+    - Butterfly
+    - Web
+  image:
+  article:
+  github:
+  demo:
+  featured: true

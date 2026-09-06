@@ -1,4 +1,4 @@
-# --------------------------------------
+﻿# --------------------------------------
 # Hexo Butterfly Theme Configuration
 # If you have any questions, please refer to the documentation
 # Chinese: https://butterfly.js.org/
@@ -19,10 +19,15 @@ nav:
 
 menu:
   主页: / || fas fa-home
+  Lab||fas fa-flask:
+    Projects: /projects/ || fas fa-diagram-project
+    Lab Log: /lablog/ || fas fa-clipboard-list
+    Timeline: /timeline/ || fas fa-route
   文章||fas fa-book:
     归档: /archives/ || fas fa-box-archive
     分类: /categories/ || fas fa-folder-open
     标签: /tags/ || fas fa-tags
+  About: /about/ || fas fa-user
   GitHub: https://github.com/xinghehuanyu-sudo || fab fa-github
 
 # --------------------------------------
@@ -147,13 +152,13 @@ post_meta:
 # The position of site info, eg: 300px/300em/300rem/10%
 index_site_info_top:
 # The height of top_img, eg: 300px/300em/300rem
-index_top_img_height:
+index_top_img_height: 76vh
 
 # The subtitle on homepage
 subtitle:
   enable: true
   # Typewriter Effect
-  effect: true
+  effect: false
   # Customize typed.js
   # https://github.com/mattboldt/typed.js/#customization
   typed_option:
@@ -167,9 +172,7 @@ subtitle:
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
   sub:
-    - 记录学习和生活的点滴
-    - Personal Lab & Blog
-    - Welcome to WYX LAB
+    - 在物理、代码与生活之间做一些实验。
 
 # Article layout on the homepage
 # 1: Cover on the left, info on the right
@@ -269,7 +272,7 @@ footer:
   copyright:
     enable: true
     version: true
-  custom_text:
+  custom_text: <div class="wyxlab-footer-brand"><span class="wyxlab-footer-name">WYX LAB</span><span class="wyxlab-footer-slogan">Experiments across physics, code and life.</span><span class="wyxlab-footer-tagline">Still experimenting.</span></div>
 
 # --------------------------------------
 # Aside Settings
@@ -301,7 +304,7 @@ aside:
   card_recent_post:
     enable: true
     # If set 0 will show all
-    limit: 5
+    limit: 3
     # Sort: date / updated
     sort: date
     sort_order:
@@ -1054,8 +1057,10 @@ css_prefix: true
 inject:
   head:
     - <link rel="stylesheet" href="/css/intro-animation.css?v=20260906-pagination-title-fix">
+    - <link rel="stylesheet" href="/css/wyxlab.css?v=20260906-hardening">
   bottom:
     - <script src="/js/wyx-effects.js?v=20260823-performance"></script>
+    - <script src="/js/wyxlab.js?v=20260906-links"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work

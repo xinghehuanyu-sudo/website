@@ -1,0 +1,2223 @@
+﻿/* =====================================================
+   WYX LAB — home brand hero & lab entrance cards
+   Namespaced under .wyxlab-* / #wyxlab-entrances
+   ===================================================== */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --wyxlab-radius-sm: 8px;
+  --wyxlab-radius-md: 12px;
+  --wyxlab-radius-lg: 16px;
+  --wyxlab-space-xs: 4px;
+  --wyxlab-space-sm: 8px;
+  --wyxlab-space-md: 16px;
+  --wyxlab-space-lg: 24px;
+  --wyxlab-space-xl: 32px;
+  --wyxlab-transition-fast: var(--wyxlab-transition-fast);
+  --wyxlab-card-border: 1px solid rgba(28, 61, 90, 0.09);
+  --wyxlab-card-border-hover: rgba(73, 177, 245, 0.5);
+  --wyxlab-card-shadow: 0 6px 16px rgba(28, 61, 90, 0.06);
+  --wyxlab-card-shadow-hover: 0 12px 24px rgba(28, 61, 90, 0.12);
+  --wyxlab-chip-bg: rgba(27, 31, 35, 0.06);
+  --wyxlab-hairline: rgba(28, 61, 90, 0.07);
+  --wyxlab-rail: rgba(28, 61, 90, 0.18);
+}
+
+html[data-theme='dark'] {
+  --wyxlab-card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --wyxlab-card-border-hover: rgba(73, 177, 245, 0.55);
+  --wyxlab-card-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  --wyxlab-card-shadow-hover: 0 12px 24px rgba(0, 0, 0, 0.45);
+  --wyxlab-chip-bg: rgba(255, 255, 255, 0.07);
+  --wyxlab-hairline: rgba(255, 255, 255, 0.08);
+  --wyxlab-rail: rgba(255, 255, 255, 0.16);
+}
+
+/* ---------- Hero extra lines ---------- */
+.wyxlab-hero-extra {
+  margin-top: 0.9rem;
+}
+
+.wyxlab-hero-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+  animation: wyxlab-fade-up 0.6s ease 0.15s backwards;
+}
+
+.wyxlab-hero-keywords {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+  animation: wyxlab-fade-up 0.6s ease 0.3s backwards;
+}
+
+#page-header #site-title {
+  animation: wyxlab-fade-up 0.6s ease backwards;
+}
+
+#page-header #site-subtitle {
+  animation: wyxlab-fade-up 0.6s ease 0.08s backwards;
+}
+
+/* ---------- Faint wave decoration on the hero ---------- */
+.wyxlab-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  width: 100%;
+  height: 220px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wyxlab-wave path {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 1.5;
+  animation: wyxlab-wave-drift 36s linear infinite alternate;
+}
+
+@keyframes wyxlab-wave-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-60px); }
+}
+
+/* ---------- Explore the Lab ---------- */
+.wyxlab-entrances {
+  margin: 0 0 24px;
+  padding: 0 4px;
+}
+
+.wyxlab-entrance-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 2px 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.wyxlab-entrance-sub {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--second-text);
+  letter-spacing: 0.06em;
+}
+
+.wyxlab-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.wyxlab-lab-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px 18px;
+  border: 1px solid rgba(28, 61, 90, 0.08);
+  border-radius: var(--wyxlab-radius-md);
+  background: var(--card-bg);
+  box-shadow: 0 6px 18px rgba(28, 61, 90, 0.05);
+  text-decoration: none;
+  transition:
+    transform var(--wyxlab-transition-fast),
+    border-color var(--wyxlab-transition-fast),
+    box-shadow var(--wyxlab-transition-fast);
+  animation: wyxlab-fade-up 0.6s ease backwards;
+}
+
+.wyxlab-lab-card:hover,
+.wyxlab-lab-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(73, 177, 245, 0.45);
+  box-shadow: 0 12px 26px rgba(28, 61, 90, 0.12);
+}
+
+.wyxlab-lab-card:focus-visible {
+  outline: 2px solid var(--theme-color, #49b1f5);
+  outline-offset: 2px;
+}
+
+.wyxlab-lab-icon {
+  margin-bottom: 4px;
+  font-size: 1.35rem;
+  color: var(--theme-color, #49b1f5);
+  transition: transform var(--wyxlab-transition-fast);
+}
+
+.wyxlab-lab-card:hover .wyxlab-lab-icon {
+  transform: scale(1.08);
+}
+
+.wyxlab-lab-name {
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--font-color);
+}
+
+.wyxlab-lab-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--font-color);
+}
+
+.wyxlab-lab-en {
+  font-size: 0.75rem;
+  color: var(--second-text);
+}
+
+/* ---------- Shared entrance animation ---------- */
+@keyframes wyxlab-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1200px) {
+  .wyxlab-lab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-entrances {
+    margin-bottom: 20px;
+  }
+
+  .wyxlab-lab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .wyxlab-lab-card {
+    padding: 16px 14px;
+  }
+
+  .wyxlab-hero-tagline {
+    font-size: 0.85rem;
+  }
+
+  .wyxlab-hero-keywords {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .wyxlab-wave {
+    height: 140px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wyxlab-lab-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Dark mode ---------- */
+html[data-theme='dark'] .wyxlab-lab-card {
+  border-color: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme='dark'] .wyxlab-lab-card:hover,
+html[data-theme='dark'] .wyxlab-lab-card:focus-visible {
+  border-color: rgba(73, 177, 245, 0.5);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .wyxlab-wave path {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-hero-tagline,
+  .wyxlab-hero-keywords,
+  #page-header #site-title,
+  #page-header #site-subtitle,
+  .wyxlab-lab-card {
+    animation: none;
+  }
+
+  .wyxlab-wave path {
+    animation: none;
+  }
+
+  .wyxlab-lab-card,
+  .wyxlab-lab-icon {
+    transition: none;
+  }
+}
+
+/* =====================================================
+   Projects page (/projects/) — rendered by
+   scripts/wyxlab-projects.js from source/_data/projects.yml
+   ===================================================== */
+
+.wyxlab-projects {
+  margin-top: 8px;
+}
+
+.wyxlab-projects-group {
+  margin-bottom: 34px;
+}
+
+.wyxlab-projects-group:last-child {
+  margin-bottom: 6px;
+}
+
+.wyxlab-projects-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 2px 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.wyxlab-projects-heading span {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--second-text);
+  letter-spacing: 0.06em;
+}
+
+.wyxlab-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wyxlab-project-grid.is-featured-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.wyxlab-project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(28, 61, 90, 0.09);
+  border-radius: var(--wyxlab-radius-md);
+  background: var(--global-bg);
+  box-shadow: 0 6px 18px rgba(28, 61, 90, 0.05);
+  transition:
+    transform var(--wyxlab-transition-fast),
+    border-color var(--wyxlab-transition-fast),
+    box-shadow var(--wyxlab-transition-fast);
+}
+
+.wyxlab-project-card:hover,
+.wyxlab-project-card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(73, 177, 245, 0.45);
+  box-shadow: 0 12px 26px rgba(28, 61, 90, 0.12);
+}
+
+.wyxlab-project-media {
+  position: relative;
+  height: 132px;
+  background: var(--card-bg);
+}
+
+.wyxlab-project-card.is-featured .wyxlab-project-media {
+  height: 168px;
+}
+
+.wyxlab-project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wyxlab-project-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+.wyxlab-project-placeholder-grid {
+  fill: none;
+  stroke: var(--second-text);
+  stroke-width: 0.6;
+  opacity: 0.14;
+}
+
+.wyxlab-project-placeholder-wave {
+  fill: none;
+  stroke: var(--theme-color, #49b1f5);
+  stroke-width: 1.6;
+  opacity: 0.32;
+}
+
+.wyxlab-project-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  padding: 16px 16px 14px;
+}
+
+.wyxlab-project-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wyxlab-project-name {
+  margin: 0;
+  font-size: 1.06rem;
+  font-weight: 680;
+  line-height: 1.4;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-project-card.is-featured .wyxlab-project-name {
+  font-size: 1.18rem;
+}
+
+.wyxlab-project-subtitle {
+  margin: -2px 0 0;
+  font-size: 0.82rem;
+  color: var(--second-text);
+  letter-spacing: 0.04em;
+}
+
+.wyxlab-project-desc {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--font-color);
+}
+
+.wyxlab-project-status {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.wyxlab-project-status-dot {
+  font-style: normal;
+  font-size: 0.68rem;
+}
+
+.wyxlab-project-status.status-in-progress {
+  background: rgba(34, 197, 94, 0.12);
+  color: #15803d;
+}
+
+.wyxlab-project-status.status-completed {
+  background: rgba(73, 177, 245, 0.12);
+  color: #1d6fb8;
+}
+
+.wyxlab-project-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+}
+
+.wyxlab-project-status.status-paused {
+  background: rgba(107, 114, 128, 0.14);
+  color: #4b5563;
+}
+
+.wyxlab-project-status.status-custom {
+  background: rgba(107, 114, 128, 0.12);
+  color: var(--second-text);
+}
+
+.wyxlab-project-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.wyxlab-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-project-tags li {
+  padding: 2px 8px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: rgba(27, 31, 35, 0.06);
+  font-size: 0.72rem;
+  color: var(--second-text);
+}
+
+.wyxlab-project-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid rgba(28, 61, 90, 0.07);
+  padding-top: 10px;
+}
+
+.wyxlab-project-started {
+  font-size: 0.75rem;
+  color: var(--second-text);
+}
+
+.wyxlab-project-started i {
+  margin-right: 4px;
+}
+
+.wyxlab-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border: 1px solid rgba(73, 177, 245, 0.35);
+  border-radius: var(--wyxlab-radius-sm);
+  color: var(--theme-color, #49b1f5);
+  font-size: 0.78rem;
+  text-decoration: none;
+  transition: background-color var(--wyxlab-transition-fast), border-color var(--wyxlab-transition-fast);
+}
+
+.wyxlab-project-link:hover,
+.wyxlab-project-link:focus-visible {
+  background: rgba(73, 177, 245, 0.1);
+  border-color: rgba(73, 177, 245, 0.6);
+}
+
+.wyxlab-project-link:focus-visible {
+  outline: 2px solid var(--theme-color, #49b1f5);
+  outline-offset: 2px;
+}
+
+.wyxlab-project-link i {
+  font-size: 0.68rem;
+}
+
+/* ---------- Projects responsive ---------- */
+@media (max-width: 1200px) {
+  .wyxlab-project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-project-grid,
+  .wyxlab-project-grid.is-featured-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .wyxlab-project-media {
+    height: 116px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wyxlab-project-head {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wyxlab-project-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ---------- Projects dark mode ---------- */
+html[data-theme='dark'] .wyxlab-project-card {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme='dark'] .wyxlab-project-card:hover,
+html[data-theme='dark'] .wyxlab-project-card:focus-within {
+  border-color: rgba(73, 177, 245, 0.5);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-in-progress {
+  background: rgba(34, 197, 94, 0.16);
+  color: #6ee7a7;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-completed {
+  background: rgba(73, 177, 245, 0.16);
+  color: #8ecdfb;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fbbf64;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-paused {
+  background: rgba(156, 163, 175, 0.16);
+  color: #c3c8d1;
+}
+
+html[data-theme='dark'] .wyxlab-project-tags li {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme='dark'] .wyxlab-project-actions {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Projects reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-project-card,
+  .wyxlab-project-link {
+    transition: none;
+  }
+
+  .wyxlab-project-card:hover {
+    transform: none;
+  }
+}
+
+/* =====================================================
+   Lab Log (/lablog/) timeline + home Recent Lab Logs
+   Rendered by scripts/wyxlab-lablog.js from
+   source/_data/lablog.yml
+   ===================================================== */
+
+/* ---------- Full page timeline ---------- */
+.wyxlab-lablog {
+  margin-top: 8px;
+}
+
+.wyxlab-lablog-year {
+  margin-bottom: 30px;
+}
+
+.wyxlab-lablog-year-title {
+  margin: 0 2px 14px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.wyxlab-lablog-list {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 24px;
+  border-left: 1px solid rgba(28, 61, 90, 0.16);
+  list-style: none;
+}
+
+.wyxlab-log-item {
+  position: relative;
+  margin-bottom: 14px;
+  padding: 16px 18px;
+  border: 1px solid rgba(28, 61, 90, 0.08);
+  border-radius: var(--wyxlab-radius-md);
+  background: var(--global-bg);
+  transition:
+    transform var(--wyxlab-transition-fast),
+    border-color var(--wyxlab-transition-fast),
+    box-shadow var(--wyxlab-transition-fast);
+}
+
+.wyxlab-log-item::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: -29px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--theme-color, #49b1f5);
+  border-radius: 50%;
+  background: var(--card-bg);
+}
+
+.wyxlab-log-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(73, 177, 245, 0.4);
+  box-shadow: 0 10px 22px rgba(28, 61, 90, 0.1);
+}
+
+.wyxlab-log-date time {
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-log-main {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.wyxlab-log-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-log-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--second-text);
+}
+
+.wyxlab-log-type i {
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-log-status {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.wyxlab-log-status.status-completed {
+  background: rgba(96, 145, 110, 0.12);
+  color: #3f7250;
+}
+
+.wyxlab-log-status.status-progress {
+  background: rgba(90, 130, 190, 0.12);
+  color: #46689c;
+}
+
+.wyxlab-log-status.status-note {
+  background: rgba(120, 120, 130, 0.1);
+  color: #5c5f66;
+}
+
+.wyxlab-log-status.status-custom {
+  background: rgba(120, 120, 130, 0.1);
+  color: var(--second-text);
+}
+
+.wyxlab-log-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-log-content {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--font-color);
+}
+
+.wyxlab-log-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-log-tags li {
+  padding: 1px 8px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: rgba(27, 31, 35, 0.06);
+  font-size: 0.72rem;
+  color: var(--second-text);
+}
+
+.wyxlab-log-related {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.wyxlab-log-project {
+  padding: 2px 9px;
+  border: 1px dashed rgba(73, 177, 245, 0.45);
+  border-radius: var(--wyxlab-radius-sm);
+  font-size: 0.75rem;
+  color: var(--second-text);
+  text-decoration: none;
+  transition: background-color var(--wyxlab-transition-fast), color var(--wyxlab-transition-fast);
+}
+
+a.wyxlab-log-project:hover,
+a.wyxlab-log-project:focus-visible {
+  background: rgba(73, 177, 245, 0.1);
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-log-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--theme-color, #49b1f5);
+  text-decoration: none;
+}
+
+.wyxlab-log-link i {
+  font-size: 0.68rem;
+  transition: transform var(--wyxlab-transition-fast);
+}
+
+.wyxlab-log-link:hover i {
+  transform: translateX(2px);
+}
+
+/* ---------- Home Recent Lab Logs ---------- */
+.wyxlab-recent-logs {
+  margin: 0 0 24px;
+  padding: 4px 4px 0;
+}
+
+.wyxlab-recent-logs-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 2px 10px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.wyxlab-recent-logs-title span {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--second-text);
+  letter-spacing: 0.06em;
+}
+
+.wyxlab-recent-logs-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(28, 61, 90, 0.07);
+}
+
+.wyxlab-recent-log-item {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(28, 61, 90, 0.07);
+  border-radius: var(--wyxlab-radius-sm);
+  transition: background-color var(--wyxlab-transition-fast);
+}
+
+.wyxlab-recent-log-item:hover {
+  background: rgba(73, 177, 245, 0.05);
+}
+
+.wyxlab-recent-log-date time {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--second-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.wyxlab-recent-log-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.wyxlab-recent-log-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-recent-log-head .wyxlab-log-title {
+  font-size: 0.98rem;
+}
+
+.wyxlab-recent-log-main .wyxlab-log-content {
+  font-size: 0.85rem;
+  color: var(--second-text);
+}
+
+.wyxlab-recent-logs-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 2px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--theme-color, #49b1f5);
+  text-decoration: none;
+  transition: opacity var(--wyxlab-transition-fast);
+}
+
+.wyxlab-recent-logs-more:hover {
+  opacity: 0.78;
+}
+
+.wyxlab-recent-logs-more i {
+  font-size: 0.72rem;
+}
+
+/* ---------- Lab Log responsive ---------- */
+@media (max-width: 900px) {
+  .wyxlab-recent-log-item {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-lablog-list {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .wyxlab-log-item {
+    padding: 14px 14px;
+  }
+
+  .wyxlab-log-item::before {
+    display: none;
+  }
+
+  .wyxlab-recent-log-item {
+    padding: 10px 8px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wyxlab-recent-log-item {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+/* ---------- Lab Log dark mode ---------- */
+html[data-theme='dark'] .wyxlab-lablog-list {
+  border-left-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme='dark'] .wyxlab-log-item {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme='dark'] .wyxlab-log-item:hover {
+  border-color: rgba(73, 177, 245, 0.5);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme='dark'] .wyxlab-log-status.status-completed {
+  background: rgba(110, 170, 130, 0.16);
+  color: #9dc8ab;
+}
+
+html[data-theme='dark'] .wyxlab-log-status.status-progress {
+  background: rgba(110, 150, 210, 0.16);
+  color: #a7c0e2;
+}
+
+html[data-theme='dark'] .wyxlab-log-status.status-note {
+  background: rgba(160, 164, 172, 0.14);
+  color: #b7bac1;
+}
+
+html[data-theme='dark'] .wyxlab-log-tags li {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme='dark'] .wyxlab-recent-logs-list,
+html[data-theme='dark'] .wyxlab-recent-log-item {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='dark'] .wyxlab-recent-log-item:hover {
+  background: rgba(73, 177, 245, 0.08);
+}
+
+/* ---------- Lab Log reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-log-item,
+  .wyxlab-recent-log-item,
+  .wyxlab-log-link i {
+    transition: none;
+  }
+
+  .wyxlab-log-item:hover {
+    transform: none;
+  }
+}
+
+/* =====================================================
+   Timeline (/timeline/) — curated milestones
+   Rendered by scripts/wyxlab-timeline.js from
+   source/_data/timeline.yml
+   ===================================================== */
+
+.wyxlab-timeline {
+  margin-top: 8px;
+}
+
+.wyxlab-timeline-year {
+  margin-bottom: 30px;
+}
+
+.wyxlab-timeline-year-title {
+  margin: 0 2px 18px;
+  font-size: 1.3rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  color: var(--font-color);
+}
+
+.wyxlab-timeline-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  column-gap: 26px;
+  padding-bottom: 30px;
+}
+
+.wyxlab-timeline-date {
+  text-align: right;
+  padding-top: 1px;
+}
+
+.wyxlab-timeline-date time {
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--second-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.wyxlab-timeline-body {
+  position: relative;
+  padding-left: 30px;
+  border-left: 1px solid rgba(28, 61, 90, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.wyxlab-timeline-dot {
+  position: absolute;
+  top: 6px;
+  left: -5px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--second-text);
+  border-radius: 50%;
+  background: var(--card-bg);
+  transition: border-color var(--wyxlab-transition-fast);
+}
+
+.wyxlab-timeline-item.is-milestone .wyxlab-timeline-dot {
+  top: 4px;
+  left: -7px;
+  width: 13px;
+  height: 13px;
+  border-color: var(--theme-color, #49b1f5);
+  box-shadow: 0 0 0 3px rgba(73, 177, 245, 0.16);
+}
+
+.wyxlab-timeline-item.is-milestone .wyxlab-timeline-title {
+  font-weight: 730;
+}
+
+.wyxlab-timeline-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-timeline-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--second-text);
+}
+
+.wyxlab-timeline-category i {
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-timeline-milestone {
+  padding: 1px 8px;
+  border: 1px dashed rgba(73, 177, 245, 0.5);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-timeline-title {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 650;
+  line-height: 1.5;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-timeline-item.is-milestone .wyxlab-timeline-title {
+  font-size: 1.1rem;
+}
+
+.wyxlab-timeline-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--font-color);
+}
+
+.wyxlab-timeline-media {
+  margin-top: 2px;
+}
+
+.wyxlab-timeline-media img {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border: 1px solid rgba(28, 61, 90, 0.09);
+  border-radius: var(--wyxlab-radius-md);
+}
+
+.wyxlab-timeline-related {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.wyxlab-timeline-project {
+  padding: 2px 9px;
+  border: 1px dashed rgba(73, 177, 245, 0.45);
+  border-radius: var(--wyxlab-radius-sm);
+  font-size: 0.75rem;
+  color: var(--second-text);
+  text-decoration: none;
+  transition: background-color var(--wyxlab-transition-fast), color var(--wyxlab-transition-fast);
+}
+
+a.wyxlab-timeline-project:hover,
+a.wyxlab-timeline-project:focus-visible {
+  background: rgba(73, 177, 245, 0.1);
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-timeline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--theme-color, #49b1f5);
+  text-decoration: none;
+}
+
+.wyxlab-timeline-link i {
+  font-size: 0.68rem;
+  transition: transform var(--wyxlab-transition-fast);
+}
+
+.wyxlab-timeline-link:hover i {
+  transform: translateX(2px);
+}
+
+/* ---------- Timeline responsive ---------- */
+@media (max-width: 900px) {
+  .wyxlab-timeline-item {
+    grid-template-columns: 96px minmax(0, 1fr);
+    column-gap: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-timeline-item {
+    grid-template-columns: 84px minmax(0, 1fr);
+    column-gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  .wyxlab-timeline-date time {
+    font-size: 0.75rem;
+  }
+
+  .wyxlab-timeline-body {
+    padding-left: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wyxlab-timeline-item {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+
+  .wyxlab-timeline-date {
+    text-align: left;
+    padding-left: 22px;
+  }
+
+  .wyxlab-timeline-body {
+    padding-left: 22px;
+  }
+}
+
+/* ---------- Timeline dark mode ---------- */
+html[data-theme='dark'] .wyxlab-timeline-body {
+  border-left-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme='dark'] .wyxlab-timeline-media img {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Timeline reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-timeline-dot,
+  .wyxlab-timeline-project,
+  .wyxlab-timeline-link i {
+    transition: none;
+  }
+}
+
+/* =====================================================
+   About (/about/) — aggregation of projects / lablog /
+   timeline data. Rendered by scripts/wyxlab-about.js
+   ===================================================== */
+
+.wyxlab-about {
+  margin-top: 4px;
+}
+
+.wyxlab-about-block {
+  margin-bottom: 34px;
+}
+
+.wyxlab-about-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 2px 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.wyxlab-about-heading span {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--second-text);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Profile ---------- */
+.wyxlab-about-profile {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  margin-bottom: 34px;
+  padding: 22px 22px 20px;
+  border: 1px solid rgba(28, 61, 90, 0.08);
+  border-radius: var(--wyxlab-radius-lg);
+  background: var(--global-bg);
+}
+
+.wyxlab-about-avatar {
+  display: block;
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+  border: 1px solid rgba(28, 61, 90, 0.1);
+  border-radius: var(--wyxlab-radius-lg);
+}
+
+.wyxlab-about-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.wyxlab-about-name {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  color: var(--font-color);
+}
+
+.wyxlab-about-tagline {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-about-lead {
+  margin: 4px 0 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--font-color);
+}
+
+.wyxlab-about-second {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--second-text);
+}
+
+.wyxlab-about-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-about-keywords li {
+  padding: 2px 10px;
+  border: 1px solid rgba(73, 177, 245, 0.3);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  letter-spacing: 0.05em;
+  color: var(--second-text);
+}
+
+.wyxlab-about-statusline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  color: var(--second-text);
+}
+
+.wyxlab-about-status-label {
+  padding: 1px 8px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: rgba(27, 31, 35, 0.06);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+/* ---------- Research & Interests ---------- */
+.wyxlab-about-interests {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wyxlab-about-interest-group {
+  padding: 14px 16px;
+  border-left: 2px solid rgba(73, 177, 245, 0.4);
+}
+
+.wyxlab-about-interest-group h3 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  font-weight: 680;
+  color: var(--font-color);
+}
+
+.wyxlab-about-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-about-chips li {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(27, 31, 35, 0.05);
+  font-size: 0.76rem;
+  color: var(--second-text);
+}
+
+/* ---------- Shared status pill ---------- */
+.wyxlab-about-status {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.wyxlab-about-status.status-in-progress {
+  background: rgba(34, 197, 94, 0.1);
+  color: #2f7d46;
+}
+
+.wyxlab-about-status.status-completed {
+  background: rgba(73, 177, 245, 0.12);
+  color: #1d6fb8;
+}
+
+.wyxlab-about-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.12);
+  color: #a15c07;
+}
+
+.wyxlab-about-status.status-paused {
+  background: rgba(107, 114, 128, 0.12);
+  color: #4b5563;
+}
+
+/* ---------- Currently ---------- */
+.wyxlab-about-current {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.wyxlab-about-current-item {
+  padding: 4px 0 0;
+}
+
+.wyxlab-about-current-heading {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--second-text);
+}
+
+.wyxlab-about-current-project {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-about-current-name {
+  font-size: 1rem;
+  font-weight: 680;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Featured Projects ---------- */
+.wyxlab-about-featured {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.wyxlab-about-project {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid rgba(28, 61, 90, 0.08);
+  border-radius: var(--wyxlab-radius-md);
+  background: var(--global-bg);
+  text-decoration: none;
+  transition:
+    transform var(--wyxlab-transition-fast),
+    border-color var(--wyxlab-transition-fast),
+    box-shadow var(--wyxlab-transition-fast);
+}
+
+.wyxlab-about-project:hover,
+.wyxlab-about-project:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(73, 177, 245, 0.45);
+  box-shadow: 0 10px 22px rgba(28, 61, 90, 0.1);
+}
+
+.wyxlab-about-project:focus-visible {
+  outline: 2px solid var(--theme-color, #49b1f5);
+  outline-offset: 2px;
+}
+
+.wyxlab-about-project-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-about-project-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 680;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-about-project-subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--second-text);
+}
+
+.wyxlab-about-project-desc {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.7;
+  color: var(--font-color);
+}
+
+.wyxlab-about-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wyxlab-about-project-tags li {
+  padding: 1px 8px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: rgba(27, 31, 35, 0.06);
+  font-size: 0.72rem;
+  color: var(--second-text);
+}
+
+/* ---------- More link ---------- */
+.wyxlab-about-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--theme-color, #49b1f5);
+  text-decoration: none;
+  transition: opacity var(--wyxlab-transition-fast);
+}
+
+.wyxlab-about-more:hover {
+  opacity: 0.78;
+}
+
+.wyxlab-about-more i {
+  font-size: 0.72rem;
+}
+
+/* ---------- Latest Milestone ---------- */
+.wyxlab-about-milestone {
+  margin-bottom: 12px;
+  padding: 14px 18px;
+  border-left: 3px solid rgba(73, 177, 245, 0.5);
+}
+
+.wyxlab-about-milestone-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--second-text);
+}
+
+.wyxlab-about-milestone-meta time {
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-about-milestone-category {
+  padding: 1px 8px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: rgba(27, 31, 35, 0.06);
+  font-size: 0.72rem;
+}
+
+.wyxlab-about-milestone-title {
+  margin: 6px 0 0;
+  font-size: 1.05rem;
+  font-weight: 680;
+  line-height: 1.5;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-about-milestone-desc {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--font-color);
+}
+
+.wyxlab-about-milestone-related {
+  margin-top: 6px;
+}
+
+.wyxlab-about-milestone-project {
+  padding: 2px 9px;
+  border: 1px dashed rgba(73, 177, 245, 0.45);
+  border-radius: var(--wyxlab-radius-sm);
+  font-size: 0.75rem;
+  color: var(--second-text);
+  text-decoration: none;
+  transition: background-color var(--wyxlab-transition-fast), color var(--wyxlab-transition-fast);
+}
+
+a.wyxlab-about-milestone-project:hover,
+a.wyxlab-about-milestone-project:focus-visible {
+  background: rgba(73, 177, 245, 0.1);
+  color: var(--theme-color, #49b1f5);
+}
+
+/* ---------- Latest Lab Activity ---------- */
+.wyxlab-about-activity {
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(28, 61, 90, 0.07);
+}
+
+.wyxlab-about-activity-item {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 14px;
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(28, 61, 90, 0.07);
+}
+
+.wyxlab-about-activity-date time {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--second-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.wyxlab-about-activity-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.wyxlab-about-activity-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wyxlab-about-activity-head h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 620;
+  color: var(--font-color);
+  overflow-wrap: anywhere;
+}
+
+.wyxlab-about-activity-type {
+  font-size: 0.72rem;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-about-activity-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--second-text);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* ---------- Explore ---------- */
+.wyxlab-about-explore {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.wyxlab-about-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 14px 15px;
+  border: 1px solid rgba(28, 61, 90, 0.08);
+  border-radius: var(--wyxlab-radius-md);
+  background: var(--global-bg);
+  text-decoration: none;
+  transition:
+    transform var(--wyxlab-transition-fast),
+    border-color var(--wyxlab-transition-fast);
+}
+
+.wyxlab-about-link-card:hover,
+.wyxlab-about-link-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(73, 177, 245, 0.45);
+}
+
+.wyxlab-about-link-card > i {
+  font-size: 1.05rem;
+  color: var(--theme-color, #49b1f5);
+}
+
+.wyxlab-about-link-name {
+  font-size: 0.95rem;
+  font-weight: 650;
+  color: var(--font-color);
+}
+
+.wyxlab-about-link-desc {
+  font-size: 0.76rem;
+  color: var(--second-text);
+}
+
+/* ---------- About responsive ---------- */
+@media (max-width: 900px) {
+  .wyxlab-about-explore {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-about-interests,
+  .wyxlab-about-current,
+  .wyxlab-about-featured {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wyxlab-about-profile {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 18px 16px;
+  }
+
+  .wyxlab-about-avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .wyxlab-about-name {
+    font-size: 1.25rem;
+  }
+
+  .wyxlab-about-activity-item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .wyxlab-about-explore {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- About dark mode ---------- */
+html[data-theme='dark'] .wyxlab-about-profile,
+html[data-theme='dark'] .wyxlab-about-project,
+html[data-theme='dark'] .wyxlab-about-link-card {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='dark'] .wyxlab-about-avatar {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme='dark'] .wyxlab-about-status.status-in-progress {
+  background: rgba(110, 200, 130, 0.14);
+  color: #8fd0a4;
+}
+
+html[data-theme='dark'] .wyxlab-about-status.status-completed {
+  background: rgba(73, 177, 245, 0.14);
+  color: #8ecdfb;
+}
+
+html[data-theme='dark'] .wyxlab-about-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fbbf64;
+}
+
+html[data-theme='dark'] .wyxlab-about-status.status-paused {
+  background: rgba(156, 163, 175, 0.14);
+  color: #c3c8d1;
+}
+
+html[data-theme='dark'] .wyxlab-about-chips li,
+html[data-theme='dark'] .wyxlab-about-project-tags li,
+html[data-theme='dark'] .wyxlab-about-milestone-category,
+html[data-theme='dark'] .wyxlab-about-status-label {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme='dark'] .wyxlab-about-activity,
+html[data-theme='dark'] .wyxlab-about-activity-item {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme='dark'] .wyxlab-about-project:hover,
+html[data-theme='dark'] .wyxlab-about-link-card:hover {
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- About reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-about-project,
+  .wyxlab-about-link-card,
+  .wyxlab-about-more {
+    transition: none;
+  }
+
+  .wyxlab-about-project:hover,
+  .wyxlab-about-link-card:hover {
+    transform: none;
+  }
+}
+
+/* =====================================================
+   Unified design system — visual consolidation layer
+   Single source of rhythm/token usage for all modules.
+   ===================================================== */
+
+/* ---------- Section titles ---------- */
+.wyxlab-entrance-title,
+.wyxlab-projects-heading,
+.wyxlab-recent-logs-title,
+.wyxlab-about-heading,
+.wyxlab-lablog-year-title,
+.wyxlab-timeline-year-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 2px var(--wyxlab-space-md);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--font-color);
+}
+
+.wyxlab-projects-heading span,
+.wyxlab-entrance-title .wyxlab-entrance-sub,
+.wyxlab-recent-logs-title span,
+.wyxlab-about-heading span {
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--second-text);
+}
+
+/* ---------- Card surfaces ---------- */
+.wyxlab-lab-card,
+.wyxlab-project-card,
+.wyxlab-log-item,
+.wyxlab-about-project,
+.wyxlab-about-link-card,
+.wyxlab-about-profile {
+  border: var(--wyxlab-card-border);
+  box-shadow: var(--wyxlab-card-shadow);
+}
+
+.wyxlab-lab-card:hover,
+.wyxlab-lab-card:focus-visible,
+.wyxlab-project-card:hover,
+.wyxlab-project-card:focus-within,
+.wyxlab-log-item:hover,
+.wyxlab-about-project:hover,
+.wyxlab-about-project:focus-visible,
+.wyxlab-about-link-card:hover,
+.wyxlab-about-link-card:focus-visible {
+  border-color: var(--wyxlab-card-border-hover);
+  box-shadow: var(--wyxlab-card-shadow-hover);
+  transform: translateY(-4px);
+}
+
+html[data-theme='dark'] .wyxlab-lab-card:hover,
+html[data-theme='dark'] .wyxlab-project-card:hover,
+html[data-theme='dark'] .wyxlab-project-card:focus-within,
+html[data-theme='dark'] .wyxlab-log-item:hover,
+html[data-theme='dark'] .wyxlab-about-project:hover,
+html[data-theme='dark'] .wyxlab-about-link-card:hover {
+  border-color: var(--wyxlab-card-border-hover);
+  box-shadow: var(--wyxlab-card-shadow-hover);
+}
+
+/* ---------- Card rhythm: padding & inner gaps ---------- */
+.wyxlab-project-body,
+.wyxlab-log-item,
+.wyxlab-about-project,
+.wyxlab-about-link-card {
+  padding: var(--wyxlab-space-md);
+}
+
+.wyxlab-lab-card {
+  padding: var(--wyxlab-space-md) var(--wyxlab-space-md) 14px;
+  gap: var(--wyxlab-space-xs) ;
+}
+
+.wyxlab-lab-card .wyxlab-lab-icon {
+  margin-bottom: var(--wyxlab-space-xs);
+}
+
+.wyxlab-log-item {
+  padding: var(--wyxlab-space-md) 18px;
+}
+
+.wyxlab-log-main,
+.wyxlab-project-body,
+.wyxlab-about-project {
+  gap: var(--wyxlab-space-sm);
+}
+
+/* ---------- Grid gaps ---------- */
+.wyxlab-lab-grid,
+.wyxlab-project-grid,
+.wyxlab-about-interests,
+.wyxlab-about-current,
+.wyxlab-about-featured,
+.wyxlab-about-explore {
+  gap: var(--wyxlab-space-md);
+}
+
+/* ---------- Block rhythm ---------- */
+.wyxlab-entrances,
+.wyxlab-recent-logs {
+  margin: 0 0 var(--wyxlab-space-lg);
+}
+
+.wyxlab-projects-group,
+.wyxlab-lablog-year,
+.wyxlab-timeline-year,
+.wyxlab-about-block,
+.wyxlab-about-profile {
+  margin-bottom: var(--wyxlab-space-xl);
+}
+
+/* ---------- Chips (tags / keywords / categories) ---------- */
+.wyxlab-project-tags li,
+.wyxlab-log-tags li,
+.wyxlab-about-chips li,
+.wyxlab-about-project-tags li {
+  padding: 2px 9px;
+  border-radius: var(--wyxlab-radius-sm);
+  background: var(--wyxlab-chip-bg);
+  font-size: 0.74rem;
+  color: var(--second-text);
+}
+
+.wyxlab-project-tags,
+.wyxlab-log-tags,
+.wyxlab-about-chips,
+.wyxlab-about-project-tags,
+.wyxlab-about-keywords {
+  gap: 7px;
+}
+
+/* ---------- Status pills: unified base ---------- */
+.wyxlab-project-status,
+.wyxlab-log-status,
+.wyxlab-about-status,
+.wyxlab-timeline-milestone {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 550;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* In Progress → soft blue */
+.wyxlab-project-status.status-in-progress,
+.wyxlab-log-status.status-progress,
+.wyxlab-about-status.status-in-progress,
+.wyxlab-about-status.status-progress {
+  background: rgba(73, 177, 245, 0.13);
+  color: #1d6fb8;
+}
+
+/* Completed → soft green */
+.wyxlab-project-status.status-completed,
+.wyxlab-log-status.status-completed,
+.wyxlab-about-status.status-completed {
+  background: rgba(46, 160, 90, 0.13);
+  color: #2f7d46;
+}
+
+/* Maintaining → soft amber */
+.wyxlab-project-status.status-maintaining,
+.wyxlab-about-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.15);
+  color: #a15c07;
+}
+
+/* Paused → neutral gray */
+.wyxlab-project-status.status-paused,
+.wyxlab-about-status.status-paused {
+  background: rgba(107, 114, 128, 0.13);
+  color: #4b5563;
+}
+
+/* Note → soft slate blue-gray */
+.wyxlab-log-status.status-note {
+  background: rgba(100, 116, 139, 0.14);
+  color: #52617c;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-in-progress,
+html[data-theme='dark'] .wyxlab-log-status.status-progress,
+html[data-theme='dark'] .wyxlab-about-status.status-in-progress,
+html[data-theme='dark'] .wyxlab-about-status.status-progress {
+  background: rgba(73, 177, 245, 0.17);
+  color: #8ecdfb;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-completed,
+html[data-theme='dark'] .wyxlab-log-status.status-completed,
+html[data-theme='dark'] .wyxlab-about-status.status-completed {
+  background: rgba(88, 180, 120, 0.17);
+  color: #93d0ab;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-maintaining,
+html[data-theme='dark'] .wyxlab-about-status.status-maintaining {
+  background: rgba(245, 158, 11, 0.18);
+  color: #fbbf64;
+}
+
+html[data-theme='dark'] .wyxlab-project-status.status-paused,
+html[data-theme='dark'] .wyxlab-about-status.status-paused {
+  background: rgba(156, 163, 175, 0.16);
+  color: #c3c8d1;
+}
+
+html[data-theme='dark'] .wyxlab-log-status.status-note {
+  background: rgba(148, 163, 190, 0.17);
+  color: #aebad0;
+}
+
+/* ---------- Dashed project chips (log / timeline / about) ---------- */
+.wyxlab-log-project,
+.wyxlab-timeline-project,
+.wyxlab-about-milestone-project {
+  padding: 2px 10px;
+  border: 1px dashed rgba(73, 177, 245, 0.5);
+  border-radius: var(--wyxlab-radius-sm);
+  font-size: 0.75rem;
+  color: var(--second-text);
+}
+
+/* ---------- Action buttons (outlined, secondary) ---------- */
+.wyxlab-project-link {
+  gap: 5px;
+  padding: 5px 12px;
+  border: 1px solid rgba(73, 177, 245, 0.4);
+  border-radius: var(--wyxlab-radius-sm);
+  font-size: 0.8rem;
+}
+
+.wyxlab-project-link:hover,
+.wyxlab-project-link:focus-visible {
+  background: rgba(73, 177, 245, 0.1);
+  border-color: rgba(73, 177, 245, 0.65);
+}
+
+/* ---------- Text links with arrow (primary / tertiary) ---------- */
+.wyxlab-log-link,
+.wyxlab-timeline-link,
+.wyxlab-recent-logs-more,
+.wyxlab-about-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--theme-color, #49b1f5);
+  text-decoration: none;
+  transition: opacity var(--wyxlab-transition-fast);
+}
+
+.wyxlab-log-link:hover,
+.wyxlab-timeline-link:hover,
+.wyxlab-recent-logs-more:hover,
+.wyxlab-about-more:hover {
+  opacity: 0.78;
+}
+
+.wyxlab-log-link i,
+.wyxlab-timeline-link i {
+  font-size: 0.7rem;
+  transition: transform var(--wyxlab-transition-fast);
+}
+
+.wyxlab-log-link:hover i,
+.wyxlab-timeline-link:hover i {
+  transform: translateX(2px);
+}
+
+/* ---------- Hairlines & rails ---------- */
+.wyxlab-recent-logs-list,
+.wyxlab-recent-log-item,
+.wyxlab-about-activity,
+.wyxlab-about-activity-item {
+  border-color: var(--wyxlab-hairline);
+}
+
+.wyxlab-lablog-list {
+  border-left-color: var(--wyxlab-rail);
+}
+
+.wyxlab-timeline-body {
+  border-left-color: var(--wyxlab-rail);
+}
+
+/* ---------- Hero tightening ---------- */
+.wyxlab-hero-extra {
+  margin-top: 0.7rem;
+}
+
+.wyxlab-hero-tagline {
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.wyxlab-hero-keywords {
+  margin-top: var(--wyxlab-space-xs);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.wyxlab-wave path {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='dark'] .wyxlab-wave path {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+/* keep hero copy clear of the fixed nav at reduced height */
+#page-header.full_page #site-info {
+  top: 40%;
+}
+
+#page-header.full_page #site_social_icons {
+  margin-top: 0.4rem;
+}
+
+/* ---------- Footer brand ---------- */
+.wyxlab-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: var(--wyxlab-space-sm);
+}
+
+.wyxlab-footer-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(235, 226, 237, 0.92);
+}
+
+.wyxlab-footer-slogan {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: rgba(235, 226, 237, 0.55);
+}
+
+.wyxlab-footer-tagline {
+  margin-top: 2px;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: rgba(216, 184, 215, 0.6);
+}
+
+/* ---------- Global reduced-motion safety net ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [class^='wyxlab-'],
+  [class*=' wyxlab-'] {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [class^='wyxlab-']:hover,
+  [class*=' wyxlab-']:hover {
+    transform: none !important;
+  }
+}
+
+html[data-theme='dark'] .wyxlab-lab-card,
+html[data-theme='dark'] .wyxlab-project-card,
+html[data-theme='dark'] .wyxlab-about-project,
+html[data-theme='dark'] .wyxlab-about-link-card,
+html[data-theme='dark'] .wyxlab-about-profile {
+  box-shadow: var(--wyxlab-card-shadow);
+}

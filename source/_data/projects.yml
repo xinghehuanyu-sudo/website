@@ -33,9 +33,9 @@
     - Frontend
     - Tool
   image:
-  article:
+  article: /post/我的网页/
   github:
-  demo:
+  demo: https://xinghehuanyu-sudo.github.io/AA-agent/
   featured: false
 
 - name: Time Tracker
@@ -47,9 +47,9 @@
     - Frontend
     - Productivity
   image:
-  article:
+  article: /post/我的网页/
   github:
-  demo:
+  demo: https://xinghehuanyu-sudo.github.io/study-plan/
   featured: false
 
 - name: WYX LAB

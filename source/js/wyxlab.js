@@ -110,10 +110,25 @@
     }
   }
 
+  function mountCardLink() {
+    var card = document.querySelector('.card-widget.card-info');
+    if (!card || card.dataset.wyxAboutLink) return;
+    card.dataset.wyxAboutLink = '1';
+    card.addEventListener('click', function (e) {
+      if (e.target.closest('a')) return;
+      if (window.pjax && window.pjax.loadUrl) {
+        window.pjax.loadUrl('/about/');
+      } else {
+        window.location.href = '/about/';
+      }
+    });
+  }
+
   function mount() {
     removeExisting();
     mountHero();
     mountCards();
+    mountCardLink();
   }
 
   if (document.readyState === 'loading') {

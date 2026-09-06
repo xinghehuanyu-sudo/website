@@ -2355,3 +2355,8 @@ html[data-theme='dark'] .wyxlab-about-link-card,
 html[data-theme='dark'] .wyxlab-about-profile {
   box-shadow: var(--wyxlab-card-shadow);
 }
+
+/* ---------- Sidebar author card -> About ---------- */
+.card-widget.card-info {
+  cursor: pointer;
+}

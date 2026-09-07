@@ -1057,10 +1057,10 @@ css_prefix: true
 inject:
   head:
     - <link rel="stylesheet" href="/css/intro-animation.css?v=20260906-pagination-title-fix">
-    - <link rel="stylesheet" href="/css/wyxlab.css?v=20260906-about-v3">
+    - <link rel="stylesheet" href="/css/wyxlab.css?v=20260906-about-warm">
   bottom:
     - <script src="/js/wyx-effects.js?v=20260823-performance"></script>
-    - <script src="/js/wyxlab.js?v=20260906-zh-labels"></script>
+    - <script src="/js/wyxlab.js?v=20260906-navback"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work

@@ -2360,3 +2360,87 @@ html[data-theme='dark'] .wyxlab-about-profile {
 .card-widget.card-info {
   cursor: pointer;
 }
+
+/* =====================================================
+   About — cover-palette harmony
+   Warm accents sampled from the deep-space cover
+   (amber / rust-coral / violet). Scoped to .wyxlab-about
+   so other pages keep the default theme color.
+   ===================================================== */
+
+.wyxlab-about {
+  --wyx-accent: #c05f44;
+  --wyx-accent-strong: rgba(192, 95, 68, 0.5);
+  --wyx-accent-soft: rgba(192, 95, 68, 0.12);
+  --wyx-violet: rgba(178, 145, 184, 0.55);
+}
+
+html[data-theme='dark'] .wyxlab-about {
+  --wyx-accent: #e7a699;
+  --wyx-accent-strong: rgba(231, 166, 153, 0.55);
+  --wyx-accent-soft: rgba(231, 166, 153, 0.16);
+  --wyx-violet: rgba(178, 145, 184, 0.42);
+}
+
+/* profile: faint nebula tint echoing the cover */
+.wyxlab-about .wyxlab-about-profile {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(178, 145, 184, 0.09), transparent 42%),
+    radial-gradient(circle at 92% 100%, rgba(224, 164, 94, 0.08), transparent 40%),
+    var(--global-bg);
+}
+
+.wyxlab-about .wyxlab-about-avatar {
+  border-color: var(--wyx-violet);
+}
+
+.wyxlab-about .wyxlab-about-tagline {
+  color: var(--wyx-accent);
+}
+
+.wyxlab-about .wyxlab-about-keywords li {
+  border-color: var(--wyx-violet);
+}
+
+.wyxlab-about .wyxlab-about-interest-group {
+  border-left: 2px solid transparent;
+  border-image: linear-gradient(180deg, rgba(178, 145, 184, 0.75), rgba(224, 164, 94, 0.75)) 1;
+}
+
+.wyxlab-about .wyxlab-about-project:hover,
+.wyxlab-about .wyxlab-about-project:focus-visible,
+.wyxlab-about .wyxlab-about-link-card:hover,
+.wyxlab-about .wyxlab-about-link-card:focus-visible {
+  border-color: var(--wyx-accent-strong);
+}
+
+.wyxlab-about .wyxlab-about-project:focus-visible {
+  outline-color: var(--wyx-accent);
+}
+
+.wyxlab-about .wyxlab-about-milestone {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, rgba(178, 145, 184, 0.75), rgba(224, 164, 94, 0.8)) 1;
+}
+
+.wyxlab-about .wyxlab-about-milestone-meta time,
+.wyxlab-about .wyxlab-about-activity-type,
+.wyxlab-about .wyxlab-about-link-card > i,
+.wyxlab-about .wyxlab-about-more {
+  color: var(--wyx-accent);
+}
+
+.wyxlab-about .wyxlab-about-milestone-project {
+  border-color: var(--wyx-violet);
+}
+
+.wyxlab-about a.wyxlab-about-milestone-project:hover,
+.wyxlab-about a.wyxlab-about-milestone-project:focus-visible {
+  background: var(--wyx-accent-soft);
+  color: var(--wyx-accent);
+}
+
+.wyxlab-about .wyxlab-about-milestone-category {
+  background: var(--wyx-accent-soft);
+  color: var(--wyx-accent);
+}

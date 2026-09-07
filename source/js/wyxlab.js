@@ -124,11 +124,44 @@
     });
   }
 
+  function mountNavBackHome() {
+    var blogInfo = document.querySelector('#body-wrap #blog-info');
+    if (!blogInfo || blogInfo.querySelector('.nav-page-title')) return;
+    if (document.getElementById('site-info')) return;
+
+    var titleEl = document.querySelector('#page-site-info #site-title');
+    var title = titleEl
+      ? titleEl.textContent.trim()
+      : (document.title || '').split(' - ')[0].trim();
+    if (!title || title === 'WYX LAB') return;
+
+    var link = document.createElement('a');
+    link.className = 'nav-page-title';
+    link.href = '/';
+
+    var name = document.createElement('span');
+    name.className = 'site-name';
+    name.textContent = title;
+
+    var back = document.createElement('span');
+    back.className = 'site-name';
+    var icon = document.createElement('i');
+    icon.className = 'fa-solid fa-circle-arrow-left';
+    icon.setAttribute('aria-hidden', 'true');
+    back.appendChild(icon);
+    back.appendChild(document.createTextNode(' 返回首页'));
+
+    link.appendChild(name);
+    link.appendChild(back);
+    blogInfo.appendChild(link);
+  }
+
   function mount() {
     removeExisting();
     mountHero();
     mountCards();
     mountCardLink();
+    mountNavBackHome();
   }
 
   if (document.readyState === 'loading') {

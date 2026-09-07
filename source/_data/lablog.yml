@@ -32,7 +32,7 @@
 
 - date: "2026-09-05"
   title: WYX LAB 项目页面上线
-  content: 完成 Projects 页面、项目数据结构与构建期静态渲染，开始将 WYX LAB 从普通博客逐步改造成个人数字实验室。
+  content: 完成项目页面、项目数据结构与构建期静态渲染，开始将 WYX LAB 从普通博客逐步改造成个人数字实验室。
   type: 网站
   tags:
     - WYX LAB

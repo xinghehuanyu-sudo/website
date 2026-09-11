@@ -31,3 +31,12 @@
   link: /projects/
   image:
   milestone: true
+
+- date: "2026-09-11"
+  title: Linux 云服务器实验场启动
+  description: 完成第一台 Ubuntu 云服务器的初始化（时区、Swap、SSH、公网 IP 与端口），确定将其作为长期在线的个人 Linux 实验环境，首个目标是个人服务器面板。
+  category: 项目
+  project: Linux Server Lab
+  link: /post/从一台云服务器开始：我的 Linux 实验场搭建记录/
+  image:
+  milestone: true

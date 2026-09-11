@@ -52,6 +52,23 @@
   demo: https://xinghehuanyu-sudo.github.io/study-plan/
   featured: false
 
+- name: Linux Server Lab
+  subtitle: 个人 Linux 实验场与服务器面板
+  description: 以一台 Ubuntu 云服务器为长期在线的个人 Linux 实验环境，已完成时区、Swap、SSH 与公网访问等初始化；第一个目标是轻量个人服务器面板，后续按需引入 Nginx、systemd、Docker 等组件。
+  status: In Progress
+  started: 2026
+  tags:
+    - Linux
+    - Ubuntu
+    - VPS
+    - SSH
+    - Networking
+  image:
+  article: /post/从一台云服务器开始：我的 Linux 实验场搭建记录/
+  github:
+  demo:
+  featured: false
+
 - name: WYX LAB
   subtitle: 个人数字实验室
   description: 我的个人数字实验室，用于记录物理、代码、科研与生活中的实验。

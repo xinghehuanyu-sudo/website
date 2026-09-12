@@ -2444,3 +2444,95 @@ html[data-theme='dark'] .wyxlab-about {
   background: var(--wyx-accent-soft);
   color: var(--wyx-accent);
 }
+
+/* ---------- Cursor-following card spotlight ---------- */
+.wyxlab-lab-card,
+.wyxlab-project-card,
+.wyxlab-log-item,
+.wyxlab-about-project,
+.wyxlab-about-link-card {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wyxlab-lab-card::after,
+  .wyxlab-project-card::after,
+  .wyxlab-log-item::after,
+  .wyxlab-about-project::after,
+  .wyxlab-about-link-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(220px circle at var(--wyx-spot-x, 50%) var(--wyx-spot-y, 50%), rgba(73, 177, 245, 0.13), rgba(73, 177, 245, 0.05) 45%, transparent 70%);
+    transition: opacity 0.25s ease;
+  }
+
+  .wyxlab-lab-card:hover::after,
+  .wyxlab-project-card:hover::after,
+  .wyxlab-log-item:hover::after,
+  .wyxlab-about-project:hover::after,
+  .wyxlab-about-link-card:hover::after {
+    opacity: 1;
+  }
+
+  html[data-theme='dark'] .wyxlab-lab-card::after,
+  html[data-theme='dark'] .wyxlab-project-card::after,
+  html[data-theme='dark'] .wyxlab-log-item::after {
+    background: radial-gradient(220px circle at var(--wyx-spot-x, 50%) var(--wyx-spot-y, 50%), rgba(73, 177, 245, 0.16), rgba(73, 177, 245, 0.06) 45%, transparent 70%);
+  }
+
+  .wyxlab-about .wyxlab-about-project::after,
+  .wyxlab-about .wyxlab-about-link-card::after {
+    background: radial-gradient(220px circle at var(--wyx-spot-x, 50%) var(--wyx-spot-y, 50%), var(--wyx-accent-soft), transparent 70%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wyxlab-lab-card::after,
+  .wyxlab-project-card::after,
+  .wyxlab-log-item::after,
+  .wyxlab-about-project::after,
+  .wyxlab-about-link-card::after {
+    transition: none;
+  }
+}
+
+/* ---------- Navbar menu spacing ---------- */
+#menus > .menus_items > .menus_item {
+  padding-left: 26px;
+}
+
+/* ---------- Mobile refinements ---------- */
+@media (hover: none) {
+  .wyxlab-lab-card:hover,
+  .wyxlab-project-card:hover,
+  .wyxlab-project-card:focus-within,
+  .wyxlab-log-item:hover,
+  .wyxlab-about-project:hover,
+  .wyxlab-about-link-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .wyxlab-log-project,
+  .wyxlab-timeline-project {
+    padding: 6px 12px;
+  }
+
+  .wyxlab-log-link,
+  .wyxlab-timeline-link {
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .wyxlab-hero-keywords {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+}

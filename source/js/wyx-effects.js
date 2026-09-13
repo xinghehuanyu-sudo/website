@@ -19,6 +19,11 @@
     ? window.matchMedia('(prefers-color-scheme: dark)')
     : null;
   const introSeenKey = 'wyx-intro-seen';
+  /* Motion switch: html[data-wyx-motion='off'] is set by an inline head
+     script reading localStorage('wyx-motion'). When off, every animated
+     layer below is skipped; static poster & content stay untouched. */
+  const motionOff = () =>
+    document.documentElement.getAttribute('data-wyx-motion') === 'off';
   const deepSpacePoster = '/deepspace/deep-space-poster.webp?v=20260823-deepspace';
   const deepSpaceAssets = [
     '/deepspace/galaxy_base.webp?v=20260823-flow',
@@ -738,10 +743,12 @@
   ============================================================ */
   function boot() {
     initThemeCoverSync();
-    initDeepSpaceCover();
-    buildIntro();
-    initParticles();
-    initFallingParticles();
+    if (!motionOff()) {
+      initDeepSpaceCover();
+      buildIntro();
+      initParticles();
+      initFallingParticles();
+    }
     initPostCardLinks();
     initNavActions();
   }
@@ -754,8 +761,10 @@
 
   document.addEventListener('pjax:complete', () => {
     syncThemeCover();
-    initDeepSpaceCover();
-    if (!document.getElementById('particle-canvas')) initParticles();
+    if (!motionOff()) {
+      initDeepSpaceCover();
+      if (!document.getElementById('particle-canvas')) initParticles();
+    }
     initPostCardLinks();
     initNavActions();
   });

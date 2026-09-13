@@ -83,3 +83,20 @@
   github:
   demo:
   featured: true
+
+- name: myhkw Music Downloader
+  subtitle: 明月浩空音乐批量下载工具
+  description: 从明月浩空（myhkw.cn）按歌手、专辑、关键词、歌单批量下载音乐的工具，聚合网易/QQ/酷狗/酷我四平台并自动换源；提供 Web 界面与命令行两种用法，内置跨来源去重、时长过滤、断点续传与音乐库试听，已开源。
+  status: Completed
+  started: 2026
+  tags:
+    - Python
+    - Flask
+    - Tool
+    - Web
+    - CLI
+  image:
+  article: /post/从逆向接口到 Web 界面：我的明月浩空音乐批量下载工具/
+  github: https://github.com/xinghehuanyu-sudo/myhkw-downloader
+  demo:
+  featured: false

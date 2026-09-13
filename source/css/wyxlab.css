@@ -2554,3 +2554,35 @@ html[data-theme='dark'] .wyxlab-about {
     letter-spacing: 0.08em;
   }
 }
+
+/* ---------- Motion switch (html[data-wyx-motion='off']) ---------- */
+[data-wyx-motion='off'] #particle-canvas,
+[data-wyx-motion='off'] #falling-particles,
+[data-wyx-motion='off'] .deep-space-cover,
+[data-wyx-motion='off'] #wyx-intro,
+[data-wyx-motion='off'] .wyxlab-wave {
+  display: none !important;
+}
+
+[data-wyx-motion='off'] .wyxlab-lab-card::after,
+[data-wyx-motion='off'] .wyxlab-project-card::after,
+[data-wyx-motion='off'] .wyxlab-log-item::after,
+[data-wyx-motion='off'] .wyxlab-about-project::after,
+[data-wyx-motion='off'] .wyxlab-about-link-card::after,
+[data-wyx-motion='off'] .recent-post-item::after,
+[data-wyx-motion='off'] .card-widget::after,
+[data-wyx-motion='off'] .tag-cloud-list a::after {
+  display: none;
+}
+
+[data-wyx-motion='off'] .wyxlab-hero-tagline,
+[data-wyx-motion='off'] .wyxlab-hero-keywords,
+[data-wyx-motion='off'] #page-header #site-title,
+[data-wyx-motion='off'] #page-header #site-subtitle,
+[data-wyx-motion='off'] .wyxlab-lab-card {
+  animation: none;
+}
+
+#wyx-motion-toggle.is-off {
+  opacity: 0.45;
+}

@@ -40,3 +40,12 @@
   link: /post/从一台云服务器开始：我的 Linux 实验场搭建记录/
   image:
   milestone: true
+
+- date: "2026-09-13"
+  title: myhkw 音乐批量下载工具开源
+  description: 独立完成明月浩空音乐批量下载工具并开源：逆向复用官方免注册控制台接口，四个平台自动换源，三层去重加时长过滤，Web 界面与命令行两种用法。
+  category: 项目
+  project: myhkw Music Downloader
+  link: /post/从逆向接口到 Web 界面：我的明月浩空音乐批量下载工具/
+  image:
+  milestone: true

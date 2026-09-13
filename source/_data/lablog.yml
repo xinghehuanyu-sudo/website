@@ -6,6 +6,18 @@
 # status: completed | progress | note （可为空）
 # =====================================================
 
+- date: "2026-09-13"
+  title: 明月浩空批量下载工具做完并开源
+  content: 把 myhkw 免注册控制台的接口封装成了批量下载工具，歌手/专辑/关键词/歌单四种模式，Web 和命令行都能用；四平台自动换源，去重和时长过滤也一并处理了，代码已放到 GitHub。
+  type: 开发
+  tags:
+    - Python
+    - Flask
+    - 工具开发
+  project: myhkw Music Downloader
+  link: /post/从逆向接口到 Web 界面：我的明月浩空音乐批量下载工具/
+  status: completed
+
 - date: "2026-09-06"
   title: 精简时间线并统一中文分类
   content: 给时间线做了一次减法：只保留一年后回看仍然值得留下的节点，过程性的记录都放回实验日志。顺手把日志和时间线的分类显示理顺了，看起来不再中英混杂。

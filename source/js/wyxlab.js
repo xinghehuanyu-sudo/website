@@ -6,6 +6,12 @@
 (function () {
   'use strict';
 
+  var MOTION_KEY = 'wyx-motion';
+
+  function motionOff() {
+    return document.documentElement.getAttribute('data-wyx-motion') === 'off';
+  }
+
   var HERO_TAGLINE = '探索物理、代码与生活。';
   var HERO_KEYWORDS = '物理 · 科研 · 代码 · 生活';
 
@@ -64,7 +70,7 @@
     }
 
     var header = document.getElementById('page-header');
-    if (header && !header.classList.contains('not-top-img')) {
+    if (header && !header.classList.contains('not-top-img') && !motionOff()) {
       var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('class', 'wyxlab-wave');
       svg.setAttribute('viewBox', '0 0 1440 320');
@@ -160,6 +166,7 @@
     if (window.__wyxlabSpotlight) return;
     window.__wyxlabSpotlight = true;
     document.addEventListener('pointermove', function (e) {
+      if (motionOff()) return;
       if (e.pointerType && e.pointerType !== 'mouse') return;
       var card = e.target && e.target.closest
         ? e.target.closest('.wyxlab-lab-card, .wyxlab-project-card, .wyxlab-log-item, .wyxlab-about-project, .wyxlab-about-link-card, .recent-post-item, .card-widget, .tag-cloud-list a')
@@ -171,6 +178,37 @@
     }, { passive: true });
   }
 
+  function syncMotionButton(btn) {
+    var off = motionOff();
+    btn.classList.toggle('is-off', off);
+    btn.setAttribute('title', off ? '开启动态效果' : '关闭动态效果');
+    btn.setAttribute('aria-pressed', off ? 'false' : 'true');
+  }
+
+  function mountMotionToggle() {
+    var host = document.querySelector('#rightside #rightside-config-hide');
+    if (!host) return;
+
+    var btn = document.getElementById('wyx-motion-toggle');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.id = 'wyx-motion-toggle';
+      btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>';
+      btn.addEventListener('click', function () {
+        try {
+          window.localStorage.setItem(MOTION_KEY, motionOff() ? 'on' : 'off');
+        } catch (err) {
+          window.location.reload();
+          return;
+        }
+        window.location.reload();
+      });
+      host.insertBefore(btn, host.firstChild);
+    }
+    syncMotionButton(btn);
+  }
+
   function mount() {
     removeExisting();
     mountHero();
@@ -178,6 +216,7 @@
     mountCardLink();
     mountNavBackHome();
     mountSpotlight();
+    mountMotionToggle();
   }
 
   if (document.readyState === 'loading') {

@@ -2450,7 +2450,10 @@ html[data-theme='dark'] .wyxlab-about {
 .wyxlab-project-card,
 .wyxlab-log-item,
 .wyxlab-about-project,
-.wyxlab-about-link-card {
+.wyxlab-about-link-card,
+.recent-post-item:not(.ads-wrap),
+.card-widget,
+.tag-cloud-list a {
   position: relative;
 }
 
@@ -2459,7 +2462,10 @@ html[data-theme='dark'] .wyxlab-about {
   .wyxlab-project-card::after,
   .wyxlab-log-item::after,
   .wyxlab-about-project::after,
-  .wyxlab-about-link-card::after {
+  .wyxlab-about-link-card::after,
+  .recent-post-item:not(.ads-wrap)::after,
+  .card-widget::after,
+  .tag-cloud-list a::after {
     content: '';
     position: absolute;
     inset: 0;
@@ -2475,13 +2481,22 @@ html[data-theme='dark'] .wyxlab-about {
   .wyxlab-project-card:hover::after,
   .wyxlab-log-item:hover::after,
   .wyxlab-about-project:hover::after,
-  .wyxlab-about-link-card:hover::after {
+  .wyxlab-about-link-card:hover::after,
+  .recent-post-item:not(.ads-wrap):hover::after,
+  .card-widget:hover::after,
+  .tag-cloud-list a:hover::after {
     opacity: 1;
+  }
+
+  .tag-cloud-list a::after {
+    background: radial-gradient(140px circle at var(--wyx-spot-x, 50%) var(--wyx-spot-y, 50%), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1) 45%, transparent 70%);
   }
 
   html[data-theme='dark'] .wyxlab-lab-card::after,
   html[data-theme='dark'] .wyxlab-project-card::after,
-  html[data-theme='dark'] .wyxlab-log-item::after {
+  html[data-theme='dark'] .wyxlab-log-item::after,
+  html[data-theme='dark'] .recent-post-item:not(.ads-wrap)::after,
+  html[data-theme='dark'] .card-widget::after {
     background: radial-gradient(220px circle at var(--wyx-spot-x, 50%) var(--wyx-spot-y, 50%), rgba(73, 177, 245, 0.16), rgba(73, 177, 245, 0.06) 45%, transparent 70%);
   }
 
@@ -2496,7 +2511,10 @@ html[data-theme='dark'] .wyxlab-about {
   .wyxlab-project-card::after,
   .wyxlab-log-item::after,
   .wyxlab-about-project::after,
-  .wyxlab-about-link-card::after {
+  .wyxlab-about-link-card::after,
+  .recent-post-item:not(.ads-wrap)::after,
+  .card-widget::after,
+  .tag-cloud-list a::after {
     transition: none;
   }
 }

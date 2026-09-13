@@ -162,7 +162,7 @@
     document.addEventListener('pointermove', function (e) {
       if (e.pointerType && e.pointerType !== 'mouse') return;
       var card = e.target && e.target.closest
-        ? e.target.closest('.wyxlab-lab-card, .wyxlab-project-card, .wyxlab-log-item, .wyxlab-about-project, .wyxlab-about-link-card')
+        ? e.target.closest('.wyxlab-lab-card, .wyxlab-project-card, .wyxlab-log-item, .wyxlab-about-project, .wyxlab-about-link-card, .recent-post-item, .card-widget, .tag-cloud-list a')
         : null;
       if (!card) return;
       var rect = card.getBoundingClientRect();

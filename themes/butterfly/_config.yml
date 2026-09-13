@@ -55,6 +55,7 @@ code_blocks:
 social:
   fab fa-github: https://github.com/xinghehuanyu-sudo || Github || '#24292e'
   fas fa-envelope: mailto:1223220664@qq.com || Email || '#4a7dbe'
+  fab fa-qq: https://wpa.qq.com/msgrd?v=3&uin=1223220664&site=qq&menu=yes || QQ || '#12B7F5'
 
 # --------------------------------------
 # Image Settings
@@ -1057,10 +1058,10 @@ css_prefix: true
 inject:
   head:
     - <link rel="stylesheet" href="/css/intro-animation.css?v=20260906-pagination-title-fix">
-    - <link rel="stylesheet" href="/css/wyxlab.css?v=20260912-mobile">
+    - <link rel="stylesheet" href="/css/wyxlab.css?v=20260912-spot-all">
   bottom:
     - <script src="/js/wyx-effects.js?v=20260823-performance"></script>
-    - <script src="/js/wyxlab.js?v=20260912-spotlight"></script>
+    - <script src="/js/wyxlab.js?v=20260912-spot-all"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work

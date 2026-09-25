@@ -33,7 +33,7 @@ categories:
 登录之后看到的不是 Windows 熟悉的桌面，而是一行简单的命令行：
 
 ```bash
-evan@my-first-trail:~$
+user@server:~$
 ```
 
 从这一刻开始，这台服务器的绝大部分操作都要通过终端完成。
@@ -138,7 +138,7 @@ Swap 更像是一层保险，而不是内存的真正替代品。
 例如：
 
 ```bash
-ssh evan@服务器IP
+ssh user@服务器IP
 ```
 
 输入认证信息之后，我的电脑就可以直接控制远端 Linux 服务器。

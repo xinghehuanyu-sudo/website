@@ -493,7 +493,7 @@ search:
   # Local Search
   local_search:
     # Preload the search data when the page loads.
-    preload: false
+    preload: true
     # Show top n results per article, show all results by setting to -1
     top_n_per_article: 1
     # Unescape html strings to the readable one.
@@ -1062,7 +1062,7 @@ inject:
     - <link rel="stylesheet" href="/css/wyxlab.css?v=20260913-motion-switch">
   bottom:
     - <script src="/js/wyx-effects.js?v=20260913-motion-switch"></script>
-    - <script src="/js/wyxlab.js?v=20260913-motion-switch"></script>
+    - <script src="/js/wyxlab.js?v=20260925-search-shortcut"></script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work

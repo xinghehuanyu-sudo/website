@@ -178,6 +178,60 @@
     }, { passive: true });
   }
 
+  /* ---------- Search shortcut: Ctrl/Cmd + K, or "/" ---------- */
+  function isTypingTarget(el) {
+    if (!el) return false;
+    var tag = (el.tagName || '').toLowerCase();
+    return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable === true;
+  }
+
+  function openSearchByShortcut() {
+    var trigger = document.querySelector('#search-button > .search') ||
+      document.querySelector('#search-button .search');
+    if (!trigger) return false;
+
+    var dialog = document.querySelector('#local-search .search-dialog');
+    var isOpen = dialog && window.getComputedStyle(dialog).display !== 'none';
+    if (isOpen) {
+      var input = dialog.querySelector('.local-search-input input');
+      if (input) input.focus();
+      return true;
+    }
+    trigger.click();
+    return true;
+  }
+
+  function syncSearchHint() {
+    var trigger = document.querySelector('#search-button .search');
+    if (!trigger) return;
+    var isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform || '');
+    var hint = '搜索（' + (isMac ? '⌘' : 'Ctrl') + ' + K）';
+    if (trigger.getAttribute('title') !== hint) trigger.setAttribute('title', hint);
+  }
+
+  function mountSearchShortcut() {
+    syncSearchHint();
+    if (window.__wyxSearchShortcut) return;
+    window.__wyxSearchShortcut = true;
+
+    document.addEventListener('keydown', function (e) {
+      var key = e.key;
+
+      // Ctrl / Cmd + K
+      if ((e.ctrlKey || e.metaKey) && !e.altKey && (key === 'k' || key === 'K')) {
+        e.preventDefault();
+        openSearchByShortcut();
+        return;
+      }
+
+      // Plain "/" outside form fields
+      if (key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey && !isTypingTarget(e.target)) {
+        e.preventDefault();
+        openSearchByShortcut();
+      }
+    });
+  }
+
   function syncMotionButton(btn) {
     var off = motionOff();
     btn.classList.toggle('is-off', off);
@@ -217,6 +271,7 @@
     mountNavBackHome();
     mountSpotlight();
     mountMotionToggle();
+    mountSearchShortcut();
   }
 
   if (document.readyState === 'loading') {
